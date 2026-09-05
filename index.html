@@ -123,6 +123,118 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;border
 .q-e{border-left-color:var(--brass)}
 .q-a{border-left-color:var(--arc)}
 
+/* ── 문장 ── */
+.sig{display:block;flex:none}
+.row .sig{margin-right:-2px}
+
+/* ── 오늘의 상황 ── */
+.brief{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:10px 12px;margin-bottom:12px}
+.brief .bi{display:flex;gap:8px;align-items:baseline;font-size:12.5px;padding:3px 0}
+.brief .bi .bk{flex:none;width:16px;text-align:center}
+.brief .bi .bt{flex:1;color:var(--dim)}
+.brief .bi.hot .bt{color:#E4A9A4}
+.brief .bi .bv{color:var(--text);font-weight:600;white-space:nowrap}
+.brief .nx{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:8px;font-size:12.5px}
+.brief .nx b{color:var(--brass)}
+.brief .nx button{margin-left:auto;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:var(--r);padding:5px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+
+/* ── 관계 ── */
+.rel-l{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.rel-l .rn{flex:1}
+.rel-l .rb{width:52px;height:3px;background:var(--line);border-radius:2px;position:relative;overflow:hidden}
+.rel-l .rb i{position:absolute;top:0;height:100%;background:var(--dim)}
+
+/* ── 지도 ── */
+.map{position:relative;width:100%;aspect-ratio:16/11;margin-bottom:12px;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#131A1E}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.mk{
+  position:absolute;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:0;background:none;border:0;white-space:nowrap
+}
+.mk .dot{
+  width:9px;height:9px;border-radius:50%;background:var(--dim2);
+  border:1.5px solid #131A1E;box-shadow:0 0 0 1px var(--line2)
+}
+.mk .lb{font-size:8.5px;color:var(--dim2);letter-spacing:-.02em;line-height:1}
+.mk.q .dot{background:var(--brass);box-shadow:0 0 0 1px var(--brass-d)}
+.mk.q .lb{color:var(--brass)}
+.mk.t .dot{width:13px;height:13px;background:var(--blood);box-shadow:0 0 0 2px #4A211D}
+.mk.t .lb{color:#E4A9A4;font-weight:700;font-size:9.5px}
+.mk.hq .dot{width:11px;height:11px;background:none;border:2px solid var(--text);border-radius:2px;transform:rotate(45deg)}
+.mk.hq .lb{color:var(--text);font-weight:600}
+.mk.on .dot{background:var(--moss);box-shadow:0 0 0 1px #3E5B33}
+.mlg{display:flex;gap:11px;font-size:10.5px;color:var(--dim2);margin:-6px 0 12px;flex-wrap:wrap}
+.mlg i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:3px;vertical-align:middle}
+
+/* ── 원정 일지 ── */
+.story{border-left:1px solid var(--line2);margin:10px 0 4px;padding-left:0}
+.story .sl{display:flex;gap:10px;padding:5px 0 5px 11px;position:relative}
+.story .sl::before{
+  content:"";position:absolute;left:-3.5px;top:12px;width:6px;height:6px;
+  border-radius:50%;background:var(--line2)
+}
+.story .sd{flex:none;width:38px;font-size:11px;color:var(--dim2);padding-top:1px}
+.story .sx{flex:1;font-size:13px;line-height:1.5}
+
+/* ── 그래프 ── */
+.chart{
+  background:var(--panel2);border:1px solid var(--line);
+  border-radius:var(--r);padding:10px 10px 6px;margin:10px 0
+}
+.chart .ct{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;color:var(--dim);margin-bottom:6px}
+.chart .ct b{color:var(--text);font-size:13px}
+.chart svg{display:block;width:100%;height:auto}
+.spark{vertical-align:middle;margin-left:5px}
+
+/* ── 위협 ── */
+.threat{
+  background:linear-gradient(180deg,#2E1A18,#241715);
+  border:1px solid #6B322C;border-left:3px solid var(--blood);
+  padding:12px 13px;margin-bottom:14px;border-radius:0 var(--r) var(--r) 0
+}
+.threat .th{display:flex;align-items:baseline;gap:8px}
+.threat .tn{font-size:15px;font-weight:700;flex:1;color:#F0C7C2}
+.threat .td{font-size:20px;font-weight:800;color:var(--blood);letter-spacing:-.02em}
+.threat .tb{font-size:12.5px;color:#C79B96;margin-top:5px;line-height:1.5}
+.threat .tw{
+  font-size:11.5px;color:#E4A9A4;margin-top:7px;padding-top:7px;
+  border-top:1px solid #4A2622
+}
+.threat.done{background:#1E2B1B;border-color:#3E5B33;border-left-color:var(--moss)}
+.threat.done .tn{color:#BFE0AE}.threat.done .td{color:var(--moss)}.threat.done .tb{color:#93B383}
+.quest.tq{
+  border-color:#6B322C;border-left-color:var(--blood);
+  background:linear-gradient(180deg,#291816,var(--panel))
+}
+
+/* ── 목표 패널 ── */
+.goal{
+  background:var(--panel);border:1px solid var(--line);
+  padding:11px 13px;border-radius:var(--r);margin-bottom:14px
+}
+.goal .gh{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--dim)}
+.goal .gh b{color:var(--brass);font-size:13px;font-weight:700}
+.goal .gp{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin:7px 0 5px}
+.goal .gp i{display:block;height:100%;background:var(--brass)}
+.goal .gu{font-size:11.5px;color:var(--dim2);line-height:1.5}
+
+/* ── 월말 결산 ── */
+.mrow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+.mrow .ml{color:var(--dim)}
+.mrow .mv{font-weight:700}
+.award{
+  background:var(--panel2);border-left:2px solid var(--brass);
+  padding:9px 11px;margin-bottom:6px;border-radius:0 var(--r) var(--r) 0
+}
+.award .al{font-size:11px;color:var(--brass);font-weight:700}
+.award .an{font-size:14px;font-weight:700;margin-top:1px}
+.award .ad{font-size:11.5px;color:var(--dim);margin-top:1px}
+
 /* ── 태그 ── */
 .tag{font-size:11px;padding:0 5px;border-radius:2px;border:1px solid var(--line2);color:var(--dim);white-space:nowrap;line-height:1.6}
 .tag.g{color:var(--moss);border-color:#3E5B33}
@@ -270,7 +382,159 @@ const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
 const fmt=n=>Math.round(n).toLocaleString('ko-KR');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const sgn=n=>(n>=0?'+':'')+Math.round(n);
+// 받침 유무에 따라 조사를 고른다. "윤지호이(가)" 같은 표기를 없앤다.
+function jong(w){
+  if(!w)return false;
+  const c=String(w).charCodeAt(String(w).length-1);
+  if(c<0xAC00||c>0xD7A3)return false;
+  return (c-0xAC00)%28!==0;
+}
+const ga=w=>w+(jong(w)?'이':'가');
+const eul=w=>w+(jong(w)?'을':'를');
+const neun=w=>w+(jong(w)?'은':'는');
+const gwa=w=>w+(jong(w)?'과':'와');
+function ro(w){
+  const c=String(w).charCodeAt(String(w).length-1);
+  if(c<0xAC00||c>0xD7A3)return w+'로';
+  const j=(c-0xAC00)%28;
+  return w+((j===0||j===8)?'로':'으로');
+}
 function stars(n,max){max=max||5;let h='';for(let i=1;i<=max;i++)h+=i<=n?'★':'<span class="u">★</span>';return '<span class="stars">'+h+'</span>';}
+
+/* ───────── 헌터 관계 · 팀 숙련도 ───────── */
+// 같은 조합을 계속 쓰면 호흡이 맞고, 사이 나쁜 둘을 붙이면 성공률이 떨어진다.
+// "에이스를 묶어둘까, 경험을 나눠줄까"를 실제 의사결정으로 만드는 층.
+function relKey(a,b){return a<b?a+'~'+b:b+'~'+a;}
+function rel(a,b){return (G.rel&&G.rel[relKey(a,b)])||0;}
+function addRel(a,b,v){
+  if(a===b)return;
+  G.rel=G.rel||{};const k=relKey(a,b);
+  const cur=G.rel[k]||0;
+  // 친해질수록 더 친해지기 어렵고, 틀어질수록 더 틀어지기 쉽다
+  if(v>0)v*=Math.max(0.15,1-Math.max(0,cur)/130);
+  else    v*=1+Math.max(0,-cur)/240;
+  G.rel[k]=cl(cur+v,-100,100);
+}
+function relLabel(v){
+  if(v>=70)return['둘도 없는 사이','var(--moss)'];
+  if(v>=40)return['신뢰','var(--moss)'];
+  if(v>=15)return['호의','#8FA0A8'];
+  if(v<=-60)return['원수','var(--blood)'];
+  if(v<=-35)return['불화','var(--blood)'];
+  if(v<=-15)return['껄끄러움','#C79B96'];
+  return['보통','var(--dim2)'];
+}
+// 성격 궁합으로 초기 관계를 씨뿌린다
+const CLASH={'공격적':['소심함','신중함'],'오만함':['자유분방','성실함'],
+             '소심함':['공격적','오만함'],'자유분방':['오만함','신중함'],
+             '신중함':['공격적','자유분방'],'성실함':['오만함']};
+function seedRel(h){
+  G.hunters.forEach(o=>{
+    if(o.id===h.id)return;
+    let v=ri(-16,16);
+    if((CLASH[h.pers]||[]).includes(o.pers))v-=ri(16,32);
+    if(h.pers===o.pers)v+=ri(4,12);
+    if(h.cls===o.cls)v+=ri(0,6);
+    if(h.traits.includes('오만함')||o.traits.includes('고집'))v-=ri(0,8);
+    addRel(h.id,o.id,v);
+  });
+}
+function teamKey(ids){return ids.slice().sort((a,b)=>a-b).join('.');}
+function teamOf(ids){return (G.teams&&G.teams[teamKey(ids)])||{n:0,last:0};}
+function teamLv(n){return n>=15?3:n>=8?2:n>=3?1:0;}
+const TEAMB=[0,3,5,7];
+function bumpTeam(ids,d){
+  if(ids.length<2)return;
+  G.teams=G.teams||{};
+  const k=teamKey(ids), t=G.teams[k]||{n:0,last:0};
+  t.n=cl(t.n+d,0,40); t.last=G.day;
+  G.teams[k]=t;
+}
+// 파티의 관계·숙련도 요약
+function partySync(party){
+  if(party.length<2)return null;
+  let sum=0,pairs=0,worst=null,best=null;
+  for(let i=0;i<party.length;i++)for(let j=i+1;j<party.length;j++){
+    const v=rel(party[i].id,party[j].id);
+    sum+=v;pairs++;
+    if(!worst||v<worst.v)worst={v,a:party[i],b:party[j]};
+    if(!best||v>best.v)best={v,a:party[i],b:party[j]};
+  }
+  const t=teamOf(party.map(h=>h.id));
+  return {avg:sum/pairs,worst,best,team:t,lv:teamLv(t.n)};
+}
+
+/* ───────── 문장(紋章) ───────── */
+// 헌터마다 고유한 문장을 id에서 결정론적으로 생성한다.
+// 명단이 전부 같은 이모지로 보이던 문제를 없애고, 각 헌터에 시각적 정체성을 준다.
+function hrng(seed){
+  let x=(seed>>>0)||1;
+  return ()=>{x^=x<<13;x>>>=0;x^=x>>>17;x^=x<<5;x>>>=0;return x/4294967296;};
+}
+const TINCT=['#8C332C','#2F5680','#3F6438','#7C6320','#4B3C6E','#6A452C','#2C6560','#692F55','#5A5F6B','#7A3A22'];
+const CHARGE=['star','crescent','sword','eye','rose','tower','fang','flame','drop','bolt'];
+function chargePath(c){
+  switch(c){
+    case 'star':    return '<path d="M16 8.5l2.3 4.9 5.2.7-3.8 3.6 1 5.2-4.7-2.5-4.7 2.5 1-5.2-3.8-3.6 5.2-.7z"/>';
+    case 'crescent':return '<path d="M21.5 9a8 8 0 100 13 9.6 9.6 0 010-13z"/>';
+    case 'sword':   return '<path d="M15 7h2v13h-2z"/><path d="M11 19h10v2H11z"/><path d="M15 21h2v4h-2z"/>';
+    case 'eye':     return '<path d="M6 16c4-5.5 16-5.5 20 0-4 5.5-16 5.5-20 0z" fill="none" stroke-width="2"/><circle cx="16" cy="16" r="3"/>';
+    case 'rose':    return '<circle cx="16" cy="16" r="3.2"/><path d="M16 7c3 3 3 5 0 6s-3-3 0-6zM25 16c-3 3-5 3-6 0s3-3 6 0zM16 25c-3-3-3-5 0-6s3 3 0 6zM7 16c3-3 5-3 6 0s-3 3-6 0z"/>';
+    case 'tower':   return '<path d="M11 24V12h2v-2h2v2h2v-2h2v2h2v12z"/><path d="M14 18h4v6h-4z" fill="#0006"/>';
+    case 'fang':    return '<path d="M9 8h14l-3 8-4 9-4-9z"/>';
+    case 'flame':   return '<path d="M16 6c4 5 7 7 7 12a7 7 0 11-14 0c0-3 2-4 3-7 1 3 2 4 3 2 1-2 0-4 1-7z"/>';
+    case 'drop':    return '<path d="M16 6c4 6 7 8 7 12a7 7 0 11-14 0c0-4 3-6 7-12z"/>';
+    default:        return '<path d="M18 6l-8 12h5l-2 8 9-13h-5z"/>';
+  }
+}
+function sigil(h,sz){
+  sz=sz||30;
+  const r=hrng(h.id*7919+2654);
+  const a=TINCT[Math.floor(r()*TINCT.length)];
+  let b=TINCT[Math.floor(r()*TINCT.length)]; if(b===a)b=TINCT[(TINCT.indexOf(a)+3)%TINCT.length];
+  const div=Math.floor(r()*4);
+  const ch=CHARGE[Math.floor(r()*CHARGE.length)];
+  const col=gradeOf(h)[1];
+  const uid='sg'+h.id;
+  let field;
+  if(div===0)      field=`<rect x="0" y="0" width="16" height="36" fill="${a}"/><rect x="16" y="0" width="16" height="36" fill="${b}"/>`;
+  else if(div===1) field=`<rect x="0" y="0" width="32" height="17" fill="${a}"/><rect x="0" y="17" width="32" height="19" fill="${b}"/>`;
+  else if(div===2) field=`<rect width="32" height="36" fill="${a}"/><path d="M0 36L32 0v36z" fill="${b}"/>`;
+  else             field=`<rect width="32" height="36" fill="${a}"/>`;
+  const dim=h.injury?'<rect width="32" height="36" fill="#0B0E11" opacity=".45"/>':'';
+  return `<svg class="sig" width="${sz}" height="${Math.round(sz*1.125)}" viewBox="-1 -1 34 38" aria-hidden="true">
+    <defs><clipPath id="${uid}"><path d="M1 1h30v17c0 11-8 15-15 17C9 33 1 29 1 18z"/></clipPath></defs>
+    <g clip-path="url(#${uid})">${field}${dim}
+      <g fill="#EDE7DA" fill-opacity=".92" stroke="#EDE7DA" stroke-opacity=".92">${chargePath(ch)}</g></g>
+    <path d="M1 1h30v17c0 11-8 15-15 17C9 33 1 29 1 18z" fill="none" stroke="${col}" stroke-width="2"/>
+  </svg>`;
+}
+
+/* ───────── 성장 그래프 ───────── */
+function sparkline(pts,w,h,col,fill){
+  if(!pts||pts.length<2)return '';
+  const xs=pts.map(p=>p.d),ys=pts.map(p=>p.p);
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const dx=(x1-x0)||1, dy=(y1-y0)||1;
+  const P=pts.map(p=>[( (p.d-x0)/dx*(w-2)+1 ).toFixed(1),( h-2-(p.p-y0)/dy*(h-4) ).toFixed(1)]);
+  const line=P.map((c,i)=>(i?'L':'M')+c[0]+' '+c[1]).join(' ');
+  const area=fill?`<path d="${line} L${P[P.length-1][0]} ${h} L${P[0][0]} ${h} Z" fill="${col}" opacity=".13"/>`:'';
+  const last=P[P.length-1];
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:${h}px">
+    ${area}<path d="${line}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="2.2" fill="${col}"/></svg>`;
+}
+function growthChart(h){
+  const pts=(h.hist||[]).slice(-40);
+  if(pts.length<2)return `<div class="chart"><div class="ct"><span>전투력 추이</span><b>${power(h)}</b></div>
+    <div class="empty" style="padding:12px 0">기록이 쌓이면 성장 곡선이 나타납니다.</div></div>`;
+  const lo=Math.min(...pts.map(p=>p.p)),hi=Math.max(...pts.map(p=>p.p));
+  const span=pts[pts.length-1].d-pts[0].d;
+  return `<div class="chart">
+    <div class="ct"><span>전투력 추이 · 최근 ${span}일</span><b>${power(h)} <span class="pos" style="font-size:11px">${sgn(hi-lo>0?pts[pts.length-1].p-pts[0].p:0)}</span></b></div>
+    ${sparkline(pts,240,54,'#C9A227',1)}
+    <div class="ct" style="margin:2px 0 0"><span>${pts[0].d}일차 · ${lo}</span><span>최고 ${hi}</span></div></div>`;
+}
 
 /* ───────── 데이터 정의 ───────── */
 const SUR=['김','이','박','최','정','강','조','윤','장','임','한','서','신','권','황','안','송','류','전','홍','오','문','배','백'];
@@ -323,21 +587,80 @@ const QT={
 };
 const REPN={combat:'토벌 명성',guard:'호위·구조 명성',explore:'탐색·채집 명성',arcane:'조사·마법 명성'};
 
+const MAPPOS={
+ '서리 협곡':[46,11],'북부 삼림':[26,20],'붉은 절벽':[83,22],
+ '고사목 늪':[62,33],'폐광 3구역':[15,41],'옛 성터':[74,53],
+ '안개 호수':[41,58],'국경 관문':[13,74],'버려진 수도원':[64,80],'검은 늪지':[31,88],
+};
 const MOB=['고블린','늑대 무리','오크','도적단','거대 거미','리자드맨','하피','트롤','오우거','와이번','언데드','슬라임 군체','미노타우로스','바실리스크'];
 const PLACE=['북부 삼림','고사목 늪','폐광 3구역','서리 협곡','옛 성터','붉은 절벽','안개 호수','국경 관문','버려진 수도원','검은 늪지'];
 const NPCN=['상단 행렬','왕실 전령','순례자 무리','약초상','귀족 마차','광부 조합'];
 const HERB=['월광초','화염정석','서리버섯','용의 비늘 조각','마력 결정'];
 
 const HAZ=[
- {n:'예상 밖의 대군',d:'적 규모가 보고보다 큽니다.',pow:1.32,bad:1},
- {n:'마법 생물 혼입',d:'마력 대응이 필요합니다.',add:['mag',62],bad:1},
- {n:'독 지대',      d:'지속 피해가 발생합니다.',add:['hp',66],inj:16,bad:1},
- {n:'함정 다수',    d:'회피 능력이 요구됩니다.',add:['agi',64],bad:1},
- {n:'악천후',      d:'행군이 지연됩니다.',days:1,flat:-9,bad:1},
- {n:'지형 불리',    d:'퇴로가 좁습니다.',flat:-11,inj:10,bad:1},
- {n:'과장된 보고',  d:'실제 위협은 크지 않았습니다.',pow:0.72,bad:0},
- {n:'숨겨진 보물',  d:'미발견 매장물이 있습니다.',rew:1.65,bad:0},
- {n:'현지 협력자',  d:'길잡이를 구할 수 있습니다.',flat:13,bad:0},
+ {n:'예상 밖의 대군',d:'적 규모가 보고보다 큽니다.',pow:1.32,bad:1,
+  s:'보고서에 적힌 수의 배는 됐습니다. 물러설 곳이 없었습니다.'},
+ {n:'마법 생물 혼입',d:'마력 대응이 필요합니다.',add:['mag',62],bad:1,
+  s:'평범한 짐승이 아니었습니다. 칼이 잘 들지 않았습니다.'},
+ {n:'독 지대',      d:'지속 피해가 발생합니다.',add:['hp',66],inj:16,bad:1,
+  s:'늪에서 올라온 독기가 폐를 태웠습니다. 오래 버틸 수 없었습니다.'},
+ {n:'함정 다수',    d:'회피 능력이 요구됩니다.',add:['agi',64],bad:1,
+  s:'길목마다 함정이 깔려 있었습니다. 한 걸음마다 발밑을 살펴야 했습니다.'},
+ {n:'악천후',      d:'행군이 지연됩니다.',days:1,flat:-9,bad:1,
+  s:'폭우가 쏟아졌습니다. 시야가 열 걸음도 되지 않았습니다.'},
+ {n:'지형 불리',    d:'퇴로가 좁습니다.',flat:-11,inj:10,bad:1,
+  s:'협곡으로 몰렸습니다. 물러날 길이 없었습니다.'},
+ {n:'과장된 보고',  d:'실제 위협은 크지 않았습니다.',pow:0.72,bad:0,
+  s:'막상 가보니 소문만큼은 아니었습니다. 겁먹은 주민들의 과장이었습니다.'},
+ {n:'숨겨진 보물',  d:'미발견 매장물이 있습니다.',rew:1.65,bad:0,
+  s:'무너진 석실에서 아무도 손대지 않은 물건들이 나왔습니다.'},
+ {n:'현지 협력자',  d:'길잡이를 구할 수 있습니다.',flat:13,bad:0,
+  s:'지리를 아는 사냥꾼이 길을 안내해줬습니다.'},
+];
+// 원정 중 한 번 발생하는 현장 판단.
+// req가 붙은 선택지는 해당 능력치를 갖춘 파티에게만 열린다 — 능력치가 경험으로 연결되는 지점.
+const FIELD=[
+ {n:'갈림길',ic:'🪧',d:'지도에 없는 갈림길이 나왔습니다. 어느 쪽으로 갈지 결정해야 합니다.',
+  o:[{t:'험한 지름길로 간다',d:'하루 단축, 부상 위험 증가',m:{days:-1,inj:14},s:'험한 길을 택해 하루를 벌었습니다.'},
+     {t:'우회로로 돌아간다',d:'하루 추가, 안전 확보',m:{days:1,inj:-14,flat:4},s:'멀리 돌아갔지만 아무도 다치지 않았습니다.'},
+     {t:'절벽을 타고 넘는다',d:'단축과 안전을 모두',req:{k:'agi',v:66,m:'best'},m:{days:-1,flat:4},s:'절벽을 타고 넘어 시간과 안전을 모두 챙겼습니다.'}]},
+
+ {n:'버려진 야영지',ic:'⛺',d:'누군가 급히 떠난 흔적이 있습니다. 짐이 그대로 남아 있습니다.',
+  o:[{t:'쓸 만한 것만 챙긴다',d:'보상 +25%',m:{rew:1.25},s:'남은 물자를 챙겨 나왔습니다.'},
+     {t:'손대지 않고 지나친다',d:'집중 유지',m:{flat:4},s:'한눈팔지 않고 목표로 향했습니다.'},
+     {t:'구석구석 뒤진다',d:'보상 +55%',req:{k:'luk',v:60,m:'best'},m:{rew:1.55},s:'바닥 아래 숨겨둔 주머니까지 찾아냈습니다.'}]},
+
+ {n:'정체불명의 발자국',ic:'🐾',d:'짐승의 것이 아닌 발자국이 이어져 있습니다.',
+  o:[{t:'추적한다',d:'위험하지만 큰 소득',m:{flat:-7,rew:1.45},s:'발자국을 따라가 예상 밖의 소득을 얻었습니다.'},
+     {t:'우회한다',d:'하루 추가, 안전',m:{days:1,flat:6},s:'괜한 위험을 피해 돌아갔습니다.'},
+     {t:'마력 흔적을 읽는다',d:'정체를 파악해 대비',req:{k:'mag',v:58,m:'best'},m:{flat:12},s:'남은 마력으로 상대의 정체를 미리 알아냈습니다.'}]},
+
+ {n:'부상당한 여행자',ic:'🩸',d:'길가에 쓰러진 사람이 있습니다. 의뢰와는 무관합니다.',
+  o:[{t:'응급처치만 하고 간다',d:'하루 추가',m:{days:1},loy:3,s:'응급처치를 해주고 길을 재촉했습니다.'},
+     {t:'모른 척 지나친다',d:'일정 유지, 헌터들이 지켜본다',m:{flat:2},loy:-6,s:'그냥 지나쳤습니다. 헌터들의 표정이 좋지 않았습니다.'},
+     {t:'업고 마을까지 데려다준다',d:'평판과 사기',req:{k:'hp',v:64,m:'avg'},m:{days:1,rew:1.2},loy:8,rep:4,
+      s:'마을까지 업고 갔습니다. 주민들이 길드 이름을 기억했습니다.'}]},
+
+ {n:'폭우',ic:'🌧️',d:'하늘이 무너질 듯 쏟아집니다. 시야가 거의 없습니다.',
+  o:[{t:'야영하고 기다린다',d:'하루 추가, 안전',m:{days:1,inj:-12},s:'비가 그칠 때까지 기다렸습니다.'},
+     {t:'그대로 강행한다',d:'일정 유지, 위험 증가',m:{flat:-9,inj:16},s:'빗속을 뚫고 강행군했습니다.'},
+     {t:'밤새 이동한다',d:'체력으로 밀어붙인다',req:{k:'hp',v:68,m:'avg'},m:{flat:3},s:'밤새 걸어 예정대로 도착했습니다.'}]},
+
+ {n:'적의 정찰대',ic:'👁️',d:'우리를 아직 발견하지 못한 정찰조가 앞에 있습니다.',
+  o:[{t:'선제 기습한다',d:'주도권 확보, 부상 위험',m:{flat:9,inj:12},s:'먼저 덮쳐 주도권을 잡았습니다.'},
+     {t:'숨어서 보낸다',d:'하루 추가, 안전',m:{days:1,flat:5},s:'숨죽여 보내고 뒤를 따랐습니다.'},
+     {t:'소리 없이 제거한다',d:'완전한 기습',req:{k:'agi',v:70,m:'best'},m:{flat:14},s:'소리 하나 내지 않고 정리했습니다.'}]},
+
+ {n:'봉인된 문',ic:'🚪',d:'낡은 봉인이 걸린 석문이 있습니다. 뒤에 무언가 있는 듯합니다.',
+  o:[{t:'힘으로 부순다',d:'보상 +30%, 부상 위험',m:{rew:1.3,inj:12},s:'문을 부수고 들어갔습니다.'},
+     {t:'건드리지 않는다',d:'괜한 위험 회피',m:{flat:3},s:'봉인은 그대로 두었습니다.'},
+     {t:'봉인을 해제한다',d:'보상 +70%',req:{k:'mag',v:62,m:'best'},m:{rew:1.7,flat:4},s:'봉인을 정석대로 풀어 안전하게 열었습니다.'}]},
+
+ {n:'파티 내 말다툼',ic:'💢',d:'긴장이 쌓인 끝에 두 사람이 언성을 높였습니다.',party:2,
+  o:[{t:'길드장 권한으로 정리한다',d:'즉시 진정, 앙금은 남음',m:{flat:3},relv:-4,s:'명령으로 눌렀습니다. 앙금은 남았습니다.'},
+     {t:'둘이 풀도록 둔다',d:'결과는 운에 맡긴다',m:{flat:-6},relv:8,s:'밤새 다투더니 아침에는 같이 밥을 먹고 있었습니다.'},
+     {t:'인솔자가 중재한다',d:'관계 개선과 사기 회복',req:{t:'카리스마'},m:{flat:8},relv:16,
+      s:'인솔자가 능숙하게 둘을 갈라놓고 다시 붙였습니다.'}]},
 ];
 const INJ={
  light:{n:'경상',pen:.16,d:[3,6],out:0},
@@ -362,6 +685,23 @@ const FAC={
  scout:{n:'정찰단',d:'정보 정확도',v:[30,22,15,8,0],c:[0,2600,10000,38000,125000]},
  dorm :{n:'숙소',  d:'정원·피로 회복',v:[6,8,10,13,16],c:[0,2200,8500,32000,105000]},
 };
+const THREATS=[
+ {n:'몬스터 대군 집결',ic:'🐺',t:'토벌',rep:'combat',
+  d:(pl,mb)=>`${pl}에 ${mb} 대군이 모이고 있습니다. 기한 안에 막지 못하면 인근 마을이 약탈당합니다.`,
+  fail:'마을이 약탈당했습니다. 왕국이 우리 길드의 무능을 문제삼고 있습니다.'},
+ {n:'역병 확산',ic:'☠️',t:'조사',rep:'arcane',
+  d:(pl)=>`${pl} 일대에 원인 불명의 역병이 번지고 있습니다. 마력 대응이 가능한 헌터가 필요합니다.`,
+  fail:'역병이 도시로 번졌습니다. 길드가 책임을 추궁당하고 있습니다.'},
+ {n:'집단 실종',ic:'🕯️',t:'구조',rep:'guard',
+  d:(pl)=>`${pl}에서 사람들이 연달아 사라지고 있습니다. 시간이 지날수록 생존 가능성이 떨어집니다.`,
+  fail:'수색을 포기했습니다. 유족들이 길드 앞에 모였습니다.'},
+ {n:'상단 습격 예고',ic:'📯',t:'호위',rep:'guard',
+  d:(pl)=>`${pl}을 지나는 대상단이 습격 예고를 받았습니다. 상인 조합이 호위를 의뢰했습니다.`,
+  fail:'상단이 전멸했습니다. 상인 조합이 우리 길드와 거래를 끊었습니다.'},
+ {n:'게이트 균열',ic:'🌀',t:'탐색',rep:'explore',
+  d:(pl)=>`${pl}의 게이트가 불안정합니다. 붕괴 전에 내부를 확인해야 합니다.`,
+  fail:'게이트가 붕괴하며 주변 지형이 무너졌습니다.'},
+];
 const GRADES=[['F',0],['E',70],['D',200],['C',450],['B',850],['A',1400],['S',2200]];
 const RIVALN=['붉은 늑대','황금 상단','백색 성녀회','검은 까마귀','철벽 형제단'];
 
@@ -379,6 +719,9 @@ function newGame(){
     active:[], settleCache:[],
     fac:{train:1,heal:1,rec:1,scout:1,dorm:1},
     log:[], queue:[], moves:[], nextId:1, done:0, donePts:0, earned:0,
+    threat:null, nextThreat:9, goal:null, thWin:0, thFail:0, goalWin:0, avgQ:0, avgH:null,
+    region:{}, hist:[], rel:{}, teams:{},
+    mo:newMonth(), month:1,
     rivals:RIVALN.map((n,i)=>({n,p:520+i*95+ri(-50,50)})),
     lastRecruit:1, seenIntro:false,
   };
@@ -392,9 +735,11 @@ function newGame(){
   const rook=mkHunter({age:17,lv:1,pot:ri(84,95),cls:pick(['마법사','궁수']),traits:[pick(['천재','학습광'])],pers:pick(['신중함','자유분방'])});
   rook.contract=300; rook.salary=Math.round(rook.salary*.5);
   G.hunters=[vet,mid,prob,rook];
+  G.hunters.forEach(h=>seedRel(h));
   G.stock=['w1','a1'];
   for(let i=0;i<5;i++) G.quests.push(mkQuest());
   rollCands();
+  rollGoal();
   push('길드를 인수했습니다. 게시판에 의뢰 5건이 걸려 있습니다.','info');
 }
 
@@ -432,7 +777,7 @@ function mkHunter(o){
     loyalty:o.loyalty!=null?o.loyalty:ri(55,78),
     contract:o.contract||ri(80,220),
     salary:Math.round((40+pw0*2.4+pw0*pw0/90)*(traits.includes('탐욕')?1.45:1)),
-    offer:null, quests:0, wins:0, retiring:false,
+    offer:null, quests:0, wins:0, retiring:false, hist:[],
   };
 }
 function grow(h,silent){
@@ -494,6 +839,109 @@ function myPower(){
 }
 function avail(h){return !h.busy && (!h.injury||h.injury.t==='light');}
 
+/* ───────── 위협 ───────── */
+function newMonth(){
+  return {income:0,expense:0,quests:0,fails:0,contrib:{},newbies:[],
+          rep:{combat:0,guard:0,explore:0,arcane:0},pts:0,rank:0,threats:0,threatWin:0,hard:0,h3:0,h4:0};
+}
+// 위협은 길드 점수가 아니라 "지금 우리 최정예 파티"를 기준으로 만든다.
+// 그래야 항상 A팀을 꺼내야 하는 싸움이 되고, 손도 못 대는 벽이 되지 않는다.
+function bestParty(){
+  const n=maxParty();
+  const l=G.hunters.map(power).sort((a,b)=>b-a).slice(0,n);
+  return {sum:l.reduce((a,b)=>a+b,0)||60,n:l.length||1};
+}
+function bestStat(k){
+  const n=maxParty();
+  if(k==='mag')return Math.max(45,...G.hunters.map(h=>eff(h,'mag')));
+  const l=G.hunters.map(h=>eff(h,k)).sort((a,b)=>b-a).slice(0,n);
+  return l.length?l.reduce((a,b)=>a+b,0)/l.length:45;
+}
+function spawnThreat(){
+  const T=pick(THREATS);
+  const pl=pick(PLACE), mb=pick(MOB);
+  const bp=bestParty();
+  const reqPow=Math.round(bp.sum*(0.82+rnd()*0.24));   // 정예 파티의 82~106%
+  const LAD=[42,92,160,245,345];
+  let d=2; LAD.forEach((v,i)=>{ if(reqPow>=v*0.9)d=Math.max(2,i+1); });
+  const lead=ri(7,12);                       // 예고 후 발생까지
+  const req={};
+  QT[T.t].st.forEach((k,i)=>{ req[k]=Math.round(bestStat(k)*(i?0.88:1.0)); });
+  const days=cl([1,2,2,3,4][d-1],1,4);
+  const reward=Math.round(reqPow*(11+d*3.2)*2.4/10)*10;
+  const q={
+    id:G.nextId++, name:`${T.n} — ${pl}`, type:T.t, d, reqPow, req, days, reward,
+    place:pl, mob:mb, npc:pick(NPCN), herb:pick(HERB),
+    hz:[], scouted:true, deadline:G.day+lead,
+    off:0, offRoll:100, threat:true,
+  };
+  G.quests.unshift(q);
+  G.threat={
+    qid:q.id, name:T.n, ic:T.ic, place:pl, day:G.day+lead, rep:T.rep,
+    desc:T.d(pl,mb), fail:T.fail, d, done:false, reward,
+    penGold:cl(0.12+d*0.03,0.12,0.28), penRep:8+d*3,
+  };
+  G.mo.threats++;
+  push(`${T.ic} 위기 예고 — ${T.n} (${lead}일 뒤)`,'bad');
+  G.queue.push({type:'threat'});
+}
+function fireThreat(){
+  const t=G.threat; if(!t||t.done)return;
+  const loss=Math.round(G.gold*t.penGold);
+  G.gold=Math.max(0,G.gold-loss);
+  G.rep[t.rep]=cl(G.rep[t.rep]-t.penRep,0,100);
+  G.hunters.forEach(h=>h.loyalty=cl(h.loyalty-5,0,100));
+  const rv=pick(G.rivals); rv.p=Math.round(rv.p*1.05);
+  G.quests=G.quests.filter(q=>q.id!==t.qid);
+  G.active=(G.active||[]).filter(q=>{
+    if(q.id!==t.qid)return true;
+    q.sent.ids.forEach(id=>{const h=G.hunters.find(x=>x.id===id);if(h){h.busy=null;h.party=null;}});
+    return false;
+  });
+  t.done=true; t.failed=true; t.loss=loss; t.rival=rv.n; G.thFail=(G.thFail||0)+1;
+  push(`${t.ic} ${t.name} 대응 실패 — 배상금 ${fmt(loss)}G, ${REPN[t.rep]} -${t.penRep}`,'bad');
+  G.queue.push({type:'threatFail'});
+}
+
+/* ───────── 이번 달 과제 ───────── */
+function rollGoal(prev){
+  const gp=guildPts();
+  if(prev){
+    G.avgQ=G.avgQ?G.avgQ*0.6+(prev.quests-prev.fails)*0.4:(prev.quests-prev.fails);
+    G.avgH=G.avgH!=null?G.avgH*0.6+(prev.h3||0)*0.4:(prev.h3||0);
+  }
+  const pq=G.avgQ||6, p3=G.avgH!=null?G.avgH:2;
+  const kinds=[
+    ()=>{const n=cl(Math.round(pq*0.95)+1,5,40);
+      return {k:'quests',t:n,c:0,txt:`의뢰 ${n}건 성공`,rw:Math.round(700+gp*2.4)};},
+    ()=>{const k=pick(Object.keys(REPN));
+      const up=Math.max(3,Math.round((100-G.rep[k])*0.08)+ri(0,2));   // 실측: 한 달에 명성 +6~8이 현실
+      const n=Math.round(cl(G.rep[k]+up,10,100));
+      return {k:'rep',sub:k,t:n,c:Math.round(G.rep[k]),txt:`${REPN[k]} ${n} 달성`,rw:Math.round(900+gp*2.8)};},
+    ()=>{const m=G.hunters.length?Math.max(...G.hunters.map(power)):40;const n=m+ri(1,3);
+      return {k:'power',t:n,c:0,txt:`전투력 ${n} 헌터 보유`,rw:Math.round(1000+gp*2.6)};},
+    ()=>{const min=gp>1800?4:3;
+      const n=cl(Math.round(p3*(min>=4?0.45:0.8))+1,2,14);
+      return {k:'hard',t:n,c:0,min,txt:`★${min} 이상 의뢰 ${n}건 성공`,rw:Math.round(1200+gp*3.2)};},
+  ];
+  G.goal=pick(kinds)();
+  G.goal.done=false;
+}
+function goalProgress(){
+  const g=G.goal; if(!g)return 0;
+  if(g.k==='rep')return cl(Math.round(G.rep[g.sub])/g.t,0,1);
+  if(g.k==='power'){const m=G.hunters.length?Math.max(...G.hunters.map(power)):0;return cl(m/g.t,0,1);}
+  return cl(g.c/g.t,0,1);
+}
+function checkGoal(){
+  const g=G.goal; if(!g||g.done)return;
+  if(goalProgress()>=1){
+    g.done=true; G.gold+=g.rw; G.mo.income+=g.rw; G.goalWin=(G.goalWin||0)+1;
+    G.donePts=(G.donePts||0)+12;
+    push(`🎯 이달의 과제 달성 — ${g.txt} (보상 ${fmt(g.rw)}G)`,'good');
+  }
+}
+
 /* ───────── 의뢰 생성 ───────── */
 function mkQuest(){
   const gp=guildPts();
@@ -514,15 +962,17 @@ function mkQuest(){
   const hz=[];
   const hn=chance(30+d*8)?(chance(22)?2:1):0;
   for(let i=0;i<hn;i++){const h=pick(HAZ);if(!hz.includes(h))hz.push(h);}
+  const place=pick(PLACE), mob=pick(MOB), npc=pick(NPCN), herb=pick(HERB);
   let name;
-  if(type==='토벌')name=pick(PLACE)+' '+pick(MOB)+' 토벌';
-  else if(type==='호위')name=pick(NPCN)+' 호위';
-  else if(type==='구조')name=pick(PLACE)+' 실종자 수색';
-  else if(type==='탐색')name=pick(PLACE)+' 탐색';
-  else if(type==='채집')name=pick(HERB)+' 채집';
-  else name=pick(PLACE)+' '+pick(MOB)+' 흔적 조사';
+  if(type==='토벌')name=place+' '+mob+' 토벌';
+  else if(type==='호위')name=npc+' 호위';
+  else if(type==='구조')name=place+' 실종자 수색';
+  else if(type==='탐색')name=place+' 탐색';
+  else if(type==='채집')name=herb+' 채집';
+  else name=place+' '+mob+' 흔적 조사';
   return {
     id:G.nextId++, name, type, d, reqPow, req, days, reward,
+    place, mob, npc, herb,
     hz, scouted:false, deadline:G.day+days+ri(3,8),
     off:chance(50)?1:-1, offRoll:rnd()*100,   // 추정 난이도는 고정. 정찰단을 올리면 정확해진다
   };
@@ -544,6 +994,9 @@ function evaluate(q,party,reveal){
   const L=[];
   const useHz=(reveal||q.scouted)?q.hz:[];
   let powMul=1,flat=0,extraReq={},injAdd=0,rewMul=1,dayAdd=0;
+  if(reveal&&q.mods&&q.mods.label){
+    flat+=q.mods.flat; dayAdd+=q.mods.days; injAdd+=q.mods.inj; rewMul*=q.mods.rew;
+  }
   useHz.forEach(h=>{
     if(h.pow)powMul*=h.pow;
     if(h.flat)flat+=h.flat;
@@ -584,6 +1037,20 @@ function evaluate(q,party,reveal){
   if(party.length>1){
     const lines=new Set(party.map(h=>CLASSES[h.cls].line));
     if(lines.size>=2){p+=6;L.push({l:'전위·후위 균형 편성',v:'+6',k:'p'});}
+    const sy=partySync(party);
+    if(sy){
+      if(Math.abs(sy.avg)>=14){
+        const rb=cl(sy.avg*0.10,-10,9);
+        p+=rb;
+        L.push({l:sy.avg>0?`팀 신뢰 (평균 ${Math.round(sy.avg)})`
+                          :`팀 내 불화 (${sy.worst.a.name}↔${sy.worst.b.name} ${Math.round(sy.worst.v)})`,
+                v:sgn(rb),k:rb>=0?'p':'n'});
+      }
+      if(sy.lv){
+        p+=TEAMB[sy.lv];
+        L.push({l:`합동 숙련도 Lv.${sy.lv} (${sy.team.n}회 동행)`,v:sgn(TEAMB[sy.lv]),k:'p'});
+      }
+    }
   }
   // 성격
   party.forEach(h=>{
@@ -601,11 +1068,21 @@ function evaluate(q,party,reveal){
     else if(h.pow){L.push({l:`${h.bad?'⚠️':'✅'} ${h.n} (요구 전투력 ×${h.pow})`,v:'반영됨',k:h.bad?'n':'p'});}
     else if(h.rew){L.push({l:`✅ ${h.n} (보상 ×${h.rew})`,v:'반영됨',k:'p'});}
   });
+  if(reveal&&q.mods&&q.mods.label){
+    const bits=[];
+    if(q.mods.days)bits.push('소요일 '+sgn(q.mods.days));
+    if(q.mods.inj)bits.push('부상 '+sgn(q.mods.inj)+'%');
+    if(q.mods.rew!==1)bits.push('보상 ×'+q.mods.rew);
+    L.push({l:`현장 판단: ${q.mods.label}${bits.length?' ('+bits.join(', ')+')':''}`,
+            v:q.mods.flat?sgn(q.mods.flat):'반영됨',k:q.mods.flat>=0?'p':'n'});
+  }
   if(!q.scouted&&!reveal){
     L.push({l:'정찰 미실시 — 알려지지 않은 변수 존재',v:'?',k:'w'});
   }
   let days=q.days+dayAdd;
   if(party.some(h=>h.traits.includes('속공')))days=Math.max(1,days-1);
+  const _sy=partySync(party);
+  if(_sy&&_sy.lv>=3)days=Math.max(1,days-1);
   return {p:cl(Math.round(p),3,96), L, reqPow, reqs, injAdd, rewMul, days, unknown:!q.scouted&&q.hz.length>0};
 }
 
@@ -645,11 +1122,164 @@ function dispatch(q,party,bribe){
     h.party=party.map(x=>x.id);
   });
   q.sent={ids:party.map(h=>h.id),start:G.day,end:G.day+ev.days,est:ev.p,bribe:bribe||0};
+  q.mods={flat:0,days:0,inj:0,rew:1,label:null,story:null};
+  if(ev.days>=2&&chance(66)){    // 하루짜리 심부름엔 현장 판단이 없다
+    const pool=FIELD.filter(f=>!f.party||party.length>=f.party);
+    if(pool.length)q.field={fid:FIELD.indexOf(pick(pool)),
+      day:G.day+cl(Math.floor(ev.days/2),1,ev.days-1),done:false};
+  }
   if(bribe)G.gold-=bribe;
   G.quests=G.quests.filter(x=>x.id!==q.id);
   G.active=G.active||[];
   G.active.push(q);
   push(`${party.map(h=>h.name).join(', ')} → ${q.name} (${ev.days}일)`,'info');
+}
+
+/* ───────── 지도 ───────── */
+function mapHTML(){
+  const act=(G.active||[]);
+  const th=G.threat&&!G.threat.done?G.threat:null;
+  let mk='';
+  // 길드 본부
+  mk+=`<div class="mk hq" style="left:48%;top:44%"><span class="dot"></span><span class="lb">길드</span></div>`;
+  for(const nm in MAPPOS){
+    const [x,y]=MAPPOS[nm];
+    const q=G.quests.find(z=>z.place===nm&&!(th&&z.id===th.qid));
+    const isT=th&&th.place===nm;
+    const onGoing=act.some(z=>z.place===nm);
+    const vis=(G.region&&G.region[nm])||0;
+    let cls='',lab=nm,click='';
+    if(isT){cls='t';lab=nm;click=` data-act="quest" data-id="${th.qid}"`;}
+    else if(onGoing){cls='on';}
+    else if(q){cls='q';click=` data-act="quest" data-id="${q.id}"`;}
+    const op=cls?1:cl(0.30+vis*0.06,0.30,0.95);
+    mk+=`<button class="mk ${cls}" style="left:${x}%;top:${y}%;opacity:${op}"${click}>
+      <span class="dot"></span><span class="lb">${esc(lab)}</span></button>`;
+  }
+  return `<div class="map">
+    <svg viewBox="0 0 160 110" preserveAspectRatio="none" aria-hidden="true">
+      <rect width="160" height="110" fill="#131A1E"/>
+      <path d="M0 24 Q28 12 52 20 T104 14 T160 26 L160 0 L0 0Z" fill="#18232A"/>
+      <path d="M0 78 Q34 68 60 76 T118 70 T160 82 L160 110 L0 110Z" fill="#161F25"/>
+      <ellipse cx="66" cy="60" rx="26" ry="12" fill="#16242B"/>
+      <path d="M96 44 L112 60 L80 60Z" fill="#1B262C"/>
+      <path d="M118 30 L134 52 L102 52Z" fill="#1B262C"/>
+      <g stroke="#202B33" stroke-width=".6" fill="none">
+        <path d="M0 40 Q40 34 80 42 T160 38"/><path d="M0 58 Q40 52 80 60 T160 56"/>
+        <path d="M0 94 Q40 88 80 96 T160 92"/>
+      </g>
+      <rect width="160" height="110" fill="none" stroke="#222E36" stroke-width="1"/>
+    </svg>${mk}</div>
+  <div class="mlg">
+    <span><i style="background:var(--brass)"></i>의뢰 있음</span>
+    <span><i style="background:var(--moss)"></i>원정 중</span>
+    ${th?'<span><i style="background:var(--blood)"></i>위기</span>':''}
+    <span><i style="background:var(--dim2)"></i>지역 밝기 = 활동 실적</span>
+  </div>`;
+}
+
+/* ───────── 길드 추이 ───────── */
+function trendChart(key,label,col,inv){
+  const H=(G.hist||[]).filter(x=>x[key]!=null);
+  if(H.length<2)return '';
+  const pts=H.map(x=>({d:x.m,p:inv?-x[key]:x[key]}));
+  const first=H[0][key],last=H[H.length-1][key];
+  const df=last-first, up=inv?df<0:df>0;
+  return `<div class="chart">
+    <div class="ct"><span>${label} · ${H.length}개월</span>
+      <b>${key==='gold'?fmt(last)+'G':key==='rank'?last+'위':fmt(last)}
+      <span class="${df===0?'tiny':up?'pos':'neg'}" style="font-size:11px">${df===0?'—':(inv?(df<0?'↑'+(-df):'↓'+df):sgn(df))}</span></b></div>
+    ${sparkline(pts,240,46,col,1)}</div>`;
+}
+
+/* ───────── 원정 일지 ───────── */
+// 시뮬레이션 결과에서 서사를 뽑아낸다. 랜덤 장식이 아니라
+// 실제 판정에 쓰인 수치·특성·위험요소가 그대로 문장이 된다.
+function makeStory(q,party,ev,res,inj){
+  const S=[];
+  const add=(d,t,k)=>S.push({d,t,k:k||'info'});
+  const D=ev.days;
+  const P=party.slice().sort((a,b)=>power(b)-power(a));
+  const lead=P[0];
+  const tgt=q.type==='호위'?q.npc:(q.type==='채집'?q.herb:q.mob);
+  const spot=q.place||'현장';
+  const best=k=>P.slice().sort((a,b)=>eff(b,k)-eff(a,k))[0];
+  const has=t=>P.find(h=>h.traits.includes(t));
+
+  // 1일차 — 출발
+  add(1,party.length>1?`${lead.name} 외 ${party.length-1}명이 ${ro(spot)} 출발했습니다.`
+                      :`${ga(lead.name)} 단독으로 ${ro(spot)} 출발했습니다.`);
+  if(!q.scouted)add(1,'사전 정찰 없이 들어갔습니다. 지형도 적의 수도 몰랐습니다.','bad');
+  else if(!q.hz.length)add(1,'정찰 보고대로였습니다. 예상 밖의 변수는 없었습니다.','good');
+
+  // 접근 — 능력치가 문장이 된다
+  const fast=best('agi'), lucky=best('luk');
+  if(D>=2){
+    if(eff(fast,'agi')>=55)add(2,`${ga(fast.name)} 앞서 나가 길을 텄습니다.`,'good');
+    else add(2,'행군이 더뎠습니다. 예정보다 늦게 도착했습니다.');
+    if(has('행운아')&&chance(60))add(2,`${ga(has('행운아').name)} 순찰을 피할 샛길을 찾아냈습니다.`,'good');
+  }
+
+  // 위험 요소 발현
+  let dd=Math.min(D,2);
+  q.hz.forEach(z=>{ add(dd,z.s||z.d,z.bad?'bad':'good'); dd=Math.min(Math.max(1,D-1),dd+1); });
+
+  // 현장 판단
+  if(q.mods&&q.mods.story)add(Math.max(1,Math.min(D,Math.ceil(D/2))),q.mods.story,q.mods.good?'good':'info');
+  // 능력치 미달 지점
+  const weak=Object.keys(ev.reqs).map(k=>{
+    const mine=k==='mag'?Math.max(...P.map(h=>eff(h,'mag')))
+                        :Math.round(P.reduce((a,h)=>a+eff(h,k),0)/P.length);
+    return {k,r:mine/ev.reqs[k],mine};
+  }).sort((a,b)=>a.r-b.r)[0];
+  if(weak&&weak.r<0.92){
+    const W={atk:'공격이 통하지 않았습니다.',def:'방어선이 자꾸 뚫렸습니다.',
+             hp:'체력이 먼저 바닥났습니다.',agi:'움직임을 따라가지 못했습니다.',
+             mag:'마법에 대응할 수단이 없었습니다.',luk:'하는 일마다 어긋났습니다.'};
+    add(Math.max(1,D-1),W[weak.k],'bad');
+  } else if(weak&&weak.r>1.35){
+    add(Math.max(1,D-1),'전력 차이가 분명했습니다. 상대가 되지 않았습니다.','good');
+  }
+
+  // 결전
+  const V={
+    '토벌':{win:n=>`${tgt} ${n}마리를 처치했습니다.`,lose:'포위당해 물러났습니다.',half:n=>`${n}마리를 처치했지만 우두머리는 놓쳤습니다.`},
+    '호위':{win:()=>`${eul(tgt)} 무사히 목적지까지 인도했습니다.`,lose:'행렬이 흩어졌습니다.',half:()=>'짐 일부를 잃었지만 사람은 지켰습니다.'},
+    '구조':{win:n=>`실종자 ${n}명을 찾아 데려왔습니다.`,lose:'끝내 찾지 못했습니다.',half:n=>`${n}명을 구했지만 전부는 아니었습니다.`},
+    '탐색':{win:()=>`${spot} 전역을 지도에 기록했습니다.`,lose:'길을 잃고 되돌아왔습니다.',half:()=>'절반쯤 돌아보고 철수했습니다.'},
+    '채집':{win:n=>`${tgt} ${n}개를 확보했습니다.`,lose:'쓸 만한 것을 찾지 못했습니다.',half:n=>`${n}개밖에 구하지 못했습니다.`},
+    '조사':{win:()=>`${tgt}의 흔적을 추적해 근원을 밝혀냈습니다.`,lose:'단서가 끊겼습니다.',half:()=>'단서 일부만 확보했습니다.'},
+  }[q.type]||{win:()=>'의뢰를 완수했습니다.',lose:'실패했습니다.',half:()=>'일부만 달성했습니다.'};
+  const n=Math.round(q.d*q.d*ri(3,7)+ri(2,9));
+  if(res==='대성공'){
+    add(D,`${ga(lead.name)} 선두에서 밀어붙였습니다. ${V.win(n)}`,'good');
+    add(D,'예상보다 훨씬 깔끔했습니다.','good');
+  } else if(res==='성공'){
+    add(D,V.win(Math.round(n*0.8)),'good');
+  } else if(res==='절반 성공'){
+    add(D,V.half(Math.round(n*0.4)),'bad');
+  } else {
+    if(has('불굴'))add(D,`${ga(has('불굴').name)} 퇴로를 열었습니다. 전멸은 면했습니다.`,'bad');
+    add(D,V.lose,'bad');
+  }
+  // 부상
+  inj.forEach(i=>add(D,`${ga(i.h.name)} ${eul(INJ[i.t].n)} 입었습니다. ${i.d}일간 이탈합니다.`,'bad'));
+  // 귀환
+  add(D,res==='실패'?'길드로 돌아왔습니다. 보고할 성과가 없습니다.'
+                    :'길드로 돌아왔습니다.',res==='실패'?'bad':'info');
+  S.sort((a,b)=>a.d-b.d);     // 일차 순서대로 정렬
+  return S;
+}
+function storyHTML(S){
+  if(!S||!S.length)return '';
+  let h='<div class="story">',last=null;
+  S.forEach(l=>{
+    const nd=l.d!==last; last=l.d;
+    const c=l.k==='good'?'var(--moss)':l.k==='bad'?'var(--blood)':'var(--dim)';
+    h+=`<div class="sl"><span class="sd">${nd?l.d+'일차':''}</span>
+      <span class="sx" style="color:${c}">${esc(l.t)}</span></div>`;
+  });
+  return h+'</div>';
 }
 
 /* ───────── 의뢰 결산 ───────── */
@@ -665,12 +1295,45 @@ function resolveQuest(q,out){
   else {res='실패';rm=0;xm=0.28;}
 
   const gold=Math.round(q.reward*rm*ev.rewMul);
-  G.gold+=gold; G.earned+=gold;
+  G.gold+=gold; G.earned+=gold; G.mo.income+=gold;
+  G.mo.quests++; if(res==='실패')G.mo.fails++;
   const rk=QT[q.type].rep;
   let rd=res==='실패'?-q.d*0.9:(res==='절반 성공'?q.d*0.4:q.d*1.7*(res==='대성공'?1.4:1));
   if(rd>0)rd*=Math.max(0.12,1-G.rep[rk]/115);   // 명성은 올라갈수록 더디게 오른다
   G.rep[rk]=cl(G.rep[rk]+rd,0,100);
-  if(res!=='실패'){G.done++;G.donePts=(G.donePts||0)+q.d*q.d*0.55;}
+  if(res!=='실패'){
+    G.done++;G.donePts=(G.donePts||0)+q.d*q.d*0.55;
+    if(q.place){G.region=G.region||{};G.region[q.place]=(G.region[q.place]||0)+1;}
+    party.forEach(h=>{G.mo.contrib[h.id]=(G.mo.contrib[h.id]||0)+q.d*q.d;});
+    if(q.d>=3){G.mo.hard++;G.mo.h3++;}
+    if(q.d>=4)G.mo.h4++;
+    if(G.goal&&!G.goal.done){
+      if(G.goal.k==='quests')G.goal.c++;
+      if(G.goal.k==='hard'&&q.d>=G.goal.min)G.goal.c++;
+    }
+  }
+  // 위협 의뢰 결판
+  if(q.threat&&G.threat&&G.threat.qid===q.id){
+    if(res==='실패'){
+      if(G.day>=G.threat.day)fireThreat();
+      else{
+        // 기한이 남았으면 게시판에 다시 걸어 재도전을 허용한다
+        const again={...q}; delete again.sent; delete again.result;
+        again.id=G.nextId++; G.threat.qid=again.id;
+        G.quests.unshift(again);
+        push(`${G.threat.ic} ${G.threat.name} 저지 실패. 아직 ${G.threat.day-G.day}일 남았습니다.`,'bad');
+      }
+    } else {
+      G.threat.done=true;G.threat.won=true;
+      const tg=G.threat.d*4.5*Math.max(0.15,1-G.rep[G.threat.rep]/115);
+      G.rep[G.threat.rep]=cl(G.rep[G.threat.rep]+tg,0,100);G.threat.repGain=Math.round(tg);
+      G.donePts=(G.donePts||0)+G.threat.d*G.threat.d*1.6;
+      G.mo.threatWin++; G.thWin=(G.thWin||0)+1;
+      G.hunters.forEach(h=>h.loyalty=cl(h.loyalty+4,0,100));
+      push(`${G.threat.ic} ${G.threat.name} 저지 성공! ${REPN[G.threat.rep]}이 크게 올랐습니다.`,'good');
+      G.queue.push({type:'threatWin'});
+    }
+  }
 
   // 경험치
   const lvups=[];
@@ -687,6 +1350,8 @@ function resolveQuest(q,out){
       h.xp-=xpNeed(h.lv);h.lv++;
       const g=grow(h);
       lvups.push({h,g});
+      h.hist=h.hist||[];h.hist.push({d:G.day,p:power(h)});
+      if(h.hist.length>60)h.hist.shift();
     }
     // 충성도
     let dl=res==='실패'?-3:2;
@@ -696,6 +1361,21 @@ function resolveQuest(q,out){
     h.loyalty=cl(h.loyalty+dl,0,100);
   });
 
+  // 관계 · 숙련도 변동
+  if(party.length>1){
+    let dv=res==='실패'?-5:(res==='대성공'?6:3.5);
+    if(res==='절반 성공')dv=-1;
+    for(let i=0;i<party.length;i++)for(let j=i+1;j<party.length;j++){
+      let v=dv;
+      if(party[i].pers===party[j].pers)v+=1;
+      if((CLASH[party[i].pers]||[]).includes(party[j].pers))v-=3;
+      // 탐욕·오만은 실패를 남 탓한다
+      if(res==='실패'&&(party[i].traits.includes('탐욕')||party[j].traits.includes('탐욕')))v-=2;
+      if(res==='실패'&&(party[i].pers==='오만함'||party[j].pers==='오만함'))v-=2;
+      addRel(party[i].id,party[j].id,v);
+    }
+    bumpTeam(party.map(h=>h.id),res==='실패'?-1:1);
+  }
   // 부상
   const inj=[];
   party.forEach(h=>{
@@ -704,6 +1384,7 @@ function resolveQuest(q,out){
     if(res==='실패')c*=1.9; else if(res==='절반 성공')c*=1.35;
     if(h.traits.includes('불굴'))c*=0.55;
     if(h.traits.includes('유리몸'))c*=1.6;
+    const sy2=partySync(party); if(sy2&&sy2.lv>=2)c*=0.82;
     if(chance(cl(c,2,52))){
       const r=rnd()*100;
       const t=r<58?'light':(r<89?'mid':'heavy');
@@ -724,18 +1405,30 @@ function resolveQuest(q,out){
     }
   });
 
+  if(inj.length&&party.length>1){
+    inj.forEach(i=>party.forEach(o=>{ if(o.id!==i.h.id)addRel(i.h.id,o.id,INJ[i.t].out?-3:-1); }));
+  }
   // 해제
   party.forEach(h=>{h.busy=null;h.party=null;});
-  q.result={res,gold,ev,inj,lvups,party:party.map(h=>h.name)};
+  q.result={res,gold,ev,inj,lvups,party:party.map(h=>h.name),
+            story:makeStory(q,party,ev,res,inj)};
   out.push(q);
   G.active=G.active.filter(x=>x.id!==q.id);
   const icon=res==='실패'?'❌':(res==='대성공'?'🏆':'✅');
   push(`${icon} ${q.name} — ${res} (${gold>0?'+'+fmt(gold)+'G':'보상 없음'})`,res==='실패'?'bad':'good',q.result?q:null);
+  checkGoal();
 }
 
 /* ───────── 하루 진행 ───────── */
 function stepDay(out){
   G.day++;
+  // 현장 사건 — 복귀보다 먼저 처리해야 선택이 결과에 반영된다
+  (G.active||[]).forEach(q=>{
+    if(q.field&&!q.field.done&&G.day>=q.field.day){
+      q.field.done=true;
+      G.queue.push({type:'field',qid:q.id});
+    }
+  });
   // 복귀
   (G.active||[]).slice().forEach(q=>{if(G.day>=q.sent.end)resolveQuest(q,out);});
   // 훈련 종료
@@ -772,11 +1465,18 @@ function stepDay(out){
   });
   // 게시판
   G.quests=G.quests.filter(q=>{
+    if(q.threat)return true;
     if(G.day>q.deadline){push(`📋 「${q.name}」 의뢰 기한이 지나 취소되었습니다.`,'bad');return false;}
     return true;
   });
   if(G.quests.length<9&&chance(85))G.quests.push(mkQuest());
   while(G.quests.length<5)G.quests.push(mkQuest());
+  // 위협
+  if(G.threat&&!G.threat.done&&G.day>=G.threat.day)fireThreat();
+  if((!G.threat||G.threat.done)&&G.day>=G.nextThreat){
+    spawnThreat();
+    G.nextThreat=G.day+ri(18,26);
+  }
   // 주급
   if(G.day%7===0)payday();
   // 모집 후보
@@ -785,16 +1485,33 @@ function stepDay(out){
   contractCheck();
   // 월말
   if(G.day%30===0)monthEnd();
+  // 성장 기록 (5일마다 표본)
+  if(G.day%5===0)G.hunters.forEach(h=>{
+    h.hist=h.hist||[];
+    h.hist.push({d:G.day,p:power(h)});
+    if(h.hist.length>60)h.hist.shift();
+  });
   // 개인 사건
   if(chance(11))personalEvent();
+  checkGoal();
+}
+// 시설을 전부 최대로 올리는 것이 무조건 정답이 되지 않도록 유지비를 붙인다.
+function upkeep(){
+  let u=0;
+  for(const k in FAC)u+=Math.round(42*Math.pow(G.fac[k],1.9));
+  u+=G.hunters.length*40;
+  return Math.round(u);
 }
 function payday(){
-  let s=G.hunters.reduce((a,h)=>a+h.salary,0)+G.inst.reduce((a,i)=>a+i.salary,0);
-  if(G.gold>=s){G.gold-=s;push(`💸 주급 ${fmt(s)}G 지급`,'info');}
+  const wage=G.hunters.reduce((a,h)=>a+h.salary,0)+G.inst.reduce((a,i)=>a+i.salary,0);
+  const up=upkeep();
+  let s=wage+up;
+  if(G.gold>=s){G.gold-=s;G.mo.expense+=s;G.mo.wage=(G.mo.wage||0)+wage;G.mo.up=(G.mo.up||0)+up;
+    push(`💸 주급 ${fmt(wage)}G · 유지비 ${fmt(up)}G 지출`,'info');}
   else{
     G.gold=0;
     G.hunters.forEach(h=>h.loyalty=cl(h.loyalty-8,0,100));
-    push(`⚠️ 자금 부족! 주급 ${fmt(s)}G를 지급하지 못해 전원 충성도가 크게 떨어졌습니다.`,'bad');
+    push(`⚠️ 자금 부족! 운영비 ${fmt(s)}G를 감당하지 못해 전원 충성도가 크게 떨어졌습니다.`,'bad');
   }
 }
 function contractCheck(){
@@ -813,14 +1530,24 @@ function contractCheck(){
 }
 function leave(h,to,why){
   G.hunters=G.hunters.filter(x=>x.id!==h.id);
+  if(G.rel)for(const k in G.rel)if(k.split('~').includes(String(h.id)))delete G.rel[k];
+  if(G.teams)for(const k in G.teams)if(k.split('.').includes(String(h.id)))delete G.teams[k];
   G.active=(G.active||[]).filter(q=>!q.sent.ids.includes(h.id));
   G.moves.unshift({day:G.day,name:h.name,to,pw:power(h),why});
   const rv=G.rivals.find(r=>r.n===to);if(rv)rv.p+=Math.round(power(h)*0.55);
-  push(`🚪 ${h.name}이(가) ${to} 길드로 이적했습니다. (${why})`,'bad');
+  push(`🚪 ${ga(h.name)} ${to} 길드로 이적했습니다. (${why})`,'bad');
 }
 function monthEnd(){
   // 라이벌 성장
   G.rivals.forEach(r=>r.p=Math.round(r.p*(1.012+rnd()*0.028)));
+  // 월별 추이 기록
+  {
+    const l=G.rivals.map(r=>({p:r.p})).concat([{p:myPower(),me:1}]).sort((a,b)=>b.p-a.p);
+    G.hist=G.hist||[];
+    G.hist.push({m:G.month,gold:Math.round(G.gold),pts:guildPts(),
+                 rank:l.findIndex(x=>x.me)+1,pw:myPower()});
+    if(G.hist.length>36)G.hist.shift();
+  }
   // 노화 / 은퇴
   G.hunters.slice().forEach(h=>{
     if(G.day%360===0){h.age++;}
@@ -835,7 +1562,20 @@ function monthEnd(){
     }
     if(h.traits.includes('방랑벽'))h.loyalty=cl(h.loyalty-6,0,100);
   });
-  push(`📊 ${Math.ceil(G.day/30)}개월차 결산 — 길드 랭킹이 갱신되었습니다.`,'info');
+  // 성격 충돌은 시간이 지나며 벌어진다
+  for(let i=0;i<G.hunters.length;i++)for(let j=i+1;j<G.hunters.length;j++){
+    const a=G.hunters[i],b=G.hunters[j];
+    if((CLASH[a.pers]||[]).includes(b.pers)&&chance(35))addRel(a.id,b.id,-ri(1,3));
+    if(a.traits.includes('탐욕')&&b.traits.includes('탐욕')&&chance(30))addRel(a.id,b.id,-ri(1,3));
+  }
+  // 오래 쓰지 않은 조합은 호흡이 무뎌진다
+  if(G.teams)for(const k in G.teams){
+    const t=G.teams[k];
+    if(G.day-t.last>45){t.n=Math.max(0,t.n-2);t.last=G.day-30;}
+    if(t.n<=0)delete G.teams[k];
+  }
+  push(`📊 ${G.month}개월차 결산이 도착했습니다.`,'info');
+  G.queue.push({type:'monthly'});
 }
 function personalEvent(){
   const free=G.hunters.filter(h=>!h.busy);
@@ -843,8 +1583,9 @@ function personalEvent(){
   const h=pick(free);
   const pool=[];
   if(free.length>=2){
-    const o=pick(free.filter(x=>x.id!==h.id));
-    if(o)pool.push({type:'quarrel',hid:h.id,oid:o.id});
+    const others=free.filter(x=>x.id!==h.id).sort((a,b)=>rel(h.id,a.id)-rel(h.id,b.id));
+    const o=chance(65)?others[0]:pick(others);
+    if(o&&rel(h.id,o.id)<35)pool.push({type:'quarrel',hid:h.id,oid:o.id});
   }
   if(h.loyalty<55)pool.push({type:'complain',hid:h.id});
   if(h.fatigue>60)pool.push({type:'burnout',hid:h.id});
@@ -913,6 +1654,43 @@ function render(){
   v.scrollTop=0;window.scrollTo(0,0);
 }
 
+function briefHTML(){
+  const B=[];let next=null;
+  const t=G.threat&&!G.threat.done?G.threat:null;
+  const idle=G.hunters.filter(avail);
+  if(t){
+    const q=G.quests.find(x=>x.id===t.qid);
+    const out=(G.active||[]).some(x=>x.id===t.qid);
+    B.push({k:t.ic,t:`${t.name} 발생까지`,v:`D-${Math.max(0,t.day-G.day)}`,hot:!out});
+    if(!out&&q)next={t:'위기 대응 파티 편성',a:'quests'};
+  }
+  if(G.queue.length){B.push({k:'🔔',t:'처리 대기 중인 결정',v:`${G.queue.length}건`,hot:1});
+    if(!next)next={t:'대기 중인 결정 처리',a:'queue'};}
+  const hurt=G.hunters.filter(h=>h.injury);
+  if(hurt.length)B.push({k:'🩹',t:'부상 중',v:`${hurt.length}명 (최장 ${Math.max(...hurt.map(h=>h.injury.left))}일)`,hot:hurt.length>=3});
+  const due=G.quests.filter(q=>!q.threat&&q.deadline-G.day<=1);
+  if(due.length)B.push({k:'📋',t:'오늘·내일 마감 의뢰',v:`${due.length}건`,hot:1});
+  const cost=G.hunters.reduce((a,h)=>a+h.salary,0)+G.inst.reduce((a,i)=>a+i.salary,0)+upkeep();
+  const dleft=7-(G.day%7||7)+1;
+  B.push({k:'💰',t:`주급일까지 ${dleft}일 · 필요`,v:`${fmt(cost)}G`,hot:G.gold<cost});
+  if(G.gold<cost&&!next)next={t:'자금 확보 — 보상 높은 의뢰 파견',a:'quests'};
+  const exp=G.hunters.filter(h=>h.contract<=21).sort((a,b)=>a.contract-b.contract);
+  if(exp.length)B.push({k:'✍️',t:`계약 만료 임박 · ${exp[0].name}`,v:`D-${exp[0].contract}`,hot:exp[0].contract<=10});
+  if(idle.length)B.push({k:'🧍',t:'대기 중인 헌터',v:`${idle.length}명 / ${G.hunters.length}명`,hot:0});
+  if(G.goal&&!G.goal.done)B.push({k:'🎯',t:`이달의 과제 · ${G.goal.txt}`,
+    v:`${Math.round(goalProgress()*100)}%`,hot:0});
+  const bad=[];
+  for(const k in (G.rel||{})){ if(G.rel[k]<=-40)bad.push(k); }
+  if(bad.length)B.push({k:'💢',t:'불화 관계',v:`${bad.length}쌍 — 같은 파티 편성 주의`,hot:0});
+  if(idle.length&&G.quests.length&&!next)next={t:`대기 중인 헌터 ${idle.length}명 파견`,a:'quests'};
+  if(!B.length)return '';
+  let h=`<div class="brief">`;
+  B.slice(0,5).forEach(x=>h+=`<div class="bi ${x.hot?'hot':''}">
+    <span class="bk">${x.k}</span><span class="bt">${esc(x.t)}</span><span class="bv">${x.v}</span></div>`);
+  if(next)h+=`<div class="nx"><span>가장 급한 일 · <b>${esc(next.t)}</b></span>
+    <button data-act="${next.a==='queue'?'queue':'go'}" data-tab2="${next.a}">이동</button></div>`;
+  return h+`</div>`;
+}
 function vHome(){
   const mo=Math.floor((G.day-1)/30)+1, dd=((G.day-1)%30)+1;
   let h=`<div class="hero">
@@ -924,6 +1702,52 @@ function vHome(){
       <button data-act="advret" class="main">복귀까지</button>
     </div>
   </div>`;
+  h+=briefHTML();
+
+  // 위협 배너 — 화면에서 가장 큰 목소리
+  const t=G.threat;
+  if(t&&!t.done){
+    const left=t.day-G.day;
+    const q=G.quests.find(x=>x.id===t.qid)||(G.active||[]).find(x=>x.id===t.qid);
+    const out=(G.active||[]).some(x=>x.id===t.qid);
+    let note;
+    if(out){
+      const back=(G.active||[]).find(x=>x.id===t.qid).sent.end;
+      note=back<=t.day?`파견 완료. ${back-G.day}일 뒤 복귀합니다.`
+                      :`⚠️ 복귀가 ${back-t.day}일 늦습니다. 이대로면 막지 못합니다.`;
+    } else if(q){
+      note=left<q.days?`⚠️ 남은 기간보다 원정이 깁니다. 이미 늦었습니다.`
+                      :`아직 파견하지 않았습니다. 늦어도 ${left-q.days}일 안에 보내야 합니다.`;
+    } else note='';
+    h+=`<div class="threat">
+      <div class="th"><span class="tn">${t.ic} ${esc(t.name)}</span><span class="td">D-${Math.max(0,left)}</span></div>
+      <div class="tb">${esc(t.desc)}</div>
+      <div class="tw">${note}</div></div>`;
+  } else if(t&&t.done&&G.day-t.day<4){
+    h+=`<div class="threat ${t.won?'done':''}">
+      <div class="th"><span class="tn">${t.ic} ${esc(t.name)}</span><span class="td">${t.won?'저지':'실패'}</span></div>
+      <div class="tb">${t.won?'기한 안에 막아냈습니다. 명성이 올랐습니다.':esc(t.fail)}</div></div>`;
+  }
+
+  // 승급 목표 + 이달의 과제
+  const gi=GRADES.findIndex(x=>x[0]===guildGrade());
+  if(gi<GRADES.length-1){
+    const cur=guildPts(),lo=GRADES[gi][1],hi=GRADES[gi+1][1];
+    const UNLOCK={E:'모집 후보 증가',D:'고난도 의뢰 해금',C:'4인 파티 편성 해금',
+                  B:'대형 의뢰·희귀 헌터',A:'국가 의뢰',S:'세계 재앙 대응'};
+    h+=`<div class="goal">
+      <div class="gh"><span>${GRADES[gi+1][0]}급 승급까지</span><b>${hi-cur}점</b></div>
+      <div class="gp"><i style="width:${cl((cur-lo)/(hi-lo)*100,1,100)}%"></i></div>
+      <div class="gu">${cur} / ${hi}점 · 승급 시 ${UNLOCK[GRADES[gi+1][0]]||'신규 콘텐츠'} 해금</div></div>`;
+  }
+  if(G.goal){
+    const pr=goalProgress();
+    h+=`<div class="goal">
+      <div class="gh"><span>${G.month}개월차 과제 · ${30-((G.day-1)%30)}일 남음</span>
+        <b>${G.goal.done?'달성':Math.round(pr*100)+'%'}</b></div>
+      <div class="gp"><i style="width:${cl(pr*100,1,100)}%;background:${G.goal.done?'var(--moss)':'var(--brass)'}"></i></div>
+      <div class="gu">${esc(G.goal.txt)} · 보상 ${fmt(G.goal.rw)}G</div></div>`;
+  }
 
   if(G.queue.length)
     h+=`<div class="warn">🔔 처리해야 할 일이 ${G.queue.length}건 있습니다. <b>진행하려면 먼저 결정하세요.</b>
@@ -975,12 +1799,13 @@ function vHunters(){
     if(x.contract<=30)tags.push(`<span class="tag y">계약 D-${x.contract}</span>`);
     if(x.retiring)tags.push('<span class="tag">은퇴 임박</span>');
     if(x.loyalty<35)tags.push('<span class="tag b">불만</span>');
+    const sp=(x.hist||[]).length>3?`<span class="spark" style="display:inline-block;width:42px">${sparkline(x.hist.slice(-14),42,14,'#647680',0)}</span>`:'';
     h+=`<button class="row" data-act="hunter" data-id="${x.id}">
-      <span class="ic">${CLASSES[x.cls].ic}</span>
+      ${sigil(x,30)}
       <span class="mid"><span class="n">${esc(x.name)}
         <span class="tag" style="color:${c};border-color:${c}">${g}</span>${tags.join('')}</span>
-        <span class="s ${cls==='b'?'':''}" ${cls==='b'?'style="color:var(--blood)"':''}>${x.cls} Lv.${x.lv} · ${x.age}세 · ${st} · 피로 ${Math.round(x.fatigue)}%</span></span>
-      <span class="rt"><b>${power(x)}</b>전투력</span></button>`;
+        <span class="s" ${cls==='b'?'style="color:var(--blood)"':''}>${CLASSES[x.cls].ic} ${x.cls} Lv.${x.lv} · ${x.age}세 · ${st} · 피로 ${Math.round(x.fatigue)}%</span></span>
+      <span class="rt"><b>${power(x)}</b>${sp||'전투력'}</span></button>`;
   });
   h+=`</div></div>`;
 
@@ -999,16 +1824,19 @@ function vHunters(){
 }
 
 function vQuests(){
-  let h=`<div class="sec"><h2>의뢰 게시판</h2>`;
+  let h=`<div class="sec"><h2>왕국 지도</h2>`+mapHTML()+`</div>`;
+  h+=`<div class="sec"><h2>의뢰 게시판</h2>`;
   if(!G.quests.length)h+=`<div class="empty">걸린 의뢰가 없습니다. 하루 진행하면 새 의뢰가 붙습니다.</div>`;
   G.quests.forEach(q=>{
     const sd=shownDiff(q);
     const acc=FAC.scout.v[G.fac.scout-1];
     const dtxt=q.scouted?stars(q.d):(acc>15?stars(sd)+' <span class="tiny">추정</span>':stars(sd));
-    h+=`<button class="quest ${QT[q.type].cls}" data-act="quest" data-id="${q.id}">
-      <span class="qh"><span class="qt">${QT[q.type].ic} ${esc(q.name)}</span><span class="qr">${fmt(q.reward)}G</span></span>
-      <span class="qm">${dtxt}<span>${q.days}일 소요</span><span>기한 D-${q.deadline-G.day}</span>
-      ${q.scouted?'<span class="tag g">정찰 완료</span>':'<span class="tag">미정찰</span>'}</span>
+    const isT=q.threat&&G.threat&&G.threat.qid===q.id&&!G.threat.done;
+    h+=`<button class="quest ${isT?'tq':QT[q.type].cls}" data-act="quest" data-id="${q.id}">
+      <span class="qh"><span class="qt">${isT?G.threat.ic:QT[q.type].ic} ${esc(q.name)}</span><span class="qr">${fmt(q.reward)}G</span></span>
+      <span class="qm">${dtxt}<span>${q.days}일 소요</span>
+      <span style="${isT?'color:var(--blood);font-weight:700':''}">${isT?'발생 D-'+Math.max(0,G.threat.day-G.day):'기한 D-'+(q.deadline-G.day)}</span>
+      ${isT?'<span class="tag b">위기 대응</span>':(q.scouted?'<span class="tag g">정찰 완료</span>':'<span class="tag">미정찰</span>')}</span>
     </button>`;
   });
   h+=`</div>`;
@@ -1018,7 +1846,20 @@ function vQuests(){
 }
 
 function vGuild(){
-  let h=`<div class="sec"><h2>시설</h2>`;
+  const wage=G.hunters.reduce((a,x)=>a+x.salary,0)+G.inst.reduce((a,i)=>a+i.salary,0);
+  let h=`<div class="sec"><h2>주간 고정 지출</h2>
+    <div class="ledger">
+      <div class="row"><span class="mid"><span class="n">헌터 급여</span>
+        <span class="s">${G.hunters.length}명${G.inst.length?` + 교관 ${G.inst.length}명`:''}</span></span>
+        <span class="rt"><b>${fmt(wage)}</b>G</span></div>
+      <div class="row"><span class="mid"><span class="n">시설 유지비</span>
+        <span class="s">시설 등급이 오를수록 가파르게 증가</span></span>
+        <span class="rt"><b>${fmt(upkeep())}</b>G</span></div>
+      <div class="row" style="border-bottom:0"><span class="mid"><span class="n" style="color:var(--brass)">주급일 합계</span>
+        <span class="s">${7-(G.day%7||7)+1}일 후 지출</span></span>
+        <span class="rt"><b style="color:var(--brass)">${fmt(wage+upkeep())}</b>G</span></div>
+    </div></div>`;
+  h+=`<div class="sec"><h2>시설</h2>`;
   for(const k in FAC){
     const f=FAC[k],lv=G.fac[k],max=lv>=5;
     const cost=max?0:f.c[lv];
@@ -1027,7 +1868,8 @@ function vGuild(){
     h+=`<div class="up"><div><b>${f.n}</b> <span class="lv">Lv.${lv}</span>
       <div class="tiny">${f.d} ${cur}${unit}${max?'':` → ${nxt}${unit}`}</div></div>
       ${max?'<span class="tag y">최대</span>':
-      `<button data-act="fac" data-k="${k}" ${G.gold<cost?'disabled':''}>${fmt(cost)}G</button>`}</div>`;
+      `<button data-act="fac" data-k="${k}" ${G.gold<cost?'disabled':''}>${fmt(cost)}G
+        <span class="tiny" style="display:block;font-weight:400">유지비 +${fmt(Math.round(42*Math.pow(lv+1,1.9))-Math.round(42*Math.pow(lv,1.9)))}</span></button>`}</div>`;
   }
   h+=`</div>`;
 
@@ -1035,10 +1877,10 @@ function vGuild(){
   G.cands.forEach((c,i)=>{
     const [g,col]=gradeOf(c);
     h+=`<button class="row" data-act="cand" data-i="${i}" style="border-bottom:1px solid var(--line)">
-      <span class="ic">${CLASSES[c.cls].ic}</span>
+      ${sigil(c,28)}
       <span class="mid"><span class="n">${esc(c.name)} <span class="tag" style="color:${col};border-color:${col}">${g}</span>
         ${c.traits.map(t=>`<span class="tag ${TRAITS[t].g?'g':'b'}">${TRAITS[t].ic}</span>`).join('')}</span>
-      <span class="s">${c.cls} Lv.${c.lv} · ${c.age}세 · 전투력 ${power(c)} · ${potShown(c)}</span></span>
+      <span class="s">${CLASSES[c.cls].ic} ${c.cls} Lv.${c.lv} · ${c.age}세 · 전투력 ${power(c)} · ${potShown(c)}</span></span>
       <span class="rt"><b>${fmt(c.fee)}G</b>계약금</span></button>`;
   });
   h+=`<div style="margin-top:9px"><button data-act="reroll" class="up" style="width:100%;background:var(--panel2);border:1px solid var(--line2);border-radius:3px;padding:9px;font-weight:600;font-size:13px" ${G.gold<500?'disabled':''}>후보 새로 부르기 · 500G</button></div>`;
@@ -1075,6 +1917,10 @@ function vRank(){
   });
   h+=`</div><div class="note" style="margin-top:8px">세력은 상위 5명의 전투력 합계와 길드 실적으로 계산됩니다.</div></div>`;
 
+  const tr=trendChart('rank','길드 순위','#7B8FCB',1)+trendChart('pts','길드 점수','#C9A227',0)+trendChart('gold','자금','#6F9E5A',0);
+  if(tr)h+=`<div class="sec"><h2>성장 추이</h2>${tr}</div>`;
+  else h+=`<div class="sec"><h2>성장 추이</h2><div class="empty">2개월이 지나면 성장 곡선이 나타납니다.</div></div>`;
+
   h+=`<div class="sec"><h2>이적 기록</h2>`;
   if(!G.moves.length)h+=`<div class="empty">아직 떠난 헌터가 없습니다.</div>`;
   G.moves.slice(0,12).forEach(m=>{
@@ -1087,6 +1933,7 @@ function vRank(){
   h+=`<div class="sec"><h2>길드 실적</h2><div class="ledger">
     <div class="row"><span class="mid"><span class="n">완료한 의뢰</span></span><span class="rt"><b>${G.done}</b>건</span></div>
     <div class="row"><span class="mid"><span class="n">누적 수입</span></span><span class="rt"><b>${fmt(G.earned)}</b>G</span></div>
+    <div class="row"><span class="mid"><span class="n">위기 대응</span></span><span class="rt"><b>${G.thWin||0}</b>저지 / ${(G.thWin||0)+(G.thFail||0)}건</span></div>
     <div class="row"><span class="mid"><span class="n">길드 점수</span></span><span class="rt"><b>${guildPts()}</b>점</span></div>
   </div>`;
   const gi=GRADES.findIndex(x=>x[0]===guildGrade());
@@ -1127,6 +1974,13 @@ function mHunter(id){
   if(h.injury)b+=`<div class="warn">${INJ[h.injury.t].n} — 회복까지 ${h.injury.left}일. 능력치 -${Math.round(INJ[h.injury.t].pen*100)}%${h.injury.t!=='light'?' · 파견 불가':''}</div>`;
   if(h.retiring)b+=`<div class="warn" style="background:#2A2620;border-color:#5A4E33;color:#D6C79B">${h.age}세. 은퇴를 고려하고 있습니다. 은퇴 시 교관으로 남길 수 있습니다.</div>`;
 
+  b+=`<div style="display:flex;gap:13px;align-items:center;margin-bottom:4px">
+    ${sigil(h,56)}
+    <div style="flex:1;min-width:0">
+      <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1">${power(h)}</div>
+      <div class="tiny">전투력 · ${h.cls} Lv.${h.lv} · ${potShown(h)}</div>
+    </div></div>`;
+  b+=growthChart(h);
   b+=`<div class="stats">`;
   SKEYS.forEach(k=>{
     const v=eff(h,k),base=h.stats[k],cap=h.caps[k];
@@ -1137,8 +1991,7 @@ function mHunter(id){
       <div class="bar"><i style="width:${cl(base/99*100,2,100)}%"></i></div></div>`;
   });
   b+=`</div>`;
-  b+=`<div class="rep-l"><span class="lb">전투력</span><span class="vl">${power(h)}</span></div>
-   <div class="rep-l"><span class="lb">레벨 / 경험치</span><span class="vl">Lv.${h.lv} · ${h.xp}/${xpNeed(h.lv)}</span></div>
+  b+=`<div class="rep-l"><span class="lb">경험치</span><span class="vl">${h.xp} / ${xpNeed(h.lv)}</span></div>
    <div class="rep-l"><span class="lb">${potShown(h)}</span><span class="vl">${h.pot>=85?'특급':h.pot>=70?'우수':h.pot>=55?'보통':'제한적'}</span></div>
    <div class="rep-l"><span class="lb">충성도</span><span class="vl" style="color:${h.loyalty<40?'var(--blood)':h.loyalty>75?'var(--moss)':''}">${h.loyalty}</span></div>
    <div class="rep-l"><span class="lb">피로도</span><span class="vl" style="color:${h.fatigue>70?'var(--blood)':''}">${Math.round(h.fatigue)}%</span></div>
@@ -1151,6 +2004,19 @@ function mHunter(id){
   h.traits.forEach(t=>b+=`<div class="rep-l ${TRAITS[t].g?'p':'n'}"><span class="lb">${TRAITS[t].ic} ${t}</span><span class="vl" style="font-weight:400;font-size:11.5px;color:var(--dim)">${TRAITS[t].d}</span></div>`);
   b+=`</div>`;
 
+  const mates=G.hunters.filter(x=>x.id!==h.id)
+    .map(x=>({x,v:rel(h.id,x.id)})).sort((a,b2)=>Math.abs(b2.v)-Math.abs(a.v)).slice(0,4);
+  if(mates.length){
+    b+=`<div style="margin-top:13px"><div class="tiny" style="margin-bottom:5px">길드 내 관계</div>`;
+    mates.forEach(m=>{
+      const [lb,col]=relLabel(m.v);
+      const w=Math.abs(m.v)/2;
+      b+=`<div class="rel-l"><span class="rn">${esc(m.x.name)}</span>
+        <span style="color:${col};font-size:11.5px">${lb} ${m.v>0?'+':''}${Math.round(m.v)}</span>
+        <span class="rb"><i style="left:${m.v>=0?50:50-w}%;width:${w}%;background:${col}"></i></span></div>`;
+    });
+    b+=`</div>`;
+  }
   b+=`<div style="margin-top:11px"><div class="tiny" style="margin-bottom:5px">장비</div>`;
   ['무기','방어구','장신구'].forEach(s=>{
     const it=h.equip[s];
@@ -1257,9 +2123,26 @@ function mQuest(id){
       <span class="tiny" style="text-align:right">전투력 ${power(h)}<br>${why}</span></button>`;
   });
 
+  // 팀 궁합
+  if(party.length>1){
+    const sy=partySync(party);
+    const [wl,wc]=relLabel(sy.worst.v);
+    b+=`<div class="hint" style="margin-top:9px;border-left-color:${sy.avg<-14?'var(--blood)':sy.lv?'var(--moss)':'var(--line2)'}">
+      <b>이 조합</b> · 평균 관계 ${Math.round(sy.avg)}
+      ${sy.lv?` · 합동 숙련도 Lv.${sy.lv} (${sy.team.n}회)`:` · 합동 ${sy.team.n}회`}<br>
+      <span style="color:${wc}">${esc(sy.worst.a.name)} ↔ ${esc(sy.worst.b.name)} — ${wl} ${sy.worst.v>0?'+':''}${Math.round(sy.worst.v)}</span>
+      ${sy.lv<3?`<br><span class="tiny">${teamLv(sy.team.n+1)>sy.lv?'한 번 더 함께 보내면 숙련도가 오릅니다.':`숙련도 Lv.${sy.lv+1}까지 ${[3,8,15][sy.lv]-sy.team.n}회`}</span>`:'<br><span class="tiny">최고 숙련도 — 소요일 -1</span>'}</div>`;
+  }
   // 예측
   if(party.length){
     const ev=evaluate(q,party,false);
+    if(q.threat&&G.threat&&G.threat.qid===q.id){
+      const back=G.day+ev.days, late=back-G.threat.day;
+      b+=`<div class="hint" style="margin-top:10px;border-left-color:${late>0?'var(--blood)':'var(--moss)'}">
+        <b>${late>0?'⚠️ 늦습니다':'✅ 기한 내 복귀'}</b><br>
+        ${back}일차 복귀 · 위기 발생은 ${G.threat.day}일차.
+        ${late>0?`${late}일 늦어 막지 못합니다. 더 짧은 편성이 필요합니다.`:'이 편성이면 기한 안에 막을 수 있습니다.'}</div>`;
+    }
     b+=`<div style="margin-top:12px;background:var(--panel2);padding:11px;border-radius:3px;border:1px solid var(--line)">
       <div class="tiny" style="margin-bottom:6px">출발 전 예측 — 당신이 아는 정보만 반영됩니다</div>`;
     ev.L.forEach(l=>b+=`<div class="rep-l ${l.k}"><span class="lb">${l.l}</span><span class="vl">${l.v}</span></div>`);
@@ -1336,6 +2219,8 @@ function mReport(q){
   const r=q.result;const ev=r.ev;
   const col=r.res==='실패'?'var(--blood)':r.res==='대성공'?'var(--brass)':'var(--moss)';
   let b=`<div class="tiny" style="margin-bottom:8px">${r.party.join(', ')} · ${ev.days}일 원정</div>`;
+  b+=storyHTML(r.story);
+  b+=`<div class="tiny" style="margin:16px 0 5px">판정 내역</div>`;
   ev.L.forEach(l=>b+=`<div class="rep-l ${l.k}"><span class="lb">${l.l}</span><span class="vl">${l.v}</span></div>`);
   b+=`<div class="final"><span>최종 성공 확률</span><span class="big" style="color:${col}">${ev.p}% → ${r.res}</span></div>`;
   if(q.sent.est!==ev.p){
@@ -1359,6 +2244,55 @@ function nextQueue(){
   if(!G.queue.length){render();return;}
   const e=G.queue[0];
   const done=()=>{G.queue.shift();save();if(G.queue.length)nextQueue();else{closeM();render();}};
+  // ── 위협 예고 ──
+  if(e.type==='threat'){
+    const t=G.threat;
+    if(!t||t.done){done();return;}
+    const q=G.quests.find(x=>x.id===t.qid);
+    modal(`${t.ic} 위기 예고`,`${t.day-G.day}일 뒤 발생 · ${esc(t.place)}`,
+      `<div class="threat" style="margin:0 0 12px">
+        <div class="th"><span class="tn">${esc(t.name)}</span><span class="td">D-${t.day-G.day}</span></div>
+        <div class="tb">${esc(t.desc)}</div></div>
+       <div class="rep-l"><span class="lb">난이도</span><span class="vl">${stars(t.d)}</span></div>
+       <div class="rep-l"><span class="lb">요구 전투력</span><span class="vl">${q?q.reqPow:'-'}</span></div>
+       <div class="rep-l"><span class="lb">원정 기간</span><span class="vl">${q?q.days+'일':'-'}</span></div>
+       <div class="rep-l"><span class="lb">성공 보상</span><span class="vl money">${fmt(t.reward)}G + ${REPN[t.rep]} 대폭 상승</span></div>
+       <div class="rep-l n"><span class="lb">실패 시</span><span class="vl">자금 ${Math.round(t.penGold*100)}% 배상 · ${REPN[t.rep]} -${t.penRep}</span></div>
+       <div class="hint" style="border-left-color:var(--blood)">
+       게시판 맨 위에 대응 의뢰가 걸렸습니다. <b>발생일까지 원정을 끝내야</b> 합니다.
+       ${q?`${q.days}일 걸리니 늦어도 ${t.day-G.day-q.days}일 안에 파견하세요.`:''}</div>`,
+      [{l:'게시판으로',p:1,fn:()=>{G.queue.shift();save();closeM();TAB='quests';render();}},
+       {l:'확인',fn:done}],true);
+    return;
+  }
+  if(e.type==='threatWin'){
+    const t=G.threat;
+    modal(`${t.ic} 위기 저지`,esc(t.name),
+      `<div class="hint good" style="background:#1E2B1B;border-left-color:var(--moss);color:#A9CE97">
+        기한 안에 막아냈습니다. 왕국과 주민들이 우리 길드를 주목하고 있습니다.</div>
+       <div class="rep-l p"><span class="lb">${REPN[t.rep]}</span><span class="vl">+${t.repGain||Math.round(t.d*4.5)}</span></div>
+       <div class="rep-l p"><span class="lb">길드 점수</span><span class="vl">+${Math.round(t.d*t.d*1.6)}</span></div>
+       <div class="rep-l p"><span class="lb">전원 충성도</span><span class="vl">+4</span></div>`,
+      [{l:'좋다',p:1,fn:done}],true);
+    return;
+  }
+  if(e.type==='threatFail'){
+    const t=G.threat;
+    modal(`${t.ic} 대응 실패`,esc(t.name),
+      `<div class="warn">${esc(t.fail)}</div>
+       <div class="rep-l n"><span class="lb">배상금</span><span class="vl">-${fmt(t.loss||0)}G</span></div>
+       <div class="rep-l n"><span class="lb">${REPN[t.rep]}</span><span class="vl">-${t.penRep}</span></div>
+       <div class="rep-l n"><span class="lb">전원 충성도</span><span class="vl">-5</span></div>
+       <div class="rep-l n"><span class="lb">${esc(t.rival||'라이벌')} 길드</span><span class="vl">세력 +5%</span></div>
+       <div class="hint">우리가 못 막은 일은 다른 길드가 대신 처리합니다. 그만큼 격차가 벌어집니다.</div>`,
+      [{l:'확인',p:1,fn:done}],true);
+    return;
+  }
+  // ── 현장 판단 ──
+  if(e.type==='field'){ mField(e.qid,done); return; }
+  // ── 월말 결산 ──
+  if(e.type==='monthly'){ mMonthly(done); return; }
+
   const h=G.hunters.find(x=>x.id===e.hid);
   if(!h){done();return;}
 
@@ -1392,11 +2326,11 @@ function nextQueue(){
       [{l:'교관으로',p:1,fn:()=>{
         G.inst.push({name:h.name,cls:h.cls,salary:cost,trait:tr});
         G.hunters=G.hunters.filter(x=>x.id!==h.id);
-        push(`🎓 ${h.name}이(가) 은퇴하고 훈련장 교관이 되었습니다.`,'good');done();
+        push(`🎓 ${ga(h.name)} 은퇴하고 훈련장 교관이 되었습니다.`,'good');done();
       }},{l:'보내드린다',fn:()=>{
         G.hunters=G.hunters.filter(x=>x.id!==h.id);
         G.moves.unshift({day:G.day,name:h.name,to:'은퇴',pw:power(h),why:'현역 은퇴'});
-        push(`🫡 ${h.name}이(가) 길드를 떠났습니다. 수고했습니다.`,'info');done();
+        push(`🫡 ${ga(h.name)} 길드를 떠났습니다. 수고했습니다.`,'info');done();
       }}],true);
   }
   else if(e.type==='quarrel'){
@@ -1404,13 +2338,14 @@ function nextQueue(){
     modal('길드 내 마찰',`${esc(h.name)} ↔ ${esc(o.name)}`,
       `<div class="hint">훈련장에서 두 사람이 크게 다투었습니다. 다른 헌터들이 지켜보고 있습니다.</div>`,
       [{l:'중재한다',p:1,fn:()=>{
-        if(chance(62)){h.loyalty=cl(h.loyalty+7,0,100);o.loyalty=cl(o.loyalty+7,0,100);push(`🤝 ${h.name}과 ${o.name}이 화해했습니다.`,'good');}
-        else{h.loyalty=cl(h.loyalty-4,0,100);push(`중재가 잘 되지 않았습니다.`,'bad');}done();
+        if(chance(62)){h.loyalty=cl(h.loyalty+7,0,100);o.loyalty=cl(o.loyalty+7,0,100);
+          addRel(h.id,o.id,18);push(`🤝 ${gwa(h.name)} ${ga(o.name)} 화해했습니다.`,'good');}
+        else{h.loyalty=cl(h.loyalty-4,0,100);addRel(h.id,o.id,-6);push(`중재가 잘 되지 않았습니다.`,'bad');}done();
       }},{l:'한쪽을 편든다',fn:()=>{
-        h.loyalty=cl(h.loyalty+11,0,100);o.loyalty=cl(o.loyalty-14,0,100);
-        push(`${h.name}의 편을 들었습니다. ${o.name}이 불만을 품었습니다.`,'bad');done();
+        h.loyalty=cl(h.loyalty+11,0,100);o.loyalty=cl(o.loyalty-14,0,100);addRel(h.id,o.id,-24);
+        push(`${h.name}의 편을 들었습니다. ${ga(o.name)} 불만을 품었습니다.`,'bad');done();
       }},{l:'내버려둔다',fn:()=>{
-        h.loyalty=cl(h.loyalty-5,0,100);o.loyalty=cl(o.loyalty-5,0,100);
+        h.loyalty=cl(h.loyalty-5,0,100);o.loyalty=cl(o.loyalty-5,0,100);addRel(h.id,o.id,-14);
         push(`마찰을 방치했습니다. 분위기가 나빠졌습니다.`,'bad');done();
       }}],true);
   }
@@ -1422,8 +2357,8 @@ function nextQueue(){
       [{l:`주급 인상 ${fmt(raise)}G`,p:1,fn:()=>{
         h.salary+=raise;h.loyalty=cl(h.loyalty+20,0,100);push(`${h.name}의 주급을 올렸습니다.`,'info');done();
       }},{l:'설득한다',fn:()=>{
-        if(chance(45)){h.loyalty=cl(h.loyalty+10,0,100);push(`${h.name}을 설득했습니다.`,'good');}
-        else{h.loyalty=cl(h.loyalty-8,0,100);push(`${h.name}이 납득하지 못했습니다.`,'bad');}done();
+        if(chance(45)){h.loyalty=cl(h.loyalty+10,0,100);push(`${eul(h.name)} 설득했습니다.`,'good');}
+        else{h.loyalty=cl(h.loyalty-8,0,100);push(`${ga(h.name)} 납득하지 못했습니다.`,'bad');}done();
       }},{l:'무시',fn:()=>{h.loyalty=cl(h.loyalty-12,0,100);done();}}],true);
   }
   else if(e.type==='burnout'){
@@ -1433,7 +2368,7 @@ function nextQueue(){
         h.loyalty=cl(h.loyalty+8,0,100);
         h.busy={type:'rest'};h.until=G.day+3;
         push(`${h.name}에게 3일 휴식을 지시했습니다.`,'good');done();
-      }},{l:'계속 쓴다',fn:()=>{h.loyalty=cl(h.loyalty-9,0,100);push(`${h.name}이 불만을 품었습니다.`,'bad');done();}}],true);
+      }},{l:'계속 쓴다',fn:()=>{h.loyalty=cl(h.loyalty-9,0,100);push(`${ga(h.name)} 불만을 품었습니다.`,'bad');done();}}],true);
   }
   else if(e.type==='ask'){
     const k=pick(SKEYS);
@@ -1442,17 +2377,142 @@ function nextQueue(){
        <div class="note">허락하면 3일간 자율 훈련합니다. 그동안 의뢰에 나갈 수 없습니다.</div>`,
       [{l:'허락',p:1,dis:!!h.busy,fn:()=>{
         h.busy={type:'train',stat:k,days:3};h.until=G.day+3;h.loyalty=cl(h.loyalty+9,0,100);
-        push(`${h.name}이 자율 훈련에 들어갔습니다.`,'info');done();
+        push(`${ga(h.name)} 자율 훈련에 들어갔습니다.`,'info');done();
       }},{l:'지금은 안 된다',fn:()=>{h.loyalty=cl(h.loyalty-4,0,100);done();}}],true);
   }
   else done();
+}
+
+/* ── 현장 판단 ── */
+function mField(qid,done){
+  const q=(G.active||[]).find(x=>x.id===qid);
+  if(!q){done();return;}
+  const F=FIELD[q.field.fid];
+  const party=q.sent.ids.map(i=>G.hunters.find(h=>h.id===i)).filter(Boolean);
+  if(!F||!party.length){done();return;}
+  const statOf=(k,m)=>m==='best'?Math.max(...party.map(h=>eff(h,k)))
+                                :Math.round(party.reduce((a,h)=>a+eff(h,k),0)/party.length);
+  const met=o=>{
+    if(!o.req)return true;
+    if(o.req.t)return party.some(h=>h.traits.includes(o.req.t));
+    return statOf(o.req.k,o.req.m)>=o.req.v;
+  };
+  let b=`<div class="hint" style="border-left-color:var(--brass);margin-top:0">${esc(F.d)}</div>
+    <div class="tiny" style="margin:11px 0 6px">${party.map(h=>esc(h.name)).join(', ')} · 복귀까지 ${Math.max(0,q.sent.end-G.day)}일</div>`;
+  F.o.forEach((o,i)=>{
+    const ok=met(o);
+    let tag='';
+    if(o.req){
+      const need=o.req.t?`${TRAITS[o.req.t].ic} ${o.req.t} 보유`
+                        :`${STATN[o.req.k]} ${o.req.m==='best'?'최고':'평균'} ${o.req.v}`;
+      const cur=o.req.t?'':` (현재 ${statOf(o.req.k,o.req.m)})`;
+      tag=`<span class="tag ${ok?'g':'b'}">${need}${ok?'':cur}</span>`;
+    }
+    b+=`<button class="pick ${ok?'':'off'}" data-act="fld" data-i="${i}" ${ok?'':'disabled'}
+        style="align-items:flex-start;flex-direction:column;gap:3px">
+      <span style="display:flex;width:100%;gap:8px;align-items:center">
+        <span style="flex:1;font-weight:600">${esc(o.t)}</span>${tag}</span>
+      <span class="tiny">${esc(o.d)}</span></button>`;
+  });
+  FIELDQ={q,F,party,done,met};
+  modal(`${F.ic} ${esc(F.n)}`,esc(q.name),b,[],true);
+}
+let FIELDQ=null;
+function fieldPick(i){
+  if(!FIELDQ)return;
+  const {q,F,party,done}=FIELDQ;
+  const o=F.o[i];
+  q.mods=q.mods||{flat:0,days:0,inj:0,rew:1};
+  q.mods.flat+=o.m.flat||0;
+  q.mods.days+=o.m.days||0;
+  q.mods.inj+=o.m.inj||0;
+  q.mods.rew*=o.m.rew||1;
+  q.mods.label=o.t;
+  q.mods.story=o.s;
+  q.mods.good=(o.m.flat||0)>=0;
+  if(o.m.days)q.sent.end=Math.max(G.day,q.sent.end+o.m.days);
+  if(o.loy)party.forEach(h=>h.loyalty=cl(h.loyalty+o.loy,0,100));
+  if(o.rep){const rk=QT[q.type].rep;G.rep[rk]=cl(G.rep[rk]+o.rep,0,100);}
+  if(o.relv)for(let a=0;a<party.length;a++)for(let c=a+1;c<party.length;c++)
+    addRel(party[a].id,party[c].id,o.relv);
+  push(`${F.ic} ${q.name} — 현장 판단: ${o.t}`,q.mods.good?'info':'bad');
+  FIELDQ=null;
+  done();
+}
+
+/* ── 월말 결산 ── */
+function mMonthly(done){
+  const M=G.mo;
+  const rank=()=>{
+    const l=G.rivals.map(r=>({n:r.n,p:r.p})).concat([{n:G.name,p:myPower(),me:1}]).sort((a,b)=>b.p-a.p);
+    return l.findIndex(x=>x.me)+1;
+  };
+  const nowRank=rank(), nowPts=guildPts();
+  const dRank=M.rank?M.rank-nowRank:0;
+  const net=M.income-M.expense;
+
+  // 이달의 헌터
+  let mvp=null,mvpPts=0;
+  for(const id in M.contrib){ if(M.contrib[id]>mvpPts){mvpPts=M.contrib[id];mvp=G.hunters.find(h=>h.id===+id);} }
+  // 이달의 신인 (이달 영입 + 성장폭)
+  const rookie=G.hunters.filter(h=>M.newbies.includes(h.id))
+    .sort((a,b)=>b.pot-a.pot)[0];
+
+  let b=`<div class="mrow"><span class="ml">완료 의뢰</span><span class="mv">${M.quests-M.fails}건 <span class="tiny">(실패 ${M.fails})</span></span></div>
+   <div class="mrow"><span class="ml">수입</span><span class="mv money">+${fmt(M.income)}G</span></div>
+   <div class="mrow"><span class="ml">급여</span><span class="mv neg">-${fmt(M.wage||0)}G</span></div>
+   <div class="mrow"><span class="ml">시설 유지비</span><span class="mv neg">-${fmt(M.up||0)}G</span></div>
+   <div class="mrow"><span class="ml">기타 지출</span><span class="mv neg">-${fmt(Math.max(0,M.expense-(M.wage||0)-(M.up||0)))}G</span></div>
+   <div class="mrow"><span class="ml">순이익</span><span class="mv ${net>=0?'pos':'neg'}">${net>=0?'+':''}${fmt(net)}G</span></div>
+   <div class="mrow"><span class="ml">길드 순위</span><span class="mv">${nowRank}위
+     ${dRank>0?`<span class="pos">↑${dRank}</span>`:dRank<0?`<span class="neg">↓${-dRank}</span>`:'<span class="tiny">유지</span>'}</span></div>
+   <div class="mrow"><span class="ml">길드 점수</span><span class="mv">${nowPts}점
+     <span class="pos tiny">+${nowPts-(M.pts||0)}</span></span></div>`;
+  if(M.threats)b+=`<div class="mrow"><span class="ml">위기 대응</span><span class="mv">${M.threatWin}/${M.threats}건 저지</span></div>`;
+
+  b+=`<div style="margin-top:13px"><div class="tiny" style="margin-bottom:6px">명성 변화</div>`;
+  for(const k in REPN){
+    const d=Math.round(G.rep[k]-(M.rep[k]||0));
+    b+=`<div class="mrow"><span class="ml">${REPN[k]}</span><span class="mv">${Math.round(G.rep[k])}
+      <span class="${d>0?'pos':d<0?'neg':'tiny'}">${d===0?'—':sgn(d)}</span></span></div>`;
+  }
+  b+=`</div><div style="margin-top:14px"><div class="tiny" style="margin-bottom:6px">이달의 표창</div>`;
+  if(mvp)b+=`<div class="award" style="display:flex;gap:11px;align-items:center">
+    ${sigil(mvp,40)}<div><div class="al">이달의 헌터</div>
+    <div class="an">${esc(mvp.name)}</div>
+    <div class="ad">${mvp.cls} Lv.${mvp.lv} · 전투력 ${power(mvp)} · 기여도 ${Math.round(mvpPts)}</div></div></div>`;
+  if(rookie)b+=`<div class="award" style="border-left-color:var(--moss);display:flex;gap:11px;align-items:center">
+    ${sigil(rookie,40)}<div><div class="al" style="color:var(--moss)">이달의 신인</div>
+    <div class="an">${esc(rookie.name)}</div>
+    <div class="ad">${rookie.age}세 · ${potShown(rookie)}</div></div></div>`;
+  if(!mvp&&!rookie)b+=`<div class="empty">이번 달은 표창할 만한 활약이 없었습니다.</div>`;
+
+  if(G.goal)b+=`<div class="hint" style="margin-top:12px;border-left-color:${G.goal.done?'var(--moss)':'var(--blood)'}">
+    <b>${G.month}개월차 과제 ${G.goal.done?'달성':'미달성'}</b><br>${esc(G.goal.txt)}</div>`;
+
+  // 다음 달 준비
+  G.month++;
+  M.pts=nowPts; M.rank=nowRank;
+  const prevRank=nowRank, prevPts=nowPts;
+  modal(`${G.month-1}개월차 결산`,`${G.day}일차 · ${guildGrade()}급`,b,
+    [{l:'다음 달로',p:1,fn:()=>{
+      const prev=G.mo;
+      G.mo=newMonth(); G.mo.pts=prevPts; G.mo.rank=prevRank;
+      for(const k in REPN)G.mo.rep[k]=G.rep[k];
+      rollGoal(prev);
+      done();
+    }}],true);
 }
 
 /* ── 모집 ── */
 function mCand(i){
   const c=G.cands[i];if(!c)return;
   const [g,col]=gradeOf(c);
-  let b=`<div class="stats">`;
+  let b=`<div style="display:flex;gap:13px;align-items:center;margin-bottom:10px">
+    ${sigil(c,56)}
+    <div style="flex:1"><div style="font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1">${power(c)}</div>
+    <div class="tiny">전투력 · ${CLASSES[c.cls].ic} ${c.cls} Lv.${c.lv}</div></div></div>`;
+  b+=`<div class="stats">`;
   SKEYS.forEach(k=>{
     const hi=CLASSES[c.cls].w[k]>=1.3;
     b+=`<div class="st ${hi?'hi':''}"><div class="sl"><span>${STATN[k]}</span><b>${c.stats[k]}</b></div>
@@ -1472,8 +2532,9 @@ function mCand(i){
   modal(`${CLASSES[c.cls].ic} ${esc(c.name)} <span class="tag" style="color:${col};border-color:${col};font-size:12px">${g}</span>`,
     `${c.cls} Lv.${c.lv} · ${c.age}세`,b,
     [{l:`영입 ${fmt(c.fee)}G`,p:1,dis:G.gold<c.fee||full,fn:()=>{
-      G.gold-=c.fee;c.id=G.nextId++;G.hunters.push(c);G.cands.splice(i,1);
-      push(`🤝 ${c.name}을(를) 영입했습니다.`,'good');closeM();save();render();
+      G.gold-=c.fee;c.id=G.nextId++;G.hunters.push(c);G.cands.splice(i,1);seedRel(c);
+      G.mo.newbies.push(c.id);G.mo.expense+=c.fee;
+      push(`🤝 ${eul(c.name)} 영입했습니다.`,'good');closeM();save();render();
     }},{l:'닫기',fn:closeM}]);
 }
 
@@ -1513,6 +2574,7 @@ document.addEventListener('click',ev=>{
     case 'adv': advance(+a.dataset.n); break;
     case 'advret': advanceUntilReturn(); break;
     case 'queue': nextQueue(); break;
+    case 'go': TAB=a.dataset.tab2; SEL=[]; render(); break;
     case 'hunter': mHunter(+a.dataset.id); break;
     case 'quest': SEL=[]; mQuest(+a.dataset.id); break;
     case 'sel': {
@@ -1523,6 +2585,7 @@ document.addEventListener('click',ev=>{
       mQuestReopen();
       break;
     }
+    case 'fld': fieldPick(+a.dataset.i); break;
     case 'tk': TRAINK=a.dataset.k; mTrainReopen(); break;
     case 'td': TRAIND=+a.dataset.d; mTrainReopen(); break;
     case 'equip': mEquip(+a.dataset.id,a.dataset.s); break;
@@ -1586,7 +2649,7 @@ const _closeM=closeM;closeM=function(){OPENQ=null;OPENTR=null;TRAINK=null;_close
    저장 (window.storage → localStorage → 메모리)
    ══════════════════════════════════════════════════ */
 const MEM={};
-const KEY='hgm_save_v1';
+const KEY='hgm_save_v2';
 async function rawGet(k){
   if(typeof window!=='undefined'&&window.storage&&window.storage.get){
     try{const r=await window.storage.get(k);return r?r.value:null;}catch(e){}
@@ -1636,6 +2699,7 @@ async function load(){
       ① <b style="color:var(--text)">의뢰에는 소요일이 있습니다.</b> 에이스를 5일짜리 원정에 보내면, 내일 뜨는 대형 의뢰에는 못 씁니다.<br><br>
       ② <b style="color:var(--text)">게시판 정보는 부정확합니다.</b> 돈을 내고 정찰하면 진짜 난이도와 숨은 변수를 봅니다. 나쁜 것만 나오는 건 아닙니다.<br><br>
       ③ <b style="color:var(--text)">헌터는 거절하고, 떠납니다.</b> 겁쟁이는 강한 적을 피하고, 탐욕은 수당을 요구하고, 계약이 끝나면 라이벌 길드가 데려갑니다.<br><br>
+      ④ <b style="color:var(--text)">주기적으로 위기가 예고됩니다.</b> 기한 안에 원정을 끝내야 막을 수 있습니다. 놓치면 배상금과 명성 하락이 따라오고, 그 일은 라이벌 길드가 대신 처리합니다.<br><br>
       <span style="color:var(--dim2)">접속하지 않는 동안 시간은 흐르지 않습니다. 자동으로 진행되는 것은 아무것도 없습니다.</span>
       </div>`,
       [{l:'시작',p:1,fn:closeM}]);
