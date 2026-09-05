@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>헌터 길드 매니저 — 프로토타입</title>
+<style>
+:root{
+  --bg:#141A1F;
+  --panel:#1C242B;
+  --panel2:#222C34;
+  --line:#2E3A44;
+  --line2:#3D4C58;
+  --text:#E6E9E6;
+  --dim:#8DA0A9;
+  --dim2:#647680;
+  --brass:#C9A227;
+  --brass-d:#8C7018;
+  --blood:#C0504A;
+  --moss:#6F9E5A;
+  --arc:#7B8FCB;
+  --r:3px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;
+  font-size:15px;line-height:1.55;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;border:0;background:none}
+#app{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--bg);position:relative}
+
+/* ── 상단 ── */
+#top{
+  position:sticky;top:0;z-index:20;background:var(--panel);
+  border-bottom:1px solid var(--line);
+  padding:10px 14px 9px;
+  display:flex;align-items:baseline;gap:10px;
+}
+#top .gname{font-weight:700;font-size:15px;letter-spacing:-.01em}
+#top .grade{
+  color:var(--brass);border:1px solid var(--brass-d);border-radius:2px;
+  font-size:11px;font-weight:700;padding:1px 5px;position:relative;top:-1px
+}
+#top .gold{margin-left:auto;color:var(--brass);font-weight:700;font-size:14px}
+#top .date{font-size:12px;color:var(--dim2)}
+
+/* ── 본문 ── */
+#view{flex:1;padding:14px 14px 96px}
+.sec{margin-bottom:22px}
+.sec>h2{
+  font-size:12px;font-weight:600;color:var(--dim);margin:0 0 8px;
+  letter-spacing:.02em;display:flex;align-items:center;gap:8px
+}
+.sec>h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ── 홈 히어로 ── */
+.hero{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px;margin-bottom:16px;
+}
+.hero .d1{font-size:12px;color:var(--dim2)}
+.hero .d2{font-size:27px;font-weight:800;letter-spacing:-.03em;line-height:1.15;margin:1px 0 10px}
+.hero .d2 em{font-style:normal;font-size:16px;font-weight:600;color:var(--dim);margin-left:7px}
+.adv{display:flex;gap:6px}
+.adv button{
+  flex:1;background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r);
+  padding:10px 4px;font-size:13px;font-weight:600;transition:background .12s
+}
+.adv button.main{background:var(--brass);border-color:var(--brass);color:#181203;font-weight:700}
+.adv button:active{filter:brightness(1.18)}
+
+/* ── 명성 ── */
+.reps{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+.rep{font-size:12px}
+.rep .rl{display:flex;justify-content:space-between;color:var(--dim);margin-bottom:3px}
+.rep .rl b{color:var(--text);font-weight:600}
+.bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brass)}
+
+/* ── 파견 현황 ── */
+.dispatch{
+  border-left:2px solid var(--brass);background:var(--panel);
+  padding:9px 11px;margin-bottom:6px;border-radius:0 var(--r) var(--r) 0
+}
+.dispatch .t{font-size:13px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.dispatch .t span{color:var(--brass);font-size:12px;white-space:nowrap}
+.dispatch .m{font-size:12px;color:var(--dim);margin-top:2px}
+
+/* ── 목록(장부형) ── */
+.ledger{border-top:1px solid var(--line)}
+.row{
+  border-bottom:1px solid var(--line);padding:10px 2px;
+  display:flex;align-items:center;gap:10px;width:100%;text-align:left
+}
+.row:active{background:var(--panel)}
+.row .ic{font-size:17px;width:22px;text-align:center;flex:none}
+.row .mid{flex:1;min-width:0}
+.row .n{font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.row .s{font-size:12px;color:var(--dim);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .rt{text-align:right;flex:none;font-size:12px;color:var(--dim)}
+.row .rt b{display:block;font-size:14px;color:var(--text);font-weight:700}
+
+/* ── 의뢰 카드 ── */
+.quest{
+  display:block;width:100%;text-align:left;background:var(--panel);
+  border:1px solid var(--line);border-left-width:3px;border-radius:0 var(--r) var(--r) 0;
+  padding:11px 12px;margin-bottom:7px
+}
+.quest:active{background:var(--panel2)}
+.quest .qh{display:flex;align-items:baseline;gap:7px}
+.quest .qt{font-size:14px;font-weight:600;flex:1}
+.quest .qr{color:var(--brass);font-weight:700;font-size:13px;white-space:nowrap}
+.quest .qm{display:flex;gap:9px;font-size:12px;color:var(--dim);margin-top:4px;flex-wrap:wrap}
+.stars{color:var(--brass);letter-spacing:1px;font-size:12px}
+.stars .u{color:var(--dim2)}
+.q-c{border-left-color:var(--blood)}
+.q-g{border-left-color:var(--moss)}
+.q-e{border-left-color:var(--brass)}
+.q-a{border-left-color:var(--arc)}
+
+/* ── 태그 ── */
+.tag{font-size:11px;padding:0 5px;border-radius:2px;border:1px solid var(--line2);color:var(--dim);white-space:nowrap;line-height:1.6}
+.tag.g{color:var(--moss);border-color:#3E5B33}
+.tag.b{color:var(--blood);border-color:#5C302C}
+.tag.y{color:var(--brass);border-color:var(--brass-d)}
+.tag.a{color:var(--arc);border-color:#3F4A6B}
+
+/* ── 모달 ── */
+#mroot{position:fixed;inset:0;z-index:60;display:none;background:rgba(8,11,14,.72)}
+#mroot.on{display:flex;align-items:flex-end;justify-content:center}
+.modal{
+  width:100%;max-width:520px;max-height:90vh;overflow-y:auto;background:var(--panel);
+  border:1px solid var(--line2);border-bottom:0;border-radius:8px 8px 0 0;
+  padding:16px 15px calc(16px + env(safe-area-inset-bottom));
+  animation:up .18s ease-out
+}
+@keyframes up{from{transform:translateY(14px)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.modal{animation:none}}
+.modal h3{margin:0 0 3px;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.modal .sub{color:var(--dim);font-size:12.5px;margin-bottom:13px}
+.mbtns{display:flex;gap:7px;margin-top:15px}
+.mbtns button{
+  flex:1;padding:11px;border-radius:var(--r);background:var(--panel2);
+  border:1px solid var(--line2);font-weight:600;font-size:14px
+}
+.mbtns button.p{background:var(--brass);border-color:var(--brass);color:#181203;font-weight:700}
+.mbtns button:disabled{opacity:.38}
+
+/* ── 능력치 ── */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;margin:10px 0}
+.st{font-size:12px}
+.st .sl{display:flex;justify-content:space-between;color:var(--dim)}
+.st .sl b{color:var(--text);font-weight:700;font-size:13px}
+.st .bar i{background:var(--dim)}
+.st.hi .bar i{background:var(--brass)}
+
+/* ── 판정 리포트 ── */
+.rep-l{
+  display:flex;justify-content:space-between;gap:10px;font-size:12.5px;
+  padding:4px 0;border-bottom:1px dotted var(--line)
+}
+.rep-l .lb{color:var(--dim);flex:1}
+.rep-l .vl{font-weight:700;white-space:nowrap}
+.rep-l.p .vl{color:var(--moss)}
+.rep-l.n .vl{color:var(--blood)}
+.rep-l.w{color:var(--blood)}
+.rep-l.w .lb{color:var(--blood)}
+.final{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-top:10px;padding-top:9px;border-top:1px solid var(--line2);font-weight:700
+}
+.final .big{font-size:22px}
+.hint{
+  background:var(--panel2);border-left:2px solid var(--line2);
+  padding:8px 10px;font-size:12.5px;color:var(--dim);margin-top:9px;border-radius:0 var(--r) var(--r) 0
+}
+.hint b{color:var(--text)}
+
+/* ── 체크 목록 ── */
+.pick{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;margin-bottom:5px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);width:100%;text-align:left
+}
+.pick.on{border-color:var(--brass);background:#2A2A1C}
+.pick.off{opacity:.42}
+.pick .box{width:15px;height:15px;border:1px solid var(--line2);border-radius:2px;flex:none;position:relative}
+.pick.on .box{background:var(--brass);border-color:var(--brass)}
+.pick.on .box::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #181203;border-width:0 2px 2px 0;transform:rotate(42deg)}
+
+/* ── 기타 ── */
+.note{font-size:12px;color:var(--dim2);line-height:1.6}
+.money{color:var(--brass);font-weight:700}
+.neg{color:var(--blood);font-weight:700}
+.pos{color:var(--moss);font-weight:700}
+.empty{color:var(--dim2);font-size:13px;padding:18px 0;text-align:center}
+.warn{
+  background:#2B1E1C;border:1px solid #5C302C;color:#E4A9A4;
+  padding:9px 11px;border-radius:var(--r);font-size:12.5px;margin-bottom:8px
+}
+.good{background:#1E2B1B;border:1px solid #3E5B33;color:#A9CE97}
+.tiny{font-size:11px;color:var(--dim2)}
+.up{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--line)
+}
+.up b{font-size:13.5px}
+.up .lv{color:var(--brass);font-size:12px;font-weight:700}
+.up button{
+  background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r);
+  padding:6px 11px;font-size:12px;font-weight:600;white-space:nowrap
+}
+.up button:disabled{opacity:.35}
+.seg{display:flex;gap:5px;margin-bottom:11px}
+.seg button{
+  flex:1;padding:7px 4px;font-size:12.5px;font-weight:600;border-radius:var(--r);
+  background:var(--panel);border:1px solid var(--line);color:var(--dim)
+}
+.seg button.on{background:var(--panel2);border-color:var(--brass);color:var(--brass)}
+
+/* ── 탭바 ── */
+#tabs{
+  position:fixed;bottom:0;left:0;right:0;z-index:30;
+  max-width:520px;margin:0 auto;background:var(--panel);
+  border-top:1px solid var(--line);display:flex;
+  padding-bottom:env(safe-area-inset-bottom)
+}
+#tabs button{flex:1;padding:8px 0 9px;text-align:center;color:var(--dim2);font-size:10.5px}
+#tabs button .ti{display:block;font-size:19px;line-height:1.25;filter:grayscale(1) opacity(.62)}
+#tabs button.on{color:var(--brass)}
+#tabs button.on .ti{filter:none}
+#tabs button .dot{
+  position:absolute;margin-left:12px;margin-top:-2px;width:6px;height:6px;
+  border-radius:50%;background:var(--blood)
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="top"></header>
+  <main id="view"></main>
+</div>
+<nav id="tabs"></nav>
+<div id="mroot"></div>
+
+<script>
+"use strict";
+/* ══════════════════════════════════════════════════
+   헌터 길드 매니저 — 프로토타입
+   설계 원칙
+   1. 방치 없음. 접속하지 않는 동안 시간은 흐르지 않는다.
+   2. 의뢰에 소요일이 있다. 에이스는 동시에 두 곳에 못 간다.
+   3. 정보는 불완전하다. 정찰로 산다.
+   4. 실패에는 반드시 "왜"가 붙는다.
+   5. 헌터는 거절하고, 떠나고, 은퇴한다.
+   ══════════════════════════════════════════════════ */
+
+/* ───────── 유틸 ───────── */
+const $=s=>document.querySelector(s);
+let SEED=(Date.now()^0x5f3759df)%2147483647;if(SEED<=0)SEED+=2147483646;
+function rnd(){SEED=SEED*16807%2147483647;return (SEED-1)/2147483646;}
+const ri=(a,b)=>Math.floor(rnd()*(b-a+1))+a;
+const pick=a=>a[Math.floor(rnd()*a.length)];
+const chance=p=>rnd()*100<p;
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmt=n=>Math.round(n).toLocaleString('ko-KR');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sgn=n=>(n>=0?'+':'')+Math.round(n);
+function stars(n,max){max=max||5;let h='';for(let i=1;i<=max;i++)h+=i<=n?'★':'<span class="u">★</span>';return '<span class="stars">'+h+'</span>';}
+
+/* ───────── 데이터 정의 ───────── */
+const SUR=['김','이','박','최','정','강','조','윤','장','임','한','서','신','권','황','안','송','류','전','홍','오','문','배','백'];
+const GIV=['하준','서준','도윤','시우','민준','지호','유진','서연','지우','수아','다인','예린','태오','건우','연우','채원','하윤','시윤','도경','아린','현우','수빈','정민','가온'];
+const FANT=['레온','엘리','카일','리나','도르','베인','실비','가론','미라','테오','란스','아이샤','볼프','노아','키릴','유안'];
+
+const CLASSES={
+ '검사':{ic:'⚔️',w:{atk:1.45,def:1.05,hp:1.15,agi:1.00,mag:0.25,luk:0.85},line:'front'},
+ '기사':{ic:'🛡️',w:{atk:1.00,def:1.55,hp:1.35,agi:0.60,mag:0.30,luk:0.80},line:'front'},
+ '궁수':{ic:'🏹',w:{atk:1.25,def:0.60,hp:0.90,agi:1.55,mag:0.50,luk:1.05},line:'back'},
+ '마법사':{ic:'🔮',w:{atk:0.45,def:0.50,hp:0.70,agi:0.80,mag:1.85,luk:0.90},line:'back'},
+ '사제':{ic:'📿',w:{atk:0.40,def:0.95,hp:1.05,agi:0.70,mag:1.55,luk:1.15},line:'back'},
+ '도적':{ic:'🗡️',w:{atk:1.05,def:0.60,hp:0.80,agi:1.65,mag:0.40,luk:1.45},line:'mid'},
+};
+const STATN={atk:'공격',def:'방어',hp:'체력',agi:'민첩',mag:'마력',luk:'운'};
+const SKEYS=['atk','def','hp','agi','mag','luk'];
+
+const TRAITS={
+ '전투광':{ic:'🔥',g:1,d:'토벌 성공률 +8%, 획득 경험치 +12%'},
+ '천재'  :{ic:'🧠',g:1,d:'훈련 효과 +25%'},
+ '행운아':{ic:'🍀',g:1,d:'운 +12, 희귀 보상 확률 상승'},
+ '불굴'  :{ic:'🪨',g:1,d:'부상 확률 -45%'},
+ '속공'  :{ic:'⚡',g:1,d:'의뢰 소요일 -1 (최소 1일)'},
+ '카리스마':{ic:'🗣️',g:1,d:'2인 이상 파티 인솔 시 전원 +6%'},
+ '학습광':{ic:'📖',g:1,d:'획득 경험치 +25%'},
+ '해결사':{ic:'🧭',g:1,d:'탐색·조사·채집 성공률 +10%'},
+ '강철위장':{ic:'🍖',g:1,d:'피로 축적 -30%'},
+ '탐욕'  :{ic:'💰',g:0,d:'급여 +45%. 보상이 낮은 의뢰를 거절한다'},
+ '게으름':{ic:'😴',g:0,d:'훈련 효과 -35%'},
+ '겁쟁이':{ic:'😨',g:0,d:'★4 이상 의뢰를 거절한다'},
+ '유리몸':{ic:'🩹',g:0,d:'부상 확률 +60%, 회복 기간 +50%'},
+ '고집'  :{ic:'😤',g:0,d:'2인 이상 파티에서 -7%'},
+ '방랑벽':{ic:'🎒',g:0,d:'충성도가 매월 자연 감소한다'},
+};
+const PERSONA={
+ '공격적':{like:['토벌'],dis:['호위','채집'],d:'싸움을 원한다. 잡일에 불만이 쌓인다.'},
+ '신중함':{like:['조사','호위'],dis:[],d:'준비되지 않은 의뢰를 꺼린다.'},
+ '오만함':{like:[],dis:[],picky:1,d:'자기 격에 안 맞는 의뢰를 거절한다.'},
+ '성실함':{like:[],dis:[],d:'무엇이든 맡는다. 충성도가 잘 떨어지지 않는다.'},
+ '소심함':{like:['채집','조사'],dis:['토벌'],d:'위험한 일을 피하고 싶어한다.'},
+ '자유분방':{like:['탐색','채집'],dis:['호위'],d:'묶이는 일을 싫어한다.'},
+};
+const QT={
+ '토벌':{ic:'⚔️',rep:'combat',cls:'q-c',st:['atk','hp']},
+ '호위':{ic:'🛡️',rep:'guard', cls:'q-g',st:['def','hp']},
+ '구조':{ic:'🚑',rep:'guard', cls:'q-g',st:['agi','hp']},
+ '탐색':{ic:'🗺️',rep:'explore',cls:'q-e',st:['agi','luk']},
+ '채집':{ic:'🌿',rep:'explore',cls:'q-e',st:['luk','hp']},
+ '조사':{ic:'🔍',rep:'arcane', cls:'q-a',st:['mag','agi']},
+};
+const REPN={combat:'토벌 명성',guard:'호위·구조 명성',explore:'탐색·채집 명성',arcane:'조사·마법 명성'};
+
+const MOB=['고블린','늑대 무리','오크','도적단','거대 거미','리자드맨','하피','트롤','오우거','와이번','언데드','슬라임 군체','미노타우로스','바실리스크'];
+const PLACE=['북부 삼림','고사목 늪','폐광 3구역','서리 협곡','옛 성터','붉은 절벽','안개 호수','국경 관문','버려진 수도원','검은 늪지'];
+const NPCN=['상단 행렬','왕실 전령','순례자 무리','약초상','귀족 마차','광부 조합'];
+const HERB=['월광초','화염정석','서리버섯','용의 비늘 조각','마력 결정'];
+
+const HAZ=[
+ {n:'예상 밖의 대군',d:'적 규모가 보고보다 큽니다.',pow:1.32,bad:1},
+ {n:'마법 생물 혼입',d:'마력 대응이 필요합니다.',add:['mag',62],bad:1},
+ {n:'독 지대',      d:'지속 피해가 발생합니다.',add:['hp',66],inj:16,bad:1},
+ {n:'함정 다수',    d:'회피 능력이 요구됩니다.',add:['agi',64],bad:1},
+ {n:'악천후',      d:'행군이 지연됩니다.',days:1,flat:-9,bad:1},
+ {n:'지형 불리',    d:'퇴로가 좁습니다.',flat:-11,inj:10,bad:1},
+ {n:'과장된 보고',  d:'실제 위협은 크지 않았습니다.',pow:0.72,bad:0},
+ {n:'숨겨진 보물',  d:'미발견 매장물이 있습니다.',rew:1.65,bad:0},
+ {n:'현지 협력자',  d:'길잡이를 구할 수 있습니다.',flat:13,bad:0},
+];
+const INJ={
+ light:{n:'경상',pen:.16,d:[3,6],out:0},
+ mid  :{n:'중상',pen:.36,d:[9,16],out:1},
+ heavy:{n:'치명상',pen:.62,d:[22,34],out:1},
+};
+const ITEMS={
+ w1:{n:'낡은 검',   s:'atk',v:5, p:450,  t:'무기'},
+ w2:{n:'강철 장검', s:'atk',v:12,p:2600, t:'무기'},
+ w3:{n:'명공의 검', s:'atk',v:23,p:11000,t:'무기'},
+ a1:{n:'가죽 갑옷', s:'def',v:5, p:400,  t:'방어구'},
+ a2:{n:'사슬 갑옷', s:'def',v:13,p:2800, t:'방어구'},
+ a3:{n:'판금 갑옷', s:'def',v:24,p:12000,t:'방어구'},
+ c1:{n:'행운의 반지',s:'luk',v:10,p:1500,t:'장신구'},
+ c2:{n:'마력 목걸이',s:'mag',v:12,p:2400,t:'장신구'},
+ c3:{n:'신속의 부츠',s:'agi',v:11,p:2200,t:'장신구'},
+};
+const FAC={
+ train:{n:'훈련장',d:'훈련 효과',v:[0,10,20,32,46],c:[0,2400,9000,34000,110000]},
+ heal :{n:'치료소',d:'회복 속도',v:[0,18,36,58,80],c:[0,2000,8000,30000,95000]},
+ rec  :{n:'모집소',d:'후보 수·질',v:[0,1,2,3,4],  c:[0,1800,7000,28000,90000]},
+ scout:{n:'정찰단',d:'정보 정확도',v:[30,22,15,8,0],c:[0,2600,10000,38000,125000]},
+ dorm :{n:'숙소',  d:'정원·피로 회복',v:[6,8,10,13,16],c:[0,2200,8500,32000,105000]},
+};
+const GRADES=[['F',0],['E',70],['D',200],['C',450],['B',850],['A',1400],['S',2200]];
+const RIVALN=['붉은 늑대','황금 상단','백색 성녀회','검은 까마귀','철벽 형제단'];
+
+/* ───────── 상태 ───────── */
+let G=null;
+let TAB='home';
+let SEL=[];        // 파견 선택 헌터 id
+let SHOP_T='무기';
+
+function newGame(){
+  G={
+    day:1, gold:6000, name:'변방 길드',
+    rep:{combat:8,guard:5,explore:5,arcane:3},
+    hunters:[], quests:[], cands:[], stock:[], inst:[],
+    active:[], settleCache:[],
+    fac:{train:1,heal:1,rec:1,scout:1,dorm:1},
+    log:[], queue:[], moves:[], nextId:1, done:0, donePts:0, earned:0,
+    rivals:RIVALN.map((n,i)=>({n,p:520+i*95+ri(-50,50)})),
+    lastRecruit:1, seenIntro:false,
+  };
+  // 시작 로스터 — 각자 시스템 하나씩 가르친다
+  const vet=mkHunter({age:37,lv:16,pot:64,cls:'기사',traits:['불굴'],pers:'성실함'});
+  vet.name='정도현'; vet.contract=42; vet.loyalty=82;
+  const mid=mkHunter({age:26,lv:9,pot:74,cls:'검사',traits:['전투광'],pers:'공격적'});
+  mid.contract=150;
+  const prob=mkHunter({age:29,lv:11,pot:70,cls:'도적',traits:['탐욕','겁쟁이'],pers:'오만함'});
+  prob.contract=120; prob.loyalty=48;
+  const rook=mkHunter({age:17,lv:1,pot:ri(84,95),cls:pick(['마법사','궁수']),traits:[pick(['천재','학습광'])],pers:pick(['신중함','자유분방'])});
+  rook.contract=300; rook.salary=Math.round(rook.salary*.5);
+  G.hunters=[vet,mid,prob,rook];
+  G.stock=['w1','a1'];
+  for(let i=0;i<5;i++) G.quests.push(mkQuest());
+  rollCands();
+  push('길드를 인수했습니다. 게시판에 의뢰 5건이 걸려 있습니다.','info');
+}
+
+/* ───────── 헌터 생성 ───────── */
+function mkHunter(o){
+  o=o||{};
+  const cls=o.cls||pick(Object.keys(CLASSES));
+  const w=CLASSES[cls].w;
+  const pot=o.pot||cl(Math.round(38+rnd()*rnd()*62+ri(-4,8)),30,97);
+  const lv=o.lv||1;
+  const base=18+Math.round(pot*0.16)+lv*1.1;
+  const st={},caps={};
+  SKEYS.forEach(k=>{
+    caps[k]=cl(Math.round(pot*(0.52+0.30*w[k]))+ri(-6,8),14,99);
+    st[k]=cl(Math.round(base*(0.55+0.55*w[k])+ri(-4,5)),8,caps[k]);
+  });
+  for(let i=1;i<lv;i++) grow({stats:st,caps,pot,cls},true);
+
+  const traits=(o.traits||[]).slice();
+  const tp=Object.keys(TRAITS).filter(t=>TRAITS[t].g===1);
+  const tn=Object.keys(TRAITS).filter(t=>TRAITS[t].g===0);
+  const target=Math.min(3,ri(1,2)+(o.traits?o.traits.length:0));
+  let guard=0;
+  while(traits.length<target && guard++<40){
+    const t=chance(pot>78?72:56)?pick(tp):pick(tn);
+    if(!traits.includes(t))traits.push(t);
+  }
+  const name=o.name||(chance(72)?pick(SUR)+pick(GIV):pick(FANT));
+  const pw0=Math.round(st.atk*.36+st.def*.24+st.hp*.20+st.agi*.20);
+  return {
+    id:G?G.nextId++:0, name, cls, lv, xp:0, age:o.age||ri(17,31),
+    stats:st, caps, pot, traits, pers:o.pers||pick(Object.keys(PERSONA)),
+    fatigue:0, injury:null, busy:null, until:0,
+    equip:{무기:null,방어구:null,장신구:null},
+    loyalty:o.loyalty!=null?o.loyalty:ri(55,78),
+    contract:o.contract||ri(80,220),
+    salary:Math.round((40+pw0*2.4+pw0*pw0/90)*(traits.includes('탐욕')?1.45:1)),
+    offer:null, quests:0, wins:0, retiring:false,
+  };
+}
+function grow(h,silent){
+  const w=CLASSES[h.cls].w;
+  let pts=2+Math.round(h.pot/32);
+  const gained={};
+  let guard=0;
+  while(pts>0 && guard++<80){
+    const k=weightedStat(w);
+    if(h.stats[k]<h.caps[k]){h.stats[k]++;gained[k]=(gained[k]||0)+1;pts--;}
+    else if(SKEYS.every(x=>h.stats[x]>=h.caps[x]))break;
+  }
+  return gained;
+}
+function weightedStat(w){
+  let t=0;SKEYS.forEach(k=>t+=w[k]);
+  let r=rnd()*t;
+  for(const k of SKEYS){r-=w[k];if(r<=0)return k;}
+  return 'atk';
+}
+
+/* ───────── 파생 수치 ───────── */
+function eff(h,k){
+  let v=h.stats[k];
+  for(const s in h.equip){const it=h.equip[s];if(it&&ITEMS[it].s===k)v+=ITEMS[it].v;}
+  if(k==='luk'&&h.traits.includes('행운아'))v+=12;
+  if(h.injury)v=Math.round(v*(1-INJ[h.injury.t].pen));
+  return Math.round(v);
+}
+function power(h){
+  const off=Math.max(eff(h,'atk'),eff(h,'mag')*0.95);
+  return Math.round(off*.36+eff(h,'def')*.24+eff(h,'hp')*.20+eff(h,'agi')*.20);
+}
+function gradeOf(h){
+  const s=power(h)*0.62+h.pot*0.75;
+  if(s>=160)return['A','#C0504A'];if(s>=128)return['B','#C9A227'];
+  if(s>=100)return['C','#A87BC9'];if(s>=76)return['D','#7B8FCB'];
+  if(s>=54)return['E','#6F9E5A'];return['F','#8DA0A9'];
+}
+function xpNeed(lv){return 50+lv*lv*4;}
+function potShown(h){
+  const e=FAC.scout.v[G.fac.scout-1];
+  if(e===0)return '잠재력 '+h.pot;
+  const lo=cl(h.pot-e,10,99),hi=cl(h.pot+e,10,99);
+  if(e>=22)return '잠재력 '+stars(cl(Math.round(h.pot/20),1,5));
+  return '잠재력 '+lo+'~'+hi;
+}
+function guildPts(){
+  let r=0;for(const k in G.rep)r+=G.rep[k];
+  return Math.round(r*1.4+(G.donePts||0)+G.earned/14000);
+}
+function guildGrade(){
+  let g='F';for(const[n,t] of GRADES)if(guildPts()>=t)g=n;return g;
+}
+function maxParty(){return ['C','B','A','S'].includes(guildGrade())?4:3;}
+function maxHunters(){return FAC.dorm.v[G.fac.dorm-1];}
+function myPower(){
+  return Math.round(G.hunters.map(power).sort((a,b)=>b-a).slice(0,5).reduce((a,b)=>a+b,0)*(1+guildPts()/1400));
+}
+function avail(h){return !h.busy && (!h.injury||h.injury.t==='light');}
+
+/* ───────── 의뢰 생성 ───────── */
+function mkQuest(){
+  const gp=guildPts();
+  const rw={combat:G.rep.combat,guard:G.rep.guard,explore:G.rep.explore,arcane:G.rep.arcane};
+  const types=Object.keys(QT);
+  const type=pick(types.filter(t=>rnd()<0.35+rw[QT[t].rep]/140).concat(types));
+  const tier=cl(Math.round(gp/180),0,4);
+  const d=cl(ri(1,2)+ri(0,tier)+(chance(18)?1:0),1,5);
+  const REQ=[42,92,160,245,345];
+  const reqPow=Math.round(REQ[d-1]*(0.86+rnd()*0.3));
+  const req={};
+  QT[type].st.forEach((k,i)=>{
+    req[k]=Math.round((36+d*10)*(i?0.88:1)*(0.9+rnd()*0.24));
+  });
+  const days=[1,2,2,3,4][d-1]+(chance(30)?1:0);
+  const repM=1+(rw[QT[type].rep]||0)/210;
+  const reward=Math.round(reqPow*(11+d*3.2)*(0.9+rnd()*0.25)*repM/10)*10;
+  const hz=[];
+  const hn=chance(30+d*8)?(chance(22)?2:1):0;
+  for(let i=0;i<hn;i++){const h=pick(HAZ);if(!hz.includes(h))hz.push(h);}
+  let name;
+  if(type==='토벌')name=pick(PLACE)+' '+pick(MOB)+' 토벌';
+  else if(type==='호위')name=pick(NPCN)+' 호위';
+  else if(type==='구조')name=pick(PLACE)+' 실종자 수색';
+  else if(type==='탐색')name=pick(PLACE)+' 탐색';
+  else if(type==='채집')name=pick(HERB)+' 채집';
+  else name=pick(PLACE)+' '+pick(MOB)+' 흔적 조사';
+  return {
+    id:G.nextId++, name, type, d, reqPow, req, days, reward,
+    hz, scouted:false, deadline:G.day+days+ri(3,8),
+    off:chance(50)?1:-1, offRoll:rnd()*100,   // 추정 난이도는 고정. 정찰단을 올리면 정확해진다
+  };
+}
+function shownDiff(q){
+  if(q.scouted)return q.d;
+  const e=FAC.scout.v[G.fac.scout-1];
+  if(e===0||q.offRoll>=e*1.9)return q.d;
+  return cl(q.d+q.off,1,5);
+}
+function scoutCost(q){
+  return Math.round(q.reward*(0.13-G.fac.scout*0.012)/10)*10;
+}
+
+/* ───────── 판정 ───────── */
+/* reveal=false : 플레이어가 아는 정보만 (정찰 안 했으면 위험 요소 미반영)
+   reveal=true  : 실제 판정 */
+function evaluate(q,party,reveal){
+  const L=[];
+  const useHz=(reveal||q.scouted)?q.hz:[];
+  let powMul=1,flat=0,extraReq={},injAdd=0,rewMul=1,dayAdd=0;
+  useHz.forEach(h=>{
+    if(h.pow)powMul*=h.pow;
+    if(h.flat)flat+=h.flat;
+    if(h.add)extraReq[h.add[0]]=Math.max(extraReq[h.add[0]]||0,h.add[1]);
+    if(h.inj)injAdd+=h.inj;
+    if(h.rew)rewMul*=h.rew;
+    if(h.days)dayAdd+=h.days;
+  });
+  const reqPow=Math.round(q.reqPow*powMul);
+  const reqs=Object.assign({},q.req);
+  for(const k in extraReq)reqs[k]=Math.max(reqs[k]||0,extraReq[k]);
+
+  let p=55;
+  const pp=party.reduce((a,h)=>a+power(h),0);
+  const pd=cl((pp/reqPow-1)*55,-40,33);
+  p+=pd;
+  L.push({l:`파티 전투력 ${pp} vs 요구 ${reqPow}`,v:sgn(pd),k:pd>=0?'p':'n'});
+
+  for(const k in reqs){
+    const need=reqs[k];
+    const mine=k==='mag'
+      ? Math.max(...party.map(h=>eff(h,'mag')))
+      : Math.round(party.reduce((a,h)=>a+eff(h,k),0)/party.length);
+    const dv=cl((mine/need-1)*36,-17,15);
+    p+=dv;
+    const isExtra=extraReq[k]!=null&&(q.req[k]==null||q.req[k]<extraReq[k]);
+    L.push({l:`${STATN[k]} ${k==='mag'?'최고':'평균'} ${mine} vs 요구 ${need}${isExtra?' (위험요소)':''}`,v:sgn(dv),k:dv>=0?'p':'n'});
+  }
+  // 특성
+  party.forEach(h=>{
+    if(h.traits.includes('전투광')&&q.type==='토벌'){p+=8;L.push({l:`🔥 전투광 (${h.name})`,v:'+8',k:'p'});}
+    if(h.traits.includes('해결사')&&['탐색','조사','채집'].includes(q.type)){p+=10;L.push({l:`🧭 해결사 (${h.name})`,v:'+10',k:'p'});}
+    if(h.traits.includes('겁쟁이')&&q.d>=4){p-=14;L.push({l:`😨 겁쟁이 (${h.name}) 강적 대치`,v:'-14',k:'n'});}
+    if(h.traits.includes('고집')&&party.length>1){p-=7;L.push({l:`😤 고집 (${h.name})`,v:'-7',k:'n'});}
+    if(h.traits.includes('카리스마')&&party.length>1){p+=6;L.push({l:`🗣️ 카리스마 (${h.name})`,v:'+6',k:'p'});}
+  });
+  // 파티 조합
+  if(party.length>1){
+    const lines=new Set(party.map(h=>CLASSES[h.cls].line));
+    if(lines.size>=2){p+=6;L.push({l:'전위·후위 균형 편성',v:'+6',k:'p'});}
+  }
+  // 성격
+  party.forEach(h=>{
+    const P=PERSONA[h.pers];
+    if(P.like.includes(q.type)){p+=3;L.push({l:`${h.name} 성격 적합 (${h.pers})`,v:'+3',k:'p'});}
+    else if(P.dis.includes(q.type)){p-=4;L.push({l:`${h.name} 성격 부적합 (${h.pers})`,v:'-4',k:'n'});}
+  });
+  // 피로 / 부상
+  const fa=party.reduce((a,h)=>a+h.fatigue,0)/party.length;
+  if(fa>12){const v=-fa*0.26;p+=v;L.push({l:`평균 피로도 ${Math.round(fa)}%`,v:sgn(v),k:'n'});}
+  party.forEach(h=>{if(h.injury){p-=9;L.push({l:`${h.name} ${INJ[h.injury.t].n} 상태 출전`,v:'-9',k:'n'});}});
+  // 위험 요소 플랫
+  useHz.forEach(h=>{
+    if(h.flat){p+=h.flat;L.push({l:`${h.bad?'⚠️':'✅'} ${h.n}`,v:sgn(h.flat),k:h.flat>=0?'p':'n'});}
+    else if(h.pow){L.push({l:`${h.bad?'⚠️':'✅'} ${h.n} (요구 전투력 ×${h.pow})`,v:'반영됨',k:h.bad?'n':'p'});}
+    else if(h.rew){L.push({l:`✅ ${h.n} (보상 ×${h.rew})`,v:'반영됨',k:'p'});}
+  });
+  if(!q.scouted&&!reveal){
+    L.push({l:'정찰 미실시 — 알려지지 않은 변수 존재',v:'?',k:'w'});
+  }
+  let days=q.days+dayAdd;
+  if(party.some(h=>h.traits.includes('속공')))days=Math.max(1,days-1);
+  return {p:cl(Math.round(p),3,96), L, reqPow, reqs, injAdd, rewMul, days, unknown:!q.scouted&&q.hz.length>0};
+}
+
+/* ───────── 거절 판정 ───────── */
+function refusal(h,q){
+  const sd=shownDiff(q);
+  if(h.traits.includes('겁쟁이')&&sd>=4)
+    return {r:'😨 "저건... 저는 못 갑니다." (겁쟁이 · ★4 이상 거부)'};
+  if(h.traits.includes('탐욕')){
+    const perDay=q.reward/Math.max(1,q.days);
+    const need=h.salary*0.55;
+    if(perDay<need){
+      const bribe=Math.round((need-perDay)*q.days/10)*10+50;
+      return {r:'💰 "일당이 이거밖에 안 됩니까?" (탐욕 · 하루 '+fmt(perDay)+'G)',bribe};
+    }
+  }
+  if(h.pers==='오만함'&&h.loyalty<75){
+    const tier={'F':1,'E':1,'D':2,'C':3,'B':4,'A':5}[gradeOf(h)[0]];
+    if(sd<=tier-2)
+      return {r:'😐 "제 격에 맞는 일을 주십시오." (오만함)'};
+  }
+  if(h.loyalty<25&&chance(45))
+    return {r:'😞 "길드장님 지시는 이제 안 따르겠습니다." (충성도 '+h.loyalty+')'};
+  if(h.fatigue>=88)
+    return {r:'😵 "더는 못 움직입니다." (피로도 '+Math.round(h.fatigue)+'%)'};
+  if(PERSONA[h.pers].dis.includes(q.type)&&h.loyalty<38&&chance(35))
+    return {r:`🙄 "${q.type} 같은 건 사양합니다." (${h.pers} · 낮은 충성도)`};
+  return null;
+}
+
+/* ───────── 파견 ───────── */
+function dispatch(q,party,bribe){
+  const ev=evaluate(q,party,false);
+  party.forEach(h=>{
+    h.busy={type:'quest',qid:q.id};
+    h.until=G.day+ev.days;
+    h.party=party.map(x=>x.id);
+  });
+  q.sent={ids:party.map(h=>h.id),start:G.day,end:G.day+ev.days,est:ev.p,bribe:bribe||0};
+  if(bribe)G.gold-=bribe;
+  G.quests=G.quests.filter(x=>x.id!==q.id);
+  G.active=G.active||[];
+  G.active.push(q);
+  push(`${party.map(h=>h.name).join(', ')} → ${q.name} (${ev.days}일)`,'info');
+}
+
+/* ───────── 의뢰 결산 ───────── */
+function resolveQuest(q,out){
+  const party=q.sent.ids.map(id=>G.hunters.find(h=>h.id===id)).filter(Boolean);
+  if(!party.length)return;
+  const ev=evaluate(q,party,true);
+  const roll=rnd()*100;
+  let res,rm,xm;
+  if(roll<ev.p-60){res='대성공';rm=1.6;xm=1.4;}
+  else if(roll<ev.p){res='성공';rm=1;xm=1;}
+  else if(roll<ev.p+17){res='절반 성공';rm=0.42;xm=0.55;}
+  else {res='실패';rm=0;xm=0.28;}
+
+  const gold=Math.round(q.reward*rm*ev.rewMul);
+  G.gold+=gold; G.earned+=gold;
+  const rk=QT[q.type].rep;
+  let rd=res==='실패'?-q.d*0.9:(res==='절반 성공'?q.d*0.4:q.d*1.7*(res==='대성공'?1.4:1));
+  if(rd>0)rd*=Math.max(0.12,1-G.rep[rk]/115);   // 명성은 올라갈수록 더디게 오른다
+  G.rep[rk]=cl(G.rep[rk]+rd,0,100);
+  if(res!=='실패'){G.done++;G.donePts=(G.donePts||0)+q.d*q.d*0.55;}
+
+  // 경험치
+  const lvups=[];
+  party.forEach(h=>{
+    let xp=Math.round(q.d*q.d*40*xm);
+    if(h.traits.includes('학습광'))xp=Math.round(xp*1.25);
+    if(h.traits.includes('전투광')&&q.type==='토벌')xp=Math.round(xp*1.12);
+    h.xp+=xp; h.quests++;
+    if(res!=='실패')h.wins++;
+    let fa=(ev.days*(5+q.d*1.4));
+    if(h.traits.includes('강철위장'))fa*=0.7;
+    h.fatigue=cl(h.fatigue+fa,0,100);
+    while(h.xp>=xpNeed(h.lv)){
+      h.xp-=xpNeed(h.lv);h.lv++;
+      const g=grow(h);
+      lvups.push({h,g});
+    }
+    // 충성도
+    let dl=res==='실패'?-3:2;
+    if(PERSONA[h.pers].like.includes(q.type))dl+=3;
+    if(PERSONA[h.pers].dis.includes(q.type))dl-=3;
+    if(h.fatigue>82)dl-=4;
+    h.loyalty=cl(h.loyalty+dl,0,100);
+  });
+
+  // 부상
+  const inj=[];
+  party.forEach(h=>{
+    const gap=cl(ev.reqPow/party.reduce((a,x)=>a+power(x),0)-1,0,1.2);
+    let c=4+gap*38+q.d*1.6+ev.injAdd*0.8;
+    if(res==='실패')c*=1.9; else if(res==='절반 성공')c*=1.35;
+    if(h.traits.includes('불굴'))c*=0.55;
+    if(h.traits.includes('유리몸'))c*=1.6;
+    if(chance(cl(c,2,52))){
+      const r=rnd()*100;
+      const t=r<58?'light':(r<89?'mid':'heavy');
+      let d=ri(INJ[t].d[0],INJ[t].d[1]);
+      d=Math.round(d*(1-FAC.heal.v[G.fac.heal-1]/100)*(h.traits.includes('유리몸')?1.5:1));
+      d=Math.max(1,d);
+      h.injury={t,left:d};
+      // 왜 다쳤는가
+      let why='';
+      const worst=Object.keys(ev.reqs).map(k=>({k,r:eff(h,k)/ev.reqs[k]})).sort((a,b)=>a.r-b.r)[0];
+      if(worst&&worst.r<1){
+        why=`${STATN[worst.k]} ${eff(h,worst.k)} — 요구 ${ev.reqs[worst.k]}. `;
+        const slot=worst.k==='atk'?'무기':worst.k==='def'?'방어구':'장신구';
+        why+=`${slot}를 지급했다면 결과가 달랐을 수 있습니다.`;
+      } else if(h.fatigue>70) why=`출발 시 피로도가 높았습니다.`;
+      else why=`난이도 대비 파티 규모가 부족했습니다.`;
+      inj.push({h,t,d,why});
+    }
+  });
+
+  // 해제
+  party.forEach(h=>{h.busy=null;h.party=null;});
+  q.result={res,gold,ev,inj,lvups,party:party.map(h=>h.name)};
+  out.push(q);
+  G.active=G.active.filter(x=>x.id!==q.id);
+  const icon=res==='실패'?'❌':(res==='대성공'?'🏆':'✅');
+  push(`${icon} ${q.name} — ${res} (${gold>0?'+'+fmt(gold)+'G':'보상 없음'})`,res==='실패'?'bad':'good',q.result?q:null);
+}
+
+/* ───────── 하루 진행 ───────── */
+function stepDay(out){
+  G.day++;
+  // 복귀
+  (G.active||[]).slice().forEach(q=>{if(G.day>=q.sent.end)resolveQuest(q,out);});
+  // 훈련 종료
+  G.hunters.forEach(h=>{
+    if(h.busy&&h.busy.type==='train'&&G.day>=h.until){
+      const k=h.busy.stat, lvl=FAC.train.v[G.fac.train-1];
+      let g=h.busy.days*(1.05+lvl/100);
+      if(h.traits.includes('천재'))g*=1.25;
+      if(h.traits.includes('게으름'))g*=0.65;
+      g=Math.max(1,Math.round(g));
+      const before=h.stats[k];
+      h.stats[k]=Math.min(h.caps[k],h.stats[k]+g);
+      const real=h.stats[k]-before;
+      h.xp+=h.busy.days*18;
+      while(h.xp>=xpNeed(h.lv)){h.xp-=xpNeed(h.lv);h.lv++;grow(h);}
+      h.busy=null;
+      push(`🏋️ ${h.name} 훈련 완료 — ${STATN[k]} ${sgn(real)}${real<g?' (한계 도달)':''}`,real>0?'good':'bad');
+    }
+  });
+  // 강제 휴식 종료
+  G.hunters.forEach(h=>{
+    if(h.busy&&h.busy.type==='rest'&&G.day>=h.until){
+      h.busy=null;push(`😌 ${h.name} 휴식 종료.`,'info');
+    }
+  });
+  // 회복
+  const rec=6+FAC.dorm.v[G.fac.dorm-1]*1.2;
+  G.hunters.forEach(h=>{
+    if(!h.busy)h.fatigue=cl(h.fatigue-rec,0,100);
+    else if(h.busy.type==='rest')h.fatigue=cl(h.fatigue-rec*2.4,0,100);
+    else h.fatigue=cl(h.fatigue-0.6,0,100);
+    if(h.injury){h.injury.left--;if(h.injury.left<=0){h.injury=null;push(`🩹 ${h.name} 부상에서 회복했습니다.`,'good');}}
+    h.contract--;
+  });
+  // 게시판
+  G.quests=G.quests.filter(q=>{
+    if(G.day>q.deadline){push(`📋 「${q.name}」 의뢰 기한이 지나 취소되었습니다.`,'bad');return false;}
+    return true;
+  });
+  if(G.quests.length<9&&chance(85))G.quests.push(mkQuest());
+  while(G.quests.length<5)G.quests.push(mkQuest());
+  // 주급
+  if(G.day%7===0)payday();
+  // 모집 후보
+  if(G.day-G.lastRecruit>=7)rollCands();
+  // 계약 / 스카우트
+  contractCheck();
+  // 월말
+  if(G.day%30===0)monthEnd();
+  // 개인 사건
+  if(chance(11))personalEvent();
+}
+function payday(){
+  let s=G.hunters.reduce((a,h)=>a+h.salary,0)+G.inst.reduce((a,i)=>a+i.salary,0);
+  if(G.gold>=s){G.gold-=s;push(`💸 주급 ${fmt(s)}G 지급`,'info');}
+  else{
+    G.gold=0;
+    G.hunters.forEach(h=>h.loyalty=cl(h.loyalty-8,0,100));
+    push(`⚠️ 자금 부족! 주급 ${fmt(s)}G를 지급하지 못해 전원 충성도가 크게 떨어졌습니다.`,'bad');
+  }
+}
+function contractCheck(){
+  G.hunters.slice().forEach(h=>{
+    if(h.contract<=0){
+      if(h.busy){h.contract=1;return;}   // 원정 중에는 떠나지 않는다
+      leave(h,h.offer?h.offer.g:pick(G.rivals).n,'계약 만료');
+      return;
+    }
+    if(h.contract<=30&&!h.offer&&chance(2.4+ (100-h.loyalty)*0.05)&&power(h)>60){
+      const rv=pick(G.rivals);
+      h.offer={g:rv.n,salary:Math.round(h.salary*(1.6+rnd()*1.1))};
+      G.queue.push({type:'poach',hid:h.id});
+    }
+  });
+}
+function leave(h,to,why){
+  G.hunters=G.hunters.filter(x=>x.id!==h.id);
+  G.active=(G.active||[]).filter(q=>!q.sent.ids.includes(h.id));
+  G.moves.unshift({day:G.day,name:h.name,to,pw:power(h),why});
+  const rv=G.rivals.find(r=>r.n===to);if(rv)rv.p+=Math.round(power(h)*0.55);
+  push(`🚪 ${h.name}이(가) ${to} 길드로 이적했습니다. (${why})`,'bad');
+}
+function monthEnd(){
+  // 라이벌 성장
+  G.rivals.forEach(r=>r.p=Math.round(r.p*(1.012+rnd()*0.028)));
+  // 노화 / 은퇴
+  G.hunters.slice().forEach(h=>{
+    if(G.day%360===0){h.age++;}
+    if(h.age>=31&&chance((h.age-30)*7)){
+      const k=pick(['atk','agi','hp']);
+      h.stats[k]=Math.max(8,h.stats[k]-ri(1,3));
+      h.caps[k]=Math.max(h.stats[k],h.caps[k]-1);
+    }
+    if(h.age>=34){
+      h.retiring=true;
+      if(!h.busy&&chance((h.age-33)*11))G.queue.push({type:'retire',hid:h.id});
+    }
+    if(h.traits.includes('방랑벽'))h.loyalty=cl(h.loyalty-6,0,100);
+  });
+  push(`📊 ${Math.ceil(G.day/30)}개월차 결산 — 길드 랭킹이 갱신되었습니다.`,'info');
+}
+function personalEvent(){
+  const free=G.hunters.filter(h=>!h.busy);
+  if(free.length<1)return;
+  const h=pick(free);
+  const pool=[];
+  if(free.length>=2){
+    const o=pick(free.filter(x=>x.id!==h.id));
+    if(o)pool.push({type:'quarrel',hid:h.id,oid:o.id});
+  }
+  if(h.loyalty<55)pool.push({type:'complain',hid:h.id});
+  if(h.fatigue>60)pool.push({type:'burnout',hid:h.id});
+  pool.push({type:'ask',hid:h.id});
+  if(pool.length)G.queue.push(pick(pool));
+}
+function push(text,kind,q){
+  G.log.unshift({day:G.day,text,kind:kind||'info',q:q?q.id:null,
+    report:q?{name:q.name,r:q.result}:null});
+  if(G.log.length>60)G.log.pop();
+}
+
+/* ───────── 진행 실행 ───────── */
+function advance(n){
+  const out=[];
+  let moved=0;
+  for(let i=0;i<n;i++){
+    if(G.queue.length)break;
+    stepDay(out);
+    moved++;
+    if(G.queue.length)break;
+  }
+  save();
+  if(out.length)showSettle(out,moved);
+  else if(G.queue.length)nextQueue();
+  else {render();toast(`${moved}일이 지났습니다.`);}
+}
+function advanceUntilReturn(){
+  if(!G.active||!G.active.length){advance(1);return;}
+  const end=Math.min(...G.active.map(q=>q.sent.end));
+  advance(Math.max(1,end-G.day));
+}
+
+/* ───────── 모집 ───────── */
+function rollCands(){
+  G.lastRecruit=G.day;
+  const n=3+FAC.rec.v[G.fac.rec-1];
+  G.cands=[];
+  for(let i=0;i<n;i++){
+    const bonus=FAC.rec.v[G.fac.rec-1]*4;
+    let h=mkHunter({pot:cl(Math.round(36+rnd()*rnd()*60+bonus+ri(-3,6)),28,97),lv:ri(1,3)+Math.floor(guildPts()/160)});
+    // 교관 특성 전수
+    if(G.inst.length&&chance(26+G.inst.length*8)){
+      const t=pick(G.inst).trait;
+      if(t&&!h.traits.includes(t)&&h.traits.length<3)h.traits.push(t);
+    }
+    h.fee=Math.round((power(h)*11+h.pot*7)/10)*10;
+    G.cands.push(h);
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   렌더링
+   ══════════════════════════════════════════════════ */
+function render(){
+  const g=guildGrade();
+  $('#top').innerHTML=
+    `<span class="gname">${esc(G.name)}</span><span class="grade">${g}급</span>`+
+    `<span class="gold">${fmt(G.gold)}G</span>`;
+  const alerts=G.queue.length;
+  const tabs=[['home','🏠','홈'],['hunters','👥','헌터'],['quests','⚔️','의뢰'],['guild','🏰','길드'],['rank','📊','랭킹']];
+  $('#tabs').innerHTML=tabs.map(([k,i,n])=>
+    `<button data-tab="${k}" class="${TAB===k?'on':''}"><span class="ti">${i}</span>${n}${k==='home'&&alerts?'<span class="dot"></span>':''}</button>`).join('');
+  const v=$('#view');
+  v.innerHTML=({home:vHome,hunters:vHunters,quests:vQuests,guild:vGuild,rank:vRank})[TAB]();
+  v.scrollTop=0;window.scrollTo(0,0);
+}
+
+function vHome(){
+  const mo=Math.floor((G.day-1)/30)+1, dd=((G.day-1)%30)+1;
+  let h=`<div class="hero">
+    <div class="d1">${mo}월차</div>
+    <div class="d2">${dd}일<em>${G.day}일째 · ${guildGrade()}급 길드</em></div>
+    <div class="adv">
+      <button data-act="adv" data-n="1">1일 진행</button>
+      <button data-act="adv" data-n="7">7일 진행</button>
+      <button data-act="advret" class="main">복귀까지</button>
+    </div>
+  </div>`;
+
+  if(G.queue.length)
+    h+=`<div class="warn">🔔 처리해야 할 일이 ${G.queue.length}건 있습니다. <b>진행하려면 먼저 결정하세요.</b>
+      <div style="margin-top:7px"><button data-act="queue" style="background:var(--blood);color:#fff;padding:6px 12px;border-radius:3px;font-weight:700">확인하기</button></div></div>`;
+
+  const act=G.active||[];
+  h+=`<div class="sec"><h2>파견 현황 ${act.length?act.length+'건':''}</h2>`;
+  if(!act.length)h+=`<div class="empty">파견 중인 헌터가 없습니다.<br>의뢰 게시판에서 일감을 고르세요.</div>`;
+  act.forEach(q=>{
+    const left=q.sent.end-G.day;
+    const names=q.sent.ids.map(i=>{const x=G.hunters.find(y=>y.id===i);return x?x.name:'?';}).join(', ');
+    h+=`<div class="dispatch"><div class="t">${esc(q.name)}<span>D-${left<=0?0:left}</span></div>
+      <div class="m">${esc(names)} · 예상 성공률 ${q.sent.est}%${q.scouted?'':' <span class="tag b">정찰 미실시</span>'}</div></div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<div class="sec"><h2>명성</h2><div class="reps">`;
+  for(const k in REPN){
+    h+=`<div class="rep"><div class="rl"><span>${REPN[k]}</span><b>${Math.round(G.rep[k])}</b></div>
+      <div class="bar"><i style="width:${G.rep[k]}%"></i></div></div>`;
+  }
+  h+=`</div><div class="note" style="margin-top:8px">명성이 높은 분야일수록 게시판에 그 종류의 의뢰가 자주 뜨고, 보상 단가도 올라갑니다.</div></div>`;
+
+  h+=`<div class="sec"><h2>길드 일지</h2>`;
+  if(!G.log.length)h+=`<div class="empty">기록 없음</div>`;
+  G.log.slice(0,14).forEach((l,i)=>{
+    const c=l.kind==='bad'?'var(--blood)':l.kind==='good'?'var(--moss)':'var(--dim)';
+    h+=`<div ${l.report?`data-act="rep" data-i="${i}"`:''} style="padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;display:flex;gap:9px;${l.report?'cursor:pointer':''}">
+      <span class="tiny" style="flex:none;width:34px">${l.day}일</span>
+      <span style="color:${c};flex:1">${esc(l.text)}${l.report?' <span class="tag y">판정서</span>':''}</span></div>`;
+  });
+  h+=`</div>`;
+  h+=`<div class="note" style="text-align:center;padding:8px 0 0">접속하지 않는 동안 시간은 흐르지 않습니다.<br>모든 결정은 당신이 내립니다.</div>`;
+  return h;
+}
+
+function vHunters(){
+  const sorted=G.hunters.slice().sort((a,b)=>power(b)-power(a));
+  let h=`<div class="sec"><h2>소속 헌터 ${G.hunters.length} / ${maxHunters()}</h2><div class="ledger">`;
+  sorted.forEach(x=>{
+    const [g,c]=gradeOf(x);
+    let st='',cls='';
+    if(x.busy&&x.busy.type==='quest'){st=`파견 중 · D-${Math.max(0,x.until-G.day)}`;}
+    else if(x.busy&&x.busy.type==='train'){st=`훈련 중 · D-${Math.max(0,x.until-G.day)}`;}
+    else if(x.injury){st=`${INJ[x.injury.t].n} · ${x.injury.left}일 남음`;cls='b';}
+    else st='대기';
+    const tags=[];
+    if(x.offer)tags.push('<span class="tag b">영입 제안</span>');
+    if(x.contract<=30)tags.push(`<span class="tag y">계약 D-${x.contract}</span>`);
+    if(x.retiring)tags.push('<span class="tag">은퇴 임박</span>');
+    if(x.loyalty<35)tags.push('<span class="tag b">불만</span>');
+    h+=`<button class="row" data-act="hunter" data-id="${x.id}">
+      <span class="ic">${CLASSES[x.cls].ic}</span>
+      <span class="mid"><span class="n">${esc(x.name)}
+        <span class="tag" style="color:${c};border-color:${c}">${g}</span>${tags.join('')}</span>
+        <span class="s ${cls==='b'?'':''}" ${cls==='b'?'style="color:var(--blood)"':''}>${x.cls} Lv.${x.lv} · ${x.age}세 · ${st} · 피로 ${Math.round(x.fatigue)}%</span></span>
+      <span class="rt"><b>${power(x)}</b>전투력</span></button>`;
+  });
+  h+=`</div></div>`;
+
+  if(G.inst.length){
+    h+=`<div class="sec"><h2>교관</h2><div class="ledger">`;
+    G.inst.forEach(i=>{
+      h+=`<div class="row"><span class="ic">🎓</span><span class="mid">
+        <span class="n">${esc(i.name)}</span>
+        <span class="s">${i.cls} 출신 · 훈련 효과 +6% · 전수 특성 ${i.trait?TRAITS[i.trait].ic+i.trait:'없음'}</span></span>
+        <span class="rt"><b>${fmt(i.salary)}G</b>주급</span></div>`;
+    });
+    h+=`</div></div>`;
+  }
+  h+=`<div class="note">헌터를 눌러 능력치·훈련·장비·재계약을 관리합니다.</div>`;
+  return h;
+}
+
+function vQuests(){
+  let h=`<div class="sec"><h2>의뢰 게시판</h2>`;
+  if(!G.quests.length)h+=`<div class="empty">걸린 의뢰가 없습니다. 하루 진행하면 새 의뢰가 붙습니다.</div>`;
+  G.quests.forEach(q=>{
+    const sd=shownDiff(q);
+    const acc=FAC.scout.v[G.fac.scout-1];
+    const dtxt=q.scouted?stars(q.d):(acc>15?stars(sd)+' <span class="tiny">추정</span>':stars(sd));
+    h+=`<button class="quest ${QT[q.type].cls}" data-act="quest" data-id="${q.id}">
+      <span class="qh"><span class="qt">${QT[q.type].ic} ${esc(q.name)}</span><span class="qr">${fmt(q.reward)}G</span></span>
+      <span class="qm">${dtxt}<span>${q.days}일 소요</span><span>기한 D-${q.deadline-G.day}</span>
+      ${q.scouted?'<span class="tag g">정찰 완료</span>':'<span class="tag">미정찰</span>'}</span>
+    </button>`;
+  });
+  h+=`</div>`;
+  const idle=G.hunters.filter(avail).length;
+  h+=`<div class="note">지금 파견 가능한 헌터 <b style="color:var(--text)">${idle}명</b>. 파견하면 소요일 동안 다른 의뢰에 보낼 수 없습니다.</div>`;
+  return h;
+}
+
+function vGuild(){
+  let h=`<div class="sec"><h2>시설</h2>`;
+  for(const k in FAC){
+    const f=FAC[k],lv=G.fac[k],max=lv>=5;
+    const cost=max?0:f.c[lv];
+    const cur=f.v[lv-1],nxt=max?null:f.v[lv];
+    const unit=k==='rec'?'단계':k==='dorm'?'명':k==='scout'?'% 오차':'%';
+    h+=`<div class="up"><div><b>${f.n}</b> <span class="lv">Lv.${lv}</span>
+      <div class="tiny">${f.d} ${cur}${unit}${max?'':` → ${nxt}${unit}`}</div></div>
+      ${max?'<span class="tag y">최대</span>':
+      `<button data-act="fac" data-k="${k}" ${G.gold<cost?'disabled':''}>${fmt(cost)}G</button>`}</div>`;
+  }
+  h+=`</div>`;
+
+  h+=`<div class="sec"><h2>모집소 <span class="tiny" style="font-weight:400">${7-(G.day-G.lastRecruit)}일 후 갱신</span></h2>`;
+  G.cands.forEach((c,i)=>{
+    const [g,col]=gradeOf(c);
+    h+=`<button class="row" data-act="cand" data-i="${i}" style="border-bottom:1px solid var(--line)">
+      <span class="ic">${CLASSES[c.cls].ic}</span>
+      <span class="mid"><span class="n">${esc(c.name)} <span class="tag" style="color:${col};border-color:${col}">${g}</span>
+        ${c.traits.map(t=>`<span class="tag ${TRAITS[t].g?'g':'b'}">${TRAITS[t].ic}</span>`).join('')}</span>
+      <span class="s">${c.cls} Lv.${c.lv} · ${c.age}세 · 전투력 ${power(c)} · ${potShown(c)}</span></span>
+      <span class="rt"><b>${fmt(c.fee)}G</b>계약금</span></button>`;
+  });
+  h+=`<div style="margin-top:9px"><button data-act="reroll" class="up" style="width:100%;background:var(--panel2);border:1px solid var(--line2);border-radius:3px;padding:9px;font-weight:600;font-size:13px" ${G.gold<500?'disabled':''}>후보 새로 부르기 · 500G</button></div>`;
+  h+=`<div class="note" style="margin-top:8px">정찰단 등급이 낮으면 잠재력이 별점으로만 보입니다. 지금 오차 ±${FAC.scout.v[G.fac.scout-1]}.</div></div>`;
+
+  h+=`<div class="sec"><h2>장비 상점</h2><div class="seg">`;
+  ['무기','방어구','장신구'].forEach(t=>h+=`<button data-act="shopt" data-t="${t}" class="${SHOP_T===t?'on':''}">${t}</button>`);
+  h+=`</div><div class="ledger">`;
+  for(const k in ITEMS){
+    const it=ITEMS[k];if(it.t!==SHOP_T)continue;
+    const own=G.stock.filter(x=>x===k).length+G.hunters.filter(hh=>Object.values(hh.equip).includes(k)).length;
+    h+=`<div class="row"><span class="ic">${it.t==='무기'?'⚔️':it.t==='방어구'?'🛡️':'💍'}</span>
+      <span class="mid"><span class="n">${it.n}${own?` <span class="tag">보유 ${own}</span>`:''}</span>
+      <span class="s">${STATN[it.s]} +${it.v}</span></span>
+      <button data-act="buy" data-k="${k}" style="background:var(--panel2);border:1px solid var(--line2);border-radius:3px;padding:6px 11px;font-size:12px;font-weight:600" ${G.gold<it.p?'disabled':''}>${fmt(it.p)}G</button></div>`;
+  }
+  h+=`</div><div class="note" style="margin-top:8px">창고: ${G.stock.length?G.stock.map(k=>ITEMS[k].n).join(', '):'비어 있음'}</div></div>`;
+
+  h+=`<div class="sec"><h2>저장</h2>
+    <div class="up"><div><b>수동 저장</b><div class="tiny">진행할 때마다 자동 저장됩니다</div></div>
+    <button data-act="reset">새로 시작</button></div></div>`;
+  return h;
+}
+
+function vRank(){
+  const list=G.rivals.map(r=>({n:r.n,p:r.p,me:0})).concat([{n:G.name,p:myPower(),me:1}])
+    .sort((a,b)=>b.p-a.p);
+  let h=`<div class="sec"><h2>길드 랭킹</h2><div class="ledger">`;
+  list.forEach((r,i)=>{
+    h+=`<div class="row" style="${r.me?'background:#242C1D':''}">
+      <span class="ic" style="color:${i===0?'var(--brass)':'var(--dim2)'}">${i+1}</span>
+      <span class="mid"><span class="n">${esc(r.n)}${r.me?' <span class="tag y">우리</span>':''}</span></span>
+      <span class="rt"><b>${fmt(r.p)}</b>세력</span></div>`;
+  });
+  h+=`</div><div class="note" style="margin-top:8px">세력은 상위 5명의 전투력 합계와 길드 실적으로 계산됩니다.</div></div>`;
+
+  h+=`<div class="sec"><h2>이적 기록</h2>`;
+  if(!G.moves.length)h+=`<div class="empty">아직 떠난 헌터가 없습니다.</div>`;
+  G.moves.slice(0,12).forEach(m=>{
+    h+=`<div class="row"><span class="ic">🚪</span><span class="mid">
+      <span class="n">${esc(m.name)} → ${esc(m.to)}</span>
+      <span class="s">${m.day}일차 · ${m.why} · 당시 전투력 ${m.pw}</span></span></div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<div class="sec"><h2>길드 실적</h2><div class="ledger">
+    <div class="row"><span class="mid"><span class="n">완료한 의뢰</span></span><span class="rt"><b>${G.done}</b>건</span></div>
+    <div class="row"><span class="mid"><span class="n">누적 수입</span></span><span class="rt"><b>${fmt(G.earned)}</b>G</span></div>
+    <div class="row"><span class="mid"><span class="n">길드 점수</span></span><span class="rt"><b>${guildPts()}</b>점</span></div>
+  </div>`;
+  const gi=GRADES.findIndex(x=>x[0]===guildGrade());
+  if(gi<GRADES.length-1)h+=`<div class="note" style="margin-top:8px">${GRADES[gi+1][0]}급까지 ${GRADES[gi+1][1]-guildPts()}점 남았습니다.</div>`;
+  return h;
+}
+
+/* ══════════════════════════════════════════════════
+   모달
+   ══════════════════════════════════════════════════ */
+let MB=[];
+function modal(title,sub,body,btns,noclose){
+  MB=btns||[];
+  $('#mroot').className='on';
+  $('#mroot').innerHTML=`<div class="modal">
+    <h3>${title}</h3>${sub?`<div class="sub">${sub}</div>`:''}
+    <div>${body}</div>
+    <div class="mbtns">${MB.map((b,i)=>`<button data-mb="${i}" class="${b.p?'p':''}" ${b.dis?'disabled':''}>${b.l}</button>`).join('')}</div>
+  </div>`;
+  $('#mroot').dataset.noclose=noclose?'1':'';
+}
+function closeM(){$('#mroot').className='';$('#mroot').innerHTML='';MB=[];}
+function toast(t){
+  const d=document.createElement('div');
+  d.textContent=t;
+  d.style.cssText='position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line2);color:var(--text);padding:8px 15px;border-radius:20px;font-size:13px;z-index:80;white-space:nowrap';
+  document.body.appendChild(d);
+  setTimeout(()=>d.remove(),1700);
+}
+
+/* ── 헌터 상세 ── */
+function mHunter(id){
+  const h=G.hunters.find(x=>x.id===id);if(!h)return;
+  const [g,c]=gradeOf(h);
+  let b='';
+  if(h.offer)b+=`<div class="warn">📨 <b>${h.offer.g}</b> 길드가 ${h.name}에게 주급 <b>${fmt(h.offer.salary)}G</b>를 제안했습니다. (현재 ${fmt(h.salary)}G)<br>계약 만료까지 <b>${h.contract}일</b>.</div>`;
+  else if(h.contract<=30)b+=`<div class="warn">계약 만료까지 ${h.contract}일. 재계약하지 않으면 다른 길드로 떠납니다.</div>`;
+  if(h.injury)b+=`<div class="warn">${INJ[h.injury.t].n} — 회복까지 ${h.injury.left}일. 능력치 -${Math.round(INJ[h.injury.t].pen*100)}%${h.injury.t!=='light'?' · 파견 불가':''}</div>`;
+  if(h.retiring)b+=`<div class="warn" style="background:#2A2620;border-color:#5A4E33;color:#D6C79B">${h.age}세. 은퇴를 고려하고 있습니다. 은퇴 시 교관으로 남길 수 있습니다.</div>`;
+
+  b+=`<div class="stats">`;
+  SKEYS.forEach(k=>{
+    const v=eff(h,k),base=h.stats[k],cap=h.caps[k];
+    const bonus=v-base+(h.injury?Math.round(base*INJ[h.injury.t].pen):0);
+    const hi=CLASSES[h.cls].w[k]>=1.3;
+    b+=`<div class="st ${hi?'hi':''}"><div class="sl"><span>${STATN[k]}</span>
+      <b>${v}${bonus>0?` <span style="color:var(--moss);font-size:11px">+${bonus}</span>`:''} <span class="tiny">/${cap}</span></b></div>
+      <div class="bar"><i style="width:${cl(base/99*100,2,100)}%"></i></div></div>`;
+  });
+  b+=`</div>`;
+  b+=`<div class="rep-l"><span class="lb">전투력</span><span class="vl">${power(h)}</span></div>
+   <div class="rep-l"><span class="lb">레벨 / 경험치</span><span class="vl">Lv.${h.lv} · ${h.xp}/${xpNeed(h.lv)}</span></div>
+   <div class="rep-l"><span class="lb">${potShown(h)}</span><span class="vl">${h.pot>=85?'특급':h.pot>=70?'우수':h.pot>=55?'보통':'제한적'}</span></div>
+   <div class="rep-l"><span class="lb">충성도</span><span class="vl" style="color:${h.loyalty<40?'var(--blood)':h.loyalty>75?'var(--moss)':''}">${h.loyalty}</span></div>
+   <div class="rep-l"><span class="lb">피로도</span><span class="vl" style="color:${h.fatigue>70?'var(--blood)':''}">${Math.round(h.fatigue)}%</span></div>
+   <div class="rep-l"><span class="lb">주급 / 계약</span><span class="vl">${fmt(h.salary)}G · D-${h.contract}</span></div>
+   <div class="rep-l"><span class="lb">의뢰 수행</span><span class="vl">${h.quests}건 (성공 ${h.wins})</span></div>`;
+
+  b+=`<div style="margin-top:11px"><div class="tiny" style="margin-bottom:5px">성격 · ${h.pers}</div>
+    <div class="hint" style="margin-top:0">${PERSONA[h.pers].d}</div></div>`;
+  b+=`<div style="margin-top:11px"><div class="tiny" style="margin-bottom:5px">특성</div>`;
+  h.traits.forEach(t=>b+=`<div class="rep-l ${TRAITS[t].g?'p':'n'}"><span class="lb">${TRAITS[t].ic} ${t}</span><span class="vl" style="font-weight:400;font-size:11.5px;color:var(--dim)">${TRAITS[t].d}</span></div>`);
+  b+=`</div>`;
+
+  b+=`<div style="margin-top:11px"><div class="tiny" style="margin-bottom:5px">장비</div>`;
+  ['무기','방어구','장신구'].forEach(s=>{
+    const it=h.equip[s];
+    b+=`<div class="up" style="padding:7px 0"><div><b style="font-size:13px">${it?ITEMS[it].n:'—'}</b>
+      <div class="tiny">${s}${it?` · ${STATN[ITEMS[it].s]} +${ITEMS[it].v}`:' · 미장착'}</div></div>
+      <button data-act="equip" data-id="${h.id}" data-s="${s}">${it?'교체':'장착'}</button></div>`;
+  });
+  b+=`</div>`;
+
+  const btns=[];
+  if(h.offer)btns.push({l:'재계약 협상',p:1,fn:()=>mResign(h.id)});
+  else if(h.contract<=60)btns.push({l:'재계약',p:1,fn:()=>mResign(h.id)});
+  if(!h.busy&&(!h.injury||h.injury.t==='light'))btns.push({l:'훈련 배정',fn:()=>mTrain(h.id)});
+  btns.push({l:'닫기',fn:closeM});
+  modal(`${CLASSES[h.cls].ic} ${esc(h.name)} <span class="tag" style="color:${c};border-color:${c};font-size:12px">${g}</span>`,
+    `${h.cls} · ${h.age}세 · ${h.busy?(h.busy.type==='quest'?'파견 중':'훈련 중'):'대기'}`,b,btns);
+}
+
+/* ── 훈련 ── */
+function mTrain(id){
+  const h=G.hunters.find(x=>x.id===id);if(!h)return;
+  const lvl=FAC.train.v[G.fac.train-1];
+  let b=`<div class="note" style="margin-bottom:10px">훈련 중에는 의뢰에 나갈 수 없습니다. 기간이 길수록 상승폭이 큽니다.<br>훈련장 Lv.${G.fac.train} 보정 +${lvl}%${h.traits.includes('천재')?' · 🧠 천재 +25%':''}${h.traits.includes('게으름')?' · 😴 게으름 -35%':''}${G.inst.length?` · 교관 ${G.inst.length}명`:''}</div>`;
+  b+=`<div class="tiny" style="margin-bottom:6px">능력치 선택</div>`;
+  SKEYS.forEach(k=>{
+    const capped=h.stats[k]>=h.caps[k];
+    b+=`<button class="pick ${TRAINK===k?'on':''} ${capped?'off':''}" data-act="tk" data-k="${k}" ${capped?'disabled':''}>
+      <span class="box"></span><span style="flex:1">${STATN[k]} <span class="tiny">${h.stats[k]} / 한계 ${h.caps[k]}</span></span>
+      ${capped?'<span class="tag">한계 도달</span>':''}</button>`;
+  });
+  b+=`<div class="tiny" style="margin:11px 0 6px">기간 · 비용 · 피로</div>`;
+  [[3,600,14],[5,1100,24],[8,2000,40]].forEach(([d,c,f])=>{
+    b+=`<button class="pick ${TRAIND===d?'on':''}" data-act="td" data-d="${d}">
+      <span class="box"></span><span style="flex:1">${d}일 훈련</span>
+      <span class="tiny">${fmt(c)}G · 피로 +${f}</span></button>`;
+  });
+  const cost={3:600,5:1100,8:2000}[TRAIND];
+  modal('훈련 배정',esc(h.name),b,[
+    {l:`시작 · ${fmt(cost)}G`,p:1,dis:!TRAINK||G.gold<cost||h.stats[TRAINK]>=h.caps[TRAINK],fn:()=>{
+      const f={3:14,5:24,8:40}[TRAIND];
+      G.gold-=cost;h.busy={type:'train',stat:TRAINK,days:TRAIND};h.until=G.day+TRAIND;
+      h.fatigue=cl(h.fatigue+f,0,100);
+      push(`🏋️ ${h.name} ${STATN[TRAINK]} 훈련 시작 (${TRAIND}일)`,'info');
+      closeM();save();render();
+    }},
+    {l:'취소',fn:closeM}
+  ]);
+}
+let TRAINK=null,TRAIND=3;
+
+/* ── 장비 ── */
+function mEquip(id,slot){
+  const h=G.hunters.find(x=>x.id===id);if(!h)return;
+  const opts=G.stock.filter(k=>ITEMS[k].t===slot);
+  let b='';
+  if(h.equip[slot])b+=`<button class="pick" data-act="unequip" data-id="${id}" data-s="${slot}">
+    <span style="flex:1">해제 — ${ITEMS[h.equip[slot]].n}</span><span class="tag">창고로</span></button>`;
+  if(!opts.length)b+=`<div class="empty">창고에 ${slot}가 없습니다.<br>길드 → 장비 상점에서 구입하세요.</div>`;
+  opts.forEach((k,i)=>{
+    b+=`<button class="pick" data-act="doequip" data-id="${id}" data-s="${slot}" data-k="${k}" data-i="${i}">
+      <span style="flex:1">${ITEMS[k].n}</span><span class="tag g">${STATN[ITEMS[k].s]} +${ITEMS[k].v}</span></button>`;
+  });
+  modal(slot+' 장착',esc(h.name),b,[{l:'닫기',fn:()=>mHunter(id)}]);
+}
+
+/* ── 의뢰 상세 / 파견 ── */
+function mQuest(id){
+  const q=G.quests.find(x=>x.id===id);if(!q)return;
+  const party=SEL.map(i=>G.hunters.find(h=>h.id===i)).filter(Boolean);
+  const sd=shownDiff(q);
+  let b='';
+  b+=`<div class="rep-l"><span class="lb">난이도</span><span class="vl">${q.scouted?stars(q.d):stars(sd)+(FAC.scout.v[G.fac.scout-1]>0?' <span class="tiny">추정</span>':'')}</span></div>
+   <div class="rep-l"><span class="lb">기본 보상</span><span class="vl money">${fmt(q.reward)}G</span></div>
+   <div class="rep-l"><span class="lb">소요 기간</span><span class="vl">${q.days}일</span></div>
+   <div class="rep-l"><span class="lb">접수 기한</span><span class="vl">D-${q.deadline-G.day}</span></div>
+   <div class="rep-l"><span class="lb">요구 전투력</span><span class="vl">${q.scouted?q.reqPow:'약 '+Math.round(q.reqPow*(0.9+FAC.scout.v[G.fac.scout-1]/300))}</span></div>`;
+  for(const k in q.req)
+    b+=`<div class="rep-l"><span class="lb">요구 ${STATN[k]}${k==='mag'?' (최고)':' (평균)'}</span><span class="vl">${q.req[k]}</span></div>`;
+
+  if(q.scouted){
+    if(q.hz.length){
+      b+=`<div style="margin-top:11px"><div class="tiny" style="margin-bottom:5px">정찰 보고</div>`;
+      q.hz.forEach(h=>b+=`<div class="hint" style="margin-top:5px;border-left-color:${h.bad?'var(--blood)':'var(--moss)'}"><b>${h.bad?'⚠️':'✅'} ${h.n}</b><br>${h.d}</div>`);
+      b+=`</div>`;
+    } else b+=`<div class="hint good" style="margin-top:11px;background:#1E2B1B;border-left-color:var(--moss);color:#A9CE97">✅ 정찰 결과 특이사항 없음. 보고서대로입니다.</div>`;
+  } else {
+    b+=`<div class="hint" style="border-left-color:var(--brass)">이 의뢰는 <b>정찰하지 않았습니다.</b> 보고된 난이도와 실제가 다를 수 있고, 함정·대군·마법 생물 같은 변수가 숨어 있을 수 있습니다. 반대로 과장된 보고이거나 미발견 매장물이 있을 수도 있습니다.<br>
+      <span style="color:var(--brass);font-weight:700">정찰 비용 ${fmt(scoutCost(q))}G</span></div>`;
+  }
+
+  // 파티 편성
+  b+=`<div style="margin:14px 0 6px" class="tiny">파티 편성 (최대 ${maxParty()}명)</div>`;
+  const cands=G.hunters.slice().sort((a,b2)=>power(b2)-power(a));
+  cands.forEach(h=>{
+    const ok=avail(h), on=SEL.includes(h.id);
+    let why='';
+    if(h.busy)why=h.busy.type==='quest'?`파견 중 D-${h.until-G.day}`:`훈련 중 D-${h.until-G.day}`;
+    else if(h.injury&&h.injury.t!=='light')why=`${INJ[h.injury.t].n} · 출전 불가`;
+    else if(h.injury)why=`경상 (능력치 -16%)`;
+    else why=`피로 ${Math.round(h.fatigue)}%`;
+    b+=`<button class="pick ${on?'on':''} ${ok?'':'off'}" data-act="sel" data-id="${h.id}" ${ok?'':'disabled'}>
+      <span class="box"></span>
+      <span style="flex:1">${CLASSES[h.cls].ic} ${esc(h.name)} <span class="tiny">${h.cls}</span></span>
+      <span class="tiny" style="text-align:right">전투력 ${power(h)}<br>${why}</span></button>`;
+  });
+
+  // 예측
+  if(party.length){
+    const ev=evaluate(q,party,false);
+    b+=`<div style="margin-top:12px;background:var(--panel2);padding:11px;border-radius:3px;border:1px solid var(--line)">
+      <div class="tiny" style="margin-bottom:6px">출발 전 예측 — 당신이 아는 정보만 반영됩니다</div>`;
+    ev.L.forEach(l=>b+=`<div class="rep-l ${l.k}"><span class="lb">${l.l}</span><span class="vl">${l.v}</span></div>`);
+    b+=`<div class="final"><span>예상 성공률</span><span class="big" style="color:${ev.p>=65?'var(--moss)':ev.p>=40?'var(--brass)':'var(--blood)'}">${ev.p}%</span></div>
+      <div class="tiny" style="margin-top:5px">복귀 예정 ${ev.days}일 후 · 그동안 이 ${party.length}명은 다른 의뢰에 보낼 수 없습니다.</div></div>`;
+  } else {
+    b+=`<div class="empty">헌터를 선택하면 예상 성공률이 계산됩니다.</div>`;
+  }
+
+  const btns=[];
+  if(!q.scouted)btns.push({l:`정찰 ${fmt(scoutCost(q))}G`,dis:G.gold<scoutCost(q),fn:()=>{
+    G.gold-=scoutCost(q);q.scouted=true;
+    const bad=q.hz.filter(h=>h.bad).length;
+    push(`🔍 「${q.name}」 정찰 완료 — ${q.hz.length?(bad?'위험 요소 '+bad+'건 발견':'유리한 변수 발견'):'특이사항 없음'}`,bad?'bad':'good');
+    save();mQuest(id);
+  }});
+  btns.push({l:`파견 (${party.length}/${maxParty()})`,p:1,dis:!party.length,fn:()=>tryDispatch(q,party)});
+  btns.push({l:'닫기',fn:()=>{SEL=[];closeM();}});
+  modal(`${QT[q.type].ic} ${esc(q.name)}`,`${q.type} 의뢰`,b,btns);
+}
+
+function tryDispatch(q,party){
+  const refs=[];
+  party.forEach(h=>{const r=refusal(h,q);if(r)refs.push({h,r});});
+  if(!refs.length){SEL=[];dispatch(q,party);closeM();save();render();toast('파견했습니다.');return;}
+  const bribes=refs.filter(x=>x.r.bribe);
+  const hard=refs.filter(x=>!x.r.bribe);
+  let b='';
+  refs.forEach(x=>b+=`<div class="warn"><b>${esc(x.h.name)}</b><br>${x.r.r}</div>`);
+  const total=bribes.reduce((a,x)=>a+x.r.bribe,0);
+  if(hard.length){
+    b+=`<div class="note">거절한 헌터를 빼고 보내거나, 편성을 다시 짜야 합니다.</div>`;
+  } else {
+    b+=`<div class="note">추가 수당 <b class="money">${fmt(total)}G</b>를 지급하면 응합니다.</div>`;
+  }
+  const rest=party.filter(h=>!refs.some(x=>x.h.id===h.id));
+  const btns=[];
+  if(!hard.length)btns.push({l:`수당 지급 · ${fmt(total)}G`,p:1,dis:G.gold<total,fn:()=>{
+    SEL=[];dispatch(q,party,total);closeM();save();render();toast('수당을 주고 파견했습니다.');
+  }});
+  if(rest.length)btns.push({l:`${rest.length}명만 파견`,p:hard.length?1:0,fn:()=>{
+    SEL=[];dispatch(q,rest);closeM();save();render();toast('일부만 파견했습니다.');
+  }});
+  btns.push({l:'편성 다시',fn:()=>mQuest(q.id)});
+  modal('거절당했습니다','헌터는 성격과 특성에 따라 의뢰를 거부합니다',b,btns);
+}
+
+/* ── 결산 ── */
+function showSettle(list,days){
+  if(days>0){
+    G.settleCache=list.concat(G.settleCache||[]).slice(0,10);
+    save();
+  }
+  let b=`<div class="note" style="margin-bottom:11px">${days}일이 지났고, 파견이 ${list.length}건 복귀했습니다.</div>`;
+  list.forEach(q=>{
+    const r=q.result;
+    const col=r.res==='실패'?'var(--blood)':r.res==='대성공'?'var(--brass)':'var(--moss)';
+    b+=`<div style="background:var(--panel2);border:1px solid var(--line);border-left:3px solid ${col};padding:11px;margin-bottom:8px;border-radius:0 3px 3px 0">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+        <b style="font-size:14px">${esc(q.name)}</b>
+        <span style="color:${col};font-weight:700;font-size:13px">${r.res}</span></div>
+      <div class="tiny" style="margin-top:2px">${r.party.join(', ')}</div>
+      <div style="margin-top:6px;font-size:13px">${r.gold>0?`<span class="money">+${fmt(r.gold)}G</span>`:'<span class="neg">보상 없음</span>'}</div>`;
+    r.lvups.forEach(l=>b+=`<div class="tiny" style="color:var(--moss);margin-top:3px">📈 ${l.h.name} Lv.${l.h.lv} 달성 — ${Object.keys(l.g).map(k=>STATN[k]+' +'+l.g[k]).join(', ')||'성장 한계'}</div>`);
+    r.inj.forEach(i=>b+=`<div class="tiny" style="color:var(--blood);margin-top:3px">⚠️ ${i.h.name} ${INJ[i.t].n} (${i.d}일)</div>`);
+    b+=`<div style="margin-top:7px"><button data-act="repq" data-id="${q.id}" style="font-size:11.5px;color:var(--brass);border-bottom:1px solid var(--brass-d);padding:0">판정서 보기</button></div></div>`;
+  });
+  SETTLE=list;
+  modal('의뢰 결산','',b,[{l:'확인',p:1,fn:()=>{closeM();if(G.queue.length)nextQueue();else{render();}}}],true);
+}
+let SETTLE=[];
+
+function mReport(q){
+  const r=q.result;const ev=r.ev;
+  const col=r.res==='실패'?'var(--blood)':r.res==='대성공'?'var(--brass)':'var(--moss)';
+  let b=`<div class="tiny" style="margin-bottom:8px">${r.party.join(', ')} · ${ev.days}일 원정</div>`;
+  ev.L.forEach(l=>b+=`<div class="rep-l ${l.k}"><span class="lb">${l.l}</span><span class="vl">${l.v}</span></div>`);
+  b+=`<div class="final"><span>최종 성공 확률</span><span class="big" style="color:${col}">${ev.p}% → ${r.res}</span></div>`;
+  if(q.sent.est!==ev.p){
+    const gap=ev.p-q.sent.est;
+    b+=`<div class="hint" style="border-left-color:${gap<0?'var(--blood)':'var(--moss)'}">
+      출발 전 예측은 <b>${q.sent.est}%</b>였습니다. 실제는 <b>${ev.p}%</b>.
+      ${gap<0?'정찰하지 않아 숨은 위험을 놓쳤습니다.':'예상보다 유리한 변수가 있었습니다.'}</div>`;
+  }
+  r.inj.forEach(i=>b+=`<div class="hint" style="border-left-color:var(--blood);margin-top:8px">
+    <b>⚠️ ${i.h.name} ${INJ[i.t].n} · ${i.d}일 이탈</b><br>${i.why}</div>`);
+  if(r.res==='실패'){
+    const worst=ev.L.filter(l=>l.k==='n').sort((a,b2)=>parseFloat(a.v)-parseFloat(b2.v))[0];
+    if(worst)b+=`<div class="hint" style="border-left-color:var(--brass);margin-top:8px">
+      <b>다음에 바꿀 것</b><br>가장 큰 감점 요인은 「${worst.l}」(${worst.v})였습니다.</div>`;
+  }
+  modal('판정서',esc(q.name),b,[{l:'닫기',fn:()=>{if(SETTLE.length)showSettle(SETTLE,0);else closeM();}}]);
+}
+
+/* ── 대기열(결정) ── */
+function nextQueue(){
+  if(!G.queue.length){render();return;}
+  const e=G.queue[0];
+  const done=()=>{G.queue.shift();save();if(G.queue.length)nextQueue();else{closeM();render();}};
+  const h=G.hunters.find(x=>x.id===e.hid);
+  if(!h){done();return;}
+
+  if(e.type==='poach'){
+    const need=Math.round(h.offer.salary*(1.06-h.loyalty/450));
+    const bonus=Math.round(need*3.2);
+    modal('영입 제안',`${esc(h.name)} · 계약 D-${h.contract}`,
+      `<div class="warn">📨 <b>${h.offer.g}</b> 길드가 주급 <b>${fmt(h.offer.salary)}G</b>를 제시했습니다.<br>현재 우리 길드 주급은 ${fmt(h.salary)}G입니다.</div>
+       <div class="rep-l"><span class="lb">전투력</span><span class="vl">${power(h)}</span></div>
+       <div class="rep-l"><span class="lb">충성도</span><span class="vl" style="color:${h.loyalty<50?'var(--blood)':''}">${h.loyalty}</span></div>
+       <div class="rep-l"><span class="lb">잔여 계약</span><span class="vl">${h.contract}일</span></div>
+       <div class="hint">붙잡으려면 주급 <b class="money">${fmt(need)}G</b> + 계약금 <b class="money">${fmt(bonus)}G</b>가 필요합니다.
+       충성도가 높을수록 요구가 낮아집니다.</div>`,
+      [{l:`재계약 ${fmt(bonus)}G`,p:1,dis:G.gold<bonus,fn:()=>{
+        G.gold-=bonus;h.salary=need;h.contract+=ri(180,300);h.offer=null;h.loyalty=cl(h.loyalty+12,0,100);
+        push(`✍️ ${h.name} 재계약 (주급 ${fmt(need)}G)`,'good');done();
+      }},{l:'보낸다',fn:()=>{
+        h.loyalty=cl(h.loyalty-18,0,100);h.offer.decided=1;
+        push(`${h.name}이(가) 재계약 거절 통보를 받았습니다. 계약 만료 시 떠납니다.`,'bad');done();
+      }}],true);
+  }
+  else if(e.type==='retire'){
+    const cost=Math.round(h.salary*0.6);
+    const tr=h.traits.filter(t=>TRAITS[t].g)[0]||null;
+    modal('은퇴 의사',`${esc(h.name)} · ${h.age}세`,
+      `<div class="hint">"${h.name}: 이제 몸이 안 따라줍니다. 물러날 때가 된 것 같습니다."</div>
+       <div class="rep-l"><span class="lb">통산</span><span class="vl">의뢰 ${h.quests}건 · 성공 ${h.wins}건</span></div>
+       <div class="rep-l"><span class="lb">최종 전투력</span><span class="vl">${power(h)}</span></div>
+       <div class="hint" style="border-left-color:var(--brass)">교관으로 남기면 주급 <b class="money">${fmt(cost)}G</b>에
+       훈련 효과 +6%${tr?`, 신입에게 <b>${TRAITS[tr].ic} ${tr}</b> 특성을 전수할 확률`:''}이 생깁니다.</div>`,
+      [{l:'교관으로',p:1,fn:()=>{
+        G.inst.push({name:h.name,cls:h.cls,salary:cost,trait:tr});
+        G.hunters=G.hunters.filter(x=>x.id!==h.id);
+        push(`🎓 ${h.name}이(가) 은퇴하고 훈련장 교관이 되었습니다.`,'good');done();
+      }},{l:'보내드린다',fn:()=>{
+        G.hunters=G.hunters.filter(x=>x.id!==h.id);
+        G.moves.unshift({day:G.day,name:h.name,to:'은퇴',pw:power(h),why:'현역 은퇴'});
+        push(`🫡 ${h.name}이(가) 길드를 떠났습니다. 수고했습니다.`,'info');done();
+      }}],true);
+  }
+  else if(e.type==='quarrel'){
+    const o=G.hunters.find(x=>x.id===e.oid)||h;
+    modal('길드 내 마찰',`${esc(h.name)} ↔ ${esc(o.name)}`,
+      `<div class="hint">훈련장에서 두 사람이 크게 다투었습니다. 다른 헌터들이 지켜보고 있습니다.</div>`,
+      [{l:'중재한다',p:1,fn:()=>{
+        if(chance(62)){h.loyalty=cl(h.loyalty+7,0,100);o.loyalty=cl(o.loyalty+7,0,100);push(`🤝 ${h.name}과 ${o.name}이 화해했습니다.`,'good');}
+        else{h.loyalty=cl(h.loyalty-4,0,100);push(`중재가 잘 되지 않았습니다.`,'bad');}done();
+      }},{l:'한쪽을 편든다',fn:()=>{
+        h.loyalty=cl(h.loyalty+11,0,100);o.loyalty=cl(o.loyalty-14,0,100);
+        push(`${h.name}의 편을 들었습니다. ${o.name}이 불만을 품었습니다.`,'bad');done();
+      }},{l:'내버려둔다',fn:()=>{
+        h.loyalty=cl(h.loyalty-5,0,100);o.loyalty=cl(o.loyalty-5,0,100);
+        push(`마찰을 방치했습니다. 분위기가 나빠졌습니다.`,'bad');done();
+      }}],true);
+  }
+  else if(e.type==='complain'){
+    const raise=Math.round(h.salary*0.3);
+    modal('불만 제기',esc(h.name),
+      `<div class="hint">"${h.name}: 제 대우가 이게 맞습니까. 다른 길드는 훨씬 준다던데요."</div>
+       <div class="rep-l"><span class="lb">현재 충성도</span><span class="vl neg">${h.loyalty}</span></div>`,
+      [{l:`주급 인상 ${fmt(raise)}G`,p:1,fn:()=>{
+        h.salary+=raise;h.loyalty=cl(h.loyalty+20,0,100);push(`${h.name}의 주급을 올렸습니다.`,'info');done();
+      }},{l:'설득한다',fn:()=>{
+        if(chance(45)){h.loyalty=cl(h.loyalty+10,0,100);push(`${h.name}을 설득했습니다.`,'good');}
+        else{h.loyalty=cl(h.loyalty-8,0,100);push(`${h.name}이 납득하지 못했습니다.`,'bad');}done();
+      }},{l:'무시',fn:()=>{h.loyalty=cl(h.loyalty-12,0,100);done();}}],true);
+  }
+  else if(e.type==='burnout'){
+    modal('과로 경고',esc(h.name),
+      `<div class="warn">피로도 ${Math.round(h.fatigue)}%. 계속 굴리면 부상 확률이 크게 오릅니다.</div>`,
+      [{l:'3일 강제 휴식',p:1,dis:!!h.busy,fn:()=>{
+        h.loyalty=cl(h.loyalty+8,0,100);
+        h.busy={type:'rest'};h.until=G.day+3;
+        push(`${h.name}에게 3일 휴식을 지시했습니다.`,'good');done();
+      }},{l:'계속 쓴다',fn:()=>{h.loyalty=cl(h.loyalty-9,0,100);push(`${h.name}이 불만을 품었습니다.`,'bad');done();}}],true);
+  }
+  else if(e.type==='ask'){
+    const k=pick(SKEYS);
+    modal('개인 요청',esc(h.name),
+      `<div class="hint">"${h.name}: ${STATN[k]} 쪽을 더 다듬고 싶습니다. 시간을 좀 주십시오."</div>
+       <div class="note">허락하면 3일간 자율 훈련합니다. 그동안 의뢰에 나갈 수 없습니다.</div>`,
+      [{l:'허락',p:1,dis:!!h.busy,fn:()=>{
+        h.busy={type:'train',stat:k,days:3};h.until=G.day+3;h.loyalty=cl(h.loyalty+9,0,100);
+        push(`${h.name}이 자율 훈련에 들어갔습니다.`,'info');done();
+      }},{l:'지금은 안 된다',fn:()=>{h.loyalty=cl(h.loyalty-4,0,100);done();}}],true);
+  }
+  else done();
+}
+
+/* ── 모집 ── */
+function mCand(i){
+  const c=G.cands[i];if(!c)return;
+  const [g,col]=gradeOf(c);
+  let b=`<div class="stats">`;
+  SKEYS.forEach(k=>{
+    const hi=CLASSES[c.cls].w[k]>=1.3;
+    b+=`<div class="st ${hi?'hi':''}"><div class="sl"><span>${STATN[k]}</span><b>${c.stats[k]}</b></div>
+      <div class="bar"><i style="width:${cl(c.stats[k]/99*100,2,100)}%"></i></div></div>`;
+  });
+  b+=`</div>
+  <div class="rep-l"><span class="lb">전투력</span><span class="vl">${power(c)}</span></div>
+  <div class="rep-l"><span class="lb">${potShown(c)}</span><span class="vl">정찰단 Lv.${G.fac.scout}</span></div>
+  <div class="rep-l"><span class="lb">주급</span><span class="vl">${fmt(c.salary)}G</span></div>
+  <div class="rep-l"><span class="lb">성격</span><span class="vl">${c.pers}</span></div>`;
+  b+=`<div style="margin-top:10px">`;
+  c.traits.forEach(t=>b+=`<div class="rep-l ${TRAITS[t].g?'p':'n'}"><span class="lb">${TRAITS[t].ic} ${t}</span><span class="vl" style="font-weight:400;font-size:11.5px;color:var(--dim)">${TRAITS[t].d}</span></div>`);
+  b+=`</div>`;
+  if(G.fac.scout<5)b+=`<div class="hint">정찰단을 올리면 잠재력을 더 정확히 볼 수 있습니다. 지금 오차 ±${FAC.scout.v[G.fac.scout-1]}.</div>`;
+  const full=G.hunters.length>=maxHunters();
+  if(full)b+=`<div class="warn">숙소 정원이 찼습니다 (${maxHunters()}명). 숙소를 확장하세요.</div>`;
+  modal(`${CLASSES[c.cls].ic} ${esc(c.name)} <span class="tag" style="color:${col};border-color:${col};font-size:12px">${g}</span>`,
+    `${c.cls} Lv.${c.lv} · ${c.age}세`,b,
+    [{l:`영입 ${fmt(c.fee)}G`,p:1,dis:G.gold<c.fee||full,fn:()=>{
+      G.gold-=c.fee;c.id=G.nextId++;G.hunters.push(c);G.cands.splice(i,1);
+      push(`🤝 ${c.name}을(를) 영입했습니다.`,'good');closeM();save();render();
+    }},{l:'닫기',fn:closeM}]);
+}
+
+function mResign(id){
+  const h=G.hunters.find(x=>x.id===id);if(!h)return;
+  const base=h.offer?h.offer.salary:Math.round(h.salary*(1.1+power(h)/500));
+  const need=Math.round(base*(1.06-h.loyalty/450));
+  const bonus=Math.round(need*3.2);
+  modal('재계약',esc(h.name),
+    `<div class="rep-l"><span class="lb">현재 주급</span><span class="vl">${fmt(h.salary)}G</span></div>
+     <div class="rep-l"><span class="lb">요구 주급</span><span class="vl money">${fmt(need)}G</span></div>
+     <div class="rep-l"><span class="lb">계약금</span><span class="vl money">${fmt(bonus)}G</span></div>
+     <div class="rep-l"><span class="lb">충성도</span><span class="vl">${h.loyalty}</span></div>
+     ${h.offer?`<div class="warn">${h.offer.g} 길드가 주급 ${fmt(h.offer.salary)}G를 제시한 상태입니다.</div>`:''}
+     <div class="hint">충성도가 높으면 요구가 낮아집니다. 성격에 맞는 의뢰를 주고, 과로시키지 않으면 올라갑니다.</div>`,
+    [{l:`재계약 ${fmt(bonus)}G`,p:1,dis:G.gold<bonus,fn:()=>{
+      G.gold-=bonus;h.salary=need;h.contract+=ri(180,300);h.offer=null;h.loyalty=cl(h.loyalty+12,0,100);
+      push(`✍️ ${h.name} 재계약 완료`,'good');closeM();save();render();
+    }},{l:'취소',fn:()=>mHunter(id)}]);
+}
+
+/* ══════════════════════════════════════════════════
+   이벤트 위임
+   ══════════════════════════════════════════════════ */
+document.addEventListener('click',ev=>{
+  const mb=ev.target.closest('[data-mb]');
+  if(mb){const b=MB[+mb.dataset.mb];if(b&&b.fn)b.fn();return;}
+  const t=ev.target.closest('[data-tab]');
+  if(t){TAB=t.dataset.tab;SEL=[];render();return;}
+  const a=ev.target.closest('[data-act]');
+  if(!a){
+    if(ev.target.id==='mroot'&&$('#mroot').dataset.noclose!=='1'){SEL=[];closeM();}
+    return;
+  }
+  const act=a.dataset.act;
+  switch(act){
+    case 'adv': advance(+a.dataset.n); break;
+    case 'advret': advanceUntilReturn(); break;
+    case 'queue': nextQueue(); break;
+    case 'hunter': mHunter(+a.dataset.id); break;
+    case 'quest': SEL=[]; mQuest(+a.dataset.id); break;
+    case 'sel': {
+      const id=+a.dataset.id;
+      if(SEL.includes(id))SEL=SEL.filter(x=>x!==id);
+      else if(SEL.length<maxParty())SEL.push(id);
+      else toast(`최대 ${maxParty()}명까지 편성할 수 있습니다.`);
+      mQuestReopen();
+      break;
+    }
+    case 'tk': TRAINK=a.dataset.k; mTrainReopen(); break;
+    case 'td': TRAIND=+a.dataset.d; mTrainReopen(); break;
+    case 'equip': mEquip(+a.dataset.id,a.dataset.s); break;
+    case 'doequip': {
+      const h=G.hunters.find(x=>x.id===+a.dataset.id);
+      const s=a.dataset.s,k=a.dataset.k;
+      if(h.equip[s])G.stock.push(h.equip[s]);
+      const idx=G.stock.indexOf(k);if(idx>=0)G.stock.splice(idx,1);
+      h.equip[s]=k;save();mHunter(h.id);break;
+    }
+    case 'unequip': {
+      const h=G.hunters.find(x=>x.id===+a.dataset.id);
+      const s=a.dataset.s;
+      if(h.equip[s]){G.stock.push(h.equip[s]);h.equip[s]=null;}
+      save();mHunter(h.id);break;
+    }
+    case 'fac': {
+      const k=a.dataset.k,lv=G.fac[k];
+      if(lv>=5)break;
+      const c=FAC[k].c[lv];
+      if(G.gold<c)break;
+      G.gold-=c;G.fac[k]++;
+      push(`🏗️ ${FAC[k].n}을(를) Lv.${G.fac[k]}로 확장했습니다.`,'good');
+      save();render();break;
+    }
+    case 'cand': mCand(+a.dataset.i); break;
+    case 'reroll': if(G.gold>=500){G.gold-=500;rollCands();save();render();} break;
+    case 'shopt': SHOP_T=a.dataset.t; render(); break;
+    case 'buy': {
+      const k=a.dataset.k;
+      if(G.gold<ITEMS[k].p)break;
+      G.gold-=ITEMS[k].p;G.stock.push(k);
+      toast(`${ITEMS[k].n} 구입`);save();render();break;
+    }
+    case 'rep': {
+      const l=G.log[+a.dataset.i];
+      if(!l||!l.report)break;
+      const q=(G.settleCache||[]).find(x=>x.id===l.q);
+      if(q)mReport(q);else toast('판정서가 만료되었습니다.');
+      break;
+    }
+    case 'repq': {
+      const q=SETTLE.find(x=>x.id===+a.dataset.id);
+      if(q)mReport(q);break;
+    }
+    case 'reset':
+      modal('새로 시작','저장된 진행이 모두 사라집니다.','<div class="warn">되돌릴 수 없습니다.</div>',
+        [{l:'새로 시작',p:1,fn:()=>{newGame();closeM();save();TAB='home';render();}},{l:'취소',fn:closeM}]);
+      break;
+  }
+});
+// 열려 있는 모달 재렌더 헬퍼
+let OPENQ=null,OPENTR=null;
+function mQuestReopen(){if(OPENQ!=null)mQuest(OPENQ);}
+function mTrainReopen(){if(OPENTR!=null)mTrain(OPENTR);}
+const _mQuest=mQuest;mQuest=function(id){OPENQ=id;OPENTR=null;_mQuest(id);};
+const _mTrain=mTrain;mTrain=function(id){OPENTR=id;OPENQ=null;_mTrain(id);};
+const _closeM=closeM;closeM=function(){OPENQ=null;OPENTR=null;TRAINK=null;_closeM();};
+
+/* ══════════════════════════════════════════════════
+   저장 (window.storage → localStorage → 메모리)
+   ══════════════════════════════════════════════════ */
+const MEM={};
+const KEY='hgm_save_v1';
+async function rawGet(k){
+  if(typeof window!=='undefined'&&window.storage&&window.storage.get){
+    try{const r=await window.storage.get(k);return r?r.value:null;}catch(e){}
+  }
+  try{return localStorage.getItem(k);}catch(e){return MEM[k]??null;}
+}
+async function rawSet(k,v){
+  if(typeof window!=='undefined'&&window.storage&&window.storage.set){
+    try{await window.storage.set(k,v);return;}catch(e){}
+  }
+  try{localStorage.setItem(k,v);}catch(e){MEM[k]=v;}
+}
+function save(){
+  try{
+    const c=JSON.parse(JSON.stringify(G));
+    // 판정서 캐시 (최근 8건)
+    c.settleCache=(G.settleCache||[]).slice(0,8);
+    rawSet(KEY,JSON.stringify(c));
+  }catch(e){}
+}
+async function load(){
+  const s=await rawGet(KEY);
+  if(!s)return false;
+  try{
+    const d=JSON.parse(s);
+    if(!d||!d.hunters||!d.day)return false;
+    G=d;
+    G.active=G.active||[];G.queue=G.queue||[];G.moves=G.moves||[];
+    G.inst=G.inst||[];G.settleCache=G.settleCache||[];
+    return true;
+  }catch(e){return false;}
+}
+
+/* ══════════════════════════════════════════════════
+   시작
+   ══════════════════════════════════════════════════ */
+(async function boot(){
+  const ok=await load();
+  if(!ok)newGame();
+  render();
+  if(!G.seenIntro){
+    G.seenIntro=true;save();
+    modal('변방 길드 인수',`${G.day}일차 · F급`,
+      `<div class="note" style="line-height:1.65">
+      폐업 직전의 길드를 넘겨받았습니다. 헌터 4명과 6,000G가 전부입니다.<br><br>
+      <b style="color:var(--text)">이 게임의 규칙 세 가지</b><br><br>
+      ① <b style="color:var(--text)">의뢰에는 소요일이 있습니다.</b> 에이스를 5일짜리 원정에 보내면, 내일 뜨는 대형 의뢰에는 못 씁니다.<br><br>
+      ② <b style="color:var(--text)">게시판 정보는 부정확합니다.</b> 돈을 내고 정찰하면 진짜 난이도와 숨은 변수를 봅니다. 나쁜 것만 나오는 건 아닙니다.<br><br>
+      ③ <b style="color:var(--text)">헌터는 거절하고, 떠납니다.</b> 겁쟁이는 강한 적을 피하고, 탐욕은 수당을 요구하고, 계약이 끝나면 라이벌 길드가 데려갑니다.<br><br>
+      <span style="color:var(--dim2)">접속하지 않는 동안 시간은 흐르지 않습니다. 자동으로 진행되는 것은 아무것도 없습니다.</span>
+      </div>`,
+      [{l:'시작',p:1,fn:closeM}]);
+  }
+})();
+</script>
+</body>
+</html>
