@@ -972,7 +972,7 @@ function rollGoal(prev){
     ()=>{const n=cl(Math.round(pq*0.95)+1,5,40);
       return {k:'quests',t:n,c:0,txt:`의뢰 ${n}건 성공`,rw:Math.round(700+gp*2.4)};},
     ()=>{const k=pick(Object.keys(REPN));
-      const up=Math.max(3,Math.round((100-G.rep[k])*0.08)+ri(0,2));   // 실측: 한 달에 명성 +6~8이 현실
+      const up=Math.max(3,Math.round((100-G.rep[k])*0.08)+ri(0,2));   // 실측: 한 달에 평가 +6~8이 현실
       const n=Math.round(cl(G.rep[k]+up,10,100));
       return {k:'rep',sub:k,t:n,c:Math.round(G.rep[k]),txt:`${REPN[k]} ${n} 달성`,rw:Math.round(900+gp*2.8)};},
     ()=>{const m=G.hunters.length?Math.max(...G.hunters.map(power)):40;const n=m+ri(1,3);
@@ -1839,12 +1839,12 @@ function vHome(){
   });
   h+=`</div>`;
 
-  h+=`<div class="sec"><h2>명성</h2><div class="reps">`;
+  h+=`<div class="sec"><h2>협회 평가</h2><div class="reps">`;
   for(const k in REPN){
     h+=`<div class="rep"><div class="rl"><span>${REPN[k]}</span><b>${Math.round(G.rep[k])}</b></div>
       <div class="bar"><i style="width:${G.rep[k]}%"></i></div></div>`;
   }
-  h+=`</div><div class="note" style="margin-top:8px">명성이 높은 분야일수록 게시판에 그 종류의 의뢰가 자주 뜨고, 보상 단가도 올라갑니다.</div></div>`;
+  h+=`</div><div class="note" style="margin-top:8px">협회 평가가 높은 분야일수록 그 종류의 의뢰가 자주 배정되고, 단가도 올라갑니다.</div></div>`;
 
   h+=`<div class="sec"><h2>길드 일지</h2>`;
   if(!G.log.length)h+=`<div class="empty">기록 없음</div>`;
@@ -2561,7 +2561,7 @@ function mMonthly(done){
      <span class="pos tiny">+${nowPts-(M.pts||0)}</span></span></div>`;
   if(M.threats)b+=`<div class="mrow"><span class="ml">위기 대응</span><span class="mv">${M.threatWin}/${M.threats}건 저지</span></div>`;
 
-  b+=`<div style="margin-top:13px"><div class="tiny" style="margin-bottom:6px">명성 변화</div>`;
+  b+=`<div style="margin-top:13px"><div class="tiny" style="margin-bottom:6px">협회 평가 변화</div>`;
   for(const k in REPN){
     const d=Math.round(G.rep[k]-(M.rep[k]||0));
     b+=`<div class="mrow"><span class="ml">${REPN[k]}</span><span class="mv">${Math.round(G.rep[k])}
