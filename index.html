@@ -148,7 +148,7 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;border
 .rel-l .rb i{position:absolute;top:0;height:100%;background:var(--dim)}
 
 /* ── 지도 ── */
-.map{position:relative;width:100%;aspect-ratio:5/6;margin-bottom:12px;
+.map{position:relative;width:100%;aspect-ratio:5/6;margin-bottom:12px;transition:aspect-ratio .3s;
   border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#131A1E}
 .map svg{position:absolute;inset:0;width:100%;height:100%}
 .mk{
@@ -171,6 +171,12 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;border
 .mk.lk{pointer-events:none}
 .mk.hq .lb{color:var(--text);font-weight:600}
 .mk.on .dot{background:var(--moss);box-shadow:0 0 0 1px #3E5B33}
+.mtitle{
+  position:absolute;left:8px;top:7px;font-size:11px;font-weight:700;
+  color:var(--text);letter-spacing:-.02em;pointer-events:none;line-height:1.3
+}
+.mtitle span{display:block;font-size:9.5px;font-weight:400;color:var(--dim2)}
+.mk.lk .lb{color:#33434D;font-size:8px}
 .mlg{display:flex;gap:11px;font-size:10.5px;color:var(--dim2);margin:-6px 0 12px;flex-wrap:wrap}
 .mlg i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:3px;vertical-align:middle}
 
@@ -600,55 +606,93 @@ const QT={
 const REPN={combat:'토벌 실적',guard:'시민 보호 실적',explore:'탐사 실적',arcane:'분석 실적'};
 
 // 대한민국 관할 구역. tier는 길드 등급이 오를 때마다 열린다.
-const REGIONS=[
- // tier 0 — 서부 경남 (F·E급)
- {n:'사천',  x:46.5,y:99, t:0,hq:1},
- {n:'진주',  x:47.5,y:95, t:0},
- {n:'남해',  x:44,  y:104,t:0},
- {n:'고성',  x:51,  y:100,t:0},
- {n:'하동',  x:41,  y:96, t:0},
- {n:'통영',  x:53,  y:104,t:0},
- // tier 1 — 경상남도 전역 (D급)
- {n:'창원',  x:57,  y:96, t:1},
- {n:'김해',  x:60,  y:94, t:1},
- {n:'거제',  x:57,  y:103,t:1},
- {n:'밀양',  x:58,  y:88, t:1},
- {n:'양산',  x:63,  y:91, t:1},
- {n:'거창',  x:47,  y:85, t:1},
- // tier 2 — 남부권 (C급)
- {n:'부산',  x:64,  y:98, t:2},
- {n:'울산',  x:69,  y:90, t:2},
- {n:'대구',  x:57,  y:79, t:2},
- {n:'포항',  x:68,  y:75, t:2},
- {n:'여수',  x:37,  y:101,t:2},
- {n:'광주',  x:29,  y:91, t:2},
- {n:'전주',  x:32,  y:80, t:2},
- // tier 3 — 중부권 (B급)
- {n:'대전',  x:39,  y:70, t:3},
- {n:'청주',  x:42,  y:64, t:3},
- {n:'천안',  x:35,  y:58, t:3},
- {n:'목포',  x:21,  y:96, t:3},
- {n:'안동',  x:58,  y:66, t:3},
- // tier 4 — 수도권 (A급)
- {n:'서울',  x:34,  y:43, t:4},
- {n:'인천',  x:26,  y:44, t:4},
- {n:'수원',  x:33,  y:49, t:4},
- {n:'의정부',x:37,  y:38, t:4},
- {n:'춘천',  x:49,  y:39, t:4},
- // tier 5 — 전국 (S급)
- {n:'강릉',  x:66,  y:44, t:5},
- {n:'속초',  x:66,  y:33, t:5},
- {n:'제주',  x:26,  y:129,t:5},
- {n:'백령도',x:9,   y:33, t:5},
+const STAGES=[
+ // 관할이 넓어지면 지도 자체가 바뀐다. 축척이 다른 곳을 한 장에 그리지 않는다.
+ {n:'사천시',   sub:'경상남도 사천시',        w:100,h:78},
+ {n:'경상남도', sub:'경남 전역 관할',          w:100,h:70},
+ {n:'남부권',   sub:'영남·호남 남부 관할',     w:100,h:84},
+ {n:'대한민국', sub:'전국 관할',              w:100,h:136},
 ];
-const TIERNAME=['경남 서부','경상남도 전역','남부권','중부권','수도권','전국'];
-const GRADE_TIER={F:0,E:0,D:1,C:2,B:3,A:4,S:5};
-function myTier(){
-  return G.maxTier||0;      // 순수 조회. 승격은 stepDay에서만 처리한다
-}
-function openRegions(){ const t=myTier(); return REGIONS.filter(r=>r.t<=t); }
-const MAPPOS={};
-REGIONS.forEach(r=>MAPPOS[r.n]=[r.x,r.y]);
+const TIERNAME=['사천시 서부','사천시 전역','경남 서부','경상남도 전역','남부권','전국','전국 · 특급'];
+const GRADE_TIER={F:0,E:1,D:2,C:3,B:4,A:5,S:6};
+const TIER_STAGE=[0,0,1,1,2,3,3];      // 등급 → 지도 단계
+
+const REGIONS=[
+ // ── 0단계 · 사천시 ──
+ {s:0,t:0,n:'사천읍',  x:43,y:27,hq:1,up:'사천'},
+ {s:0,t:0,n:'용현면',  x:49,y:45,up:'사천'},
+ {s:0,t:0,n:'대방동',  x:66,y:76,up:'사천'},
+ {s:0,t:1,n:'사남면',  x:59,y:39,up:'사천'},
+ {s:0,t:1,n:'정동면',  x:57,y:22,up:'사천'},
+ {s:0,t:1,n:'축동면',  x:31,y:15,up:'사천'},
+ {s:0,t:1,n:'곤명면',  x:18,y:25,up:'사천'},
+ {s:0,t:1,n:'곤양면',  x:24,y:46,up:'사천'},
+ {s:0,t:1,n:'서포면',  x:27,y:66,up:'사천'},
+ {s:0,t:1,n:'남양동',  x:57,y:63,up:'사천'},
+ // ── 1단계 · 경상남도 ──
+ {s:1,t:2,n:'사천',x:45,y:52,hq:1},
+ {s:1,t:2,n:'진주',x:43,y:40},
+ {s:1,t:2,n:'하동',x:28,y:44},
+ {s:1,t:2,n:'남해',x:43,y:66},
+ {s:1,t:2,n:'고성',x:55,y:50},
+ {s:1,t:2,n:'산청',x:36,y:29},
+ {s:1,t:2,n:'통영',x:57,y:62},
+ {s:1,t:3,n:'거제',x:71,y:63},
+ {s:1,t:3,n:'창원',x:66,y:45},
+ {s:1,t:3,n:'김해',x:78,y:37},
+ {s:1,t:3,n:'양산',x:86,y:31},
+ {s:1,t:3,n:'밀양',x:73,y:24},
+ {s:1,t:3,n:'함안',x:57,y:36},
+ {s:1,t:3,n:'거창',x:35,y:17},
+ // ── 2단계 · 남부권 ──
+ {s:2,t:4,n:'사천',x:51,y:70,hq:1},
+ {s:2,t:4,n:'진주',x:53,y:63},
+ {s:2,t:4,n:'창원',x:67,y:63},
+ {s:2,t:4,n:'통영',x:60,y:73},
+ {s:2,t:4,n:'거제',x:68,y:73},
+ {s:2,t:4,n:'부산',x:78,y:66},
+ {s:2,t:4,n:'울산',x:82,y:54},
+ {s:2,t:4,n:'대구',x:65,y:41},
+ {s:2,t:4,n:'포항',x:81,y:39},
+ {s:2,t:4,n:'경주',x:76,y:48},
+ {s:2,t:4,n:'여수',x:38,y:73},
+ {s:2,t:4,n:'순천',x:34,y:65},
+ {s:2,t:4,n:'광주',x:24,y:55},
+ {s:2,t:4,n:'목포',x:17,y:69},
+ {s:2,t:4,n:'전주',x:28,y:38},
+ {s:2,t:4,n:'남원',x:34,y:50},
+ // ── 3단계 · 전국 ──
+ {s:3,t:5,n:'사천',x:50,y:88,hq:1},
+ {s:3,t:5,n:'진주',x:52,y:85},
+ {s:3,t:5,n:'창원',x:62,y:83},
+ {s:3,t:5,n:'부산',x:70,y:85},
+ {s:3,t:5,n:'울산',x:74,y:77},
+ {s:3,t:5,n:'대구',x:62,y:63},
+ {s:3,t:5,n:'포항',x:77,y:66},
+ {s:3,t:5,n:'광주',x:28,y:78},
+ {s:3,t:5,n:'전주',x:30,y:61},
+ {s:3,t:5,n:'대전',x:36,y:49},
+ {s:3,t:5,n:'청주',x:40,y:44},
+ {s:3,t:5,n:'천안',x:33,y:39},
+ {s:3,t:5,n:'수원',x:28,y:31},
+ {s:3,t:5,n:'서울',x:29,y:24},
+ {s:3,t:5,n:'인천',x:22,y:27},
+ {s:3,t:5,n:'춘천',x:44,y:23},
+ {s:3,t:6,n:'원주',x:45,y:33},
+ {s:3,t:6,n:'안동',x:62,y:50},
+ {s:3,t:6,n:'여수',x:44,y:90},
+ {s:3,t:6,n:'순천',x:38,y:84},
+ {s:3,t:6,n:'목포',x:25,y:87},
+ {s:3,t:6,n:'통영',x:58,y:90},
+ {s:3,t:6,n:'거제',x:65,y:88},
+ {s:3,t:6,n:'강릉',x:73,y:34},
+ {s:3,t:6,n:'속초',x:72,y:22},
+ {s:3,t:6,n:'제주',x:38,y:117},
+];
+function myTier(){ return G.maxTier||0; }
+function myStage(){ return TIER_STAGE[myTier()]||0; }
+function openRegions(){ const t=myTier(),st=myStage(); return REGIONS.filter(r=>r.s===st&&r.t<=t); }
+function stageRegions(st){ return REGIONS.filter(r=>r.s===st); }
 const MOB=['고블린','코볼트','오크','리자드맨','거대 거미','하피','가고일','트롤','오우거','와이번','구울','슬라임 군체','미노타우로스','바실리스크'];
 const NPCN=['협회 조사단','언론 취재진','복구 작업반','의료 지원팀','정부 시찰단','민간 수송차량'];
 const HERB=['마정석','마력 결정','몬스터 부산물','미확인 광물','잔류 결정체'];
@@ -1195,12 +1239,87 @@ function dispatch(q,party,bribe){
 }
 
 /* ───────── 지도 ───────── */
+// 단계마다 축척이 다른 별도의 지도를 그린다.
+// 전국을 한 장에 욱여넣지 않고, 관할이 넓어질 때 지도 자체를 바꾼다.
+function mapArt(st){
+  const L='#1D272D', E='#2C3A43', W='#131C21', T='#33434D';
+  if(st===0) return `
+    <rect width="100" height="78" fill="#101619"/>
+    <g fill="${L}" stroke="${E}" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M14 12 L30 5 L48 7 L64 4 L79 11 L84 22 L78 31 L81 41 L74 50
+               L76 60 L68 71 L60 74 L57 64 L52 55 L47 62 L48 71 L38 74
+               L28 69 L18 72 L11 61 L15 48 L7 35 L12 21 Z"/>
+    </g>
+    <path d="M47 78 L46 66 L50 55 L55 62 L54 74 Z" fill="${W}"/>
+    <g fill="${L}" stroke="${E}" stroke-width="0.5">
+      <ellipse cx="34" cy="76" rx="7" ry="2.6"/><ellipse cx="72" cy="76" rx="5" ry="2.2"/>
+    </g>
+    <g stroke="${T}" stroke-width="0.4" fill="none" opacity=".8">
+      <path d="M20 20 L38 26 L54 20 L70 26"/><path d="M24 40 L44 44 L62 38"/>
+    </g>
+    <text x="50" y="70" fill="#2E3E48" font-size="3.4" text-anchor="middle">사천만</text>
+    <text x="88" y="66" fill="#2A3A44" font-size="3.4" text-anchor="end">남해</text>
+    <text x="50" y="3.6" fill="#2E3E48" font-size="3.2" text-anchor="middle">진주 방면</text>`;
+  if(st===1) return `
+    <rect width="100" height="70" fill="#101619"/>
+    <g fill="${L}" stroke="${E}" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M10 32 L22 15 L40 9 L58 13 L76 7 L90 15 L96 29 L92 41 L84 45
+               L80 55 L70 51 L62 57 L52 49 L42 53 L32 45 L20 49 L8 41 Z"/>
+      <ellipse cx="71" cy="63" rx="7" ry="4"/>
+      <ellipse cx="43" cy="66" rx="7" ry="3.4"/>
+      <ellipse cx="57" cy="65" rx="3.4" ry="2"/>
+    </g>
+    <g stroke="${T}" stroke-width="0.45" fill="none" opacity=".85">
+      <path d="M18 22 L34 30 L48 24 L64 30 L82 24"/>
+      <path d="M30 40 L46 44 L64 40 L82 44"/>
+    </g>
+    <text x="50" y="6" fill="#2E3E48" font-size="3.2" text-anchor="middle">경북 · 전북 접경</text>
+    <text x="93" y="60" fill="#2A3A44" font-size="3.4" text-anchor="end">남해</text>`;
+  if(st===2) return `
+    <rect width="100" height="84" fill="#101619"/>
+    <g fill="${L}" stroke="${E}" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M20 14 L42 7 L64 11 L84 17 L92 31 L88 45 L94 57 L86 69
+               L74 76 L62 72 L52 80 L40 76 L28 79 L17 69 L21 55 L11 41 L18 25 Z"/>
+      <ellipse cx="69" cy="76" rx="5" ry="3"/>
+      <ellipse cx="46" cy="79" rx="5" ry="2.4"/>
+      <ellipse cx="14" cy="76" rx="4" ry="2.2"/>
+    </g>
+    <g stroke="${T}" stroke-width="0.45" fill="none" opacity=".8">
+      <path d="M24 26 L46 32 L66 26 L86 34"/><path d="M20 48 L44 54 L68 48 L88 54"/>
+      <path d="M52 12 L54 34 L50 56 L54 74"/>
+    </g>
+    <line x1="14" y1="16" x2="90" y2="12" stroke="${T}" stroke-width="0.6" stroke-dasharray="2 2" opacity=".7"/>
+    <text x="50" y="8" fill="#2E3E48" font-size="3" text-anchor="middle">중부권 경계</text>
+    <text x="94" y="66" fill="#2A3A44" font-size="3.2" text-anchor="end">동해</text>
+    <text x="6" y="60" fill="#2A3A44" font-size="3.2">서해</text>`;
+  return `
+    <rect width="100" height="136" fill="#101619"/>
+    <g fill="${L}" stroke="${E}" stroke-width="0.55" stroke-linejoin="round">
+      <path d="M32 15 L50 11 L73 14 L75 21 L78 34 L80 44 L82 54 L83 63 L88 71
+               L78 80 L73 86 L66 86 L63 92 L56 92 L52 94 L46 97 L39 95 L33 97
+               L28 94 L30 88 L28 78 L25 70 L29 66 L26 62 L23 57 L16 52 L21 47
+               L27 45 L29 41 L24 37 L23 30 L22 24 L28 18 Z"/>
+      <ellipse cx="38" cy="117" rx="9" ry="4.4"/>
+      <circle cx="94" cy="51" r="1.6"/>
+      <ellipse cx="20" cy="27" rx="2.6" ry="3.4"/>
+    </g>
+    <g stroke="${T}" stroke-width="0.45" fill="none" opacity=".8">
+      <path d="M66 18 L70 34 L66 48 L70 62 L64 74 L68 84"/>
+      <path d="M36 22 L33 38 L38 52 L34 68 L30 82"/>
+      <path d="M26 48 L58 44"/><path d="M28 70 L64 66"/><path d="M30 88 L66 84"/>
+    </g>
+    <line x1="18" y1="14" x2="80" y2="10" stroke="#3A4A55" stroke-width="0.7" stroke-dasharray="2 1.6"/>
+    <text x="50" y="7" fill="#3A4A55" font-size="3.4" text-anchor="middle" letter-spacing="1.5">DMZ</text>
+    <text x="94" y="80" fill="#2A3A44" font-size="3.4" text-anchor="end">동해</text>
+    <text x="6" y="62" fill="#2A3A44" font-size="3.4">서해</text>
+    <text x="38" y="126" fill="#2A3A44" font-size="3" text-anchor="middle">제주해협</text>`;
+}
 function mapHTML(){
   const act=(G.active||[]);
   const th=G.threat&&!G.threat.done?G.threat:null;
-  const tier=myTier();
+  const tier=myTier(), st=myStage(), S=STAGES[st];
   let mk='';
-  REGIONS.forEach(r=>{
+  stageRegions(st).forEach(r=>{
     const locked=r.t>tier;
     const q=G.quests.find(z=>z.place===r.n&&!(th&&z.id===th.qid));
     const isT=th&&th.place===r.n;
@@ -1211,39 +1330,21 @@ function mapHTML(){
     else if(isT){cls='t';click=` data-act="quest" data-id="${th.qid}"`;}
     else if(going)cls='on';
     else if(q){cls='q';click=` data-act="quest" data-id="${q.id}"`;}
-    if(r.hq)cls=(cls||'')+' hq';
-    const op=locked?0.20:(cls.trim()?1:cl(0.34+vis*0.05,0.34,0.95));
-    const showLab=!locked&&(cls.trim()||vis>0);
-    mk+=`<button class="mk ${cls}" style="left:${r.x}%;top:${r.y}%;opacity:${op}"${click}>
-      <span class="dot"></span>${showLab?`<span class="lb">${esc(r.n)}</span>`:''}</button>`;
+    if(r.hq&&!locked)cls=(cls?cls+' ':'')+'hq';
+    const op=locked?0.28:(cls.trim()?1:cl(0.42+vis*0.05,0.42,0.95));
+    mk+=`<button class="mk ${cls}" style="left:${r.x}%;top:${r.y/S.h*100}%;opacity:${op}"${click}>
+      <span class="dot"></span><span class="lb">${locked?'?':esc(r.n)}</span></button>`;
   });
-  return `<div class="map">
-    <svg viewBox="0 0 100 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <rect width="100" height="140" fill="#101619"/>
-      <g fill="#1D272D" stroke="#2C3A43" stroke-width="0.7" stroke-linejoin="round">
-        <path d="M31 26 L38 30 L45 27 L52 30 L58 26 L64 29 L70 27 L74 32 L72 39
-          L75 46 L73 54 L70 62 L72 70 L69 76 L71 83 L66 89 L67 95 L62 100 L56 99
-          L52 104 L46 101 L41 104 L36 100 L30 103 L25 98 L21 100 L17 95 L21 89
-          L16 84 L20 78 L15 72 L19 66 L14 60 L18 54 L13 48 L18 43 L14 38 L20 34
-          L18 29 L25 31 Z"/>
-        <path d="M21 126 L31 124 L34 128 L30 133 L22 132 L18 129 Z"/>
-        <circle cx="9" cy="33" r="1.8"/>
-      </g>
-      <g stroke="#26333B" stroke-width="0.55" fill="none" opacity=".85">
-        <path d="M60 30 L64 44 L60 56 L63 70 L58 82 L61 94"/>
-        <path d="M36 34 L33 48 L38 60 L34 74 L30 88"/>
-        <path d="M18 60 L46 58"/><path d="M20 84 L58 82"/>
-      </g>
-      <text x="50" y="14" fill="#3A4A55" font-size="5" text-anchor="middle" letter-spacing="2">DMZ</text>
-      <line x1="14" y1="20" x2="86" y2="20" stroke="#33424C" stroke-width="0.8" stroke-dasharray="2 2"/>
-      <text x="86" y="60" fill="#25333B" font-size="4.5" text-anchor="end">동해</text>
-      <text x="8" y="72" fill="#25333B" font-size="4.5">서해</text>
-    </svg>${mk}</div>
+  const nextT=REGIONS.filter(r=>r.s===st&&r.t===tier+1).length;
+  return `<div class="map" style="aspect-ratio:${S.w}/${S.h}">
+    <svg viewBox="0 0 ${S.w} ${S.h}" preserveAspectRatio="none" aria-hidden="true">${mapArt(st)}</svg>
+    <div class="mtitle">${S.n}<span>${TIERNAME[tier]}</span></div>
+    ${mk}</div>
   <div class="mlg">
     <span><i style="background:var(--brass)"></i>의뢰</span>
     <span><i style="background:var(--moss)"></i>출동 중</span>
     ${th?'<span><i style="background:var(--blood)"></i>브레이크 경보</span>':''}
-    <span>관할 <b style="color:var(--text)">${TIERNAME[tier]}</b> · ${openRegions().length}개 구역</span>
+    <span>${openRegions().length}개 구역 관할${nextT?` · 승급 시 ${nextT}곳 추가`:(st<3?' · 승급 시 관할 지도 확대':'')}</span>
   </div>`;
 }
 
@@ -1544,7 +1645,17 @@ function stepDay(out){
   {
     const before=G.maxTier||0;
     const t=GRADE_TIER[guildGrade()]||0;
-    if(t>before){ G.maxTier=t; G.queue.push({type:'tier',t}); }
+    if(t>before){
+      const oldStage=TIER_STAGE[before], newStage=TIER_STAGE[t];
+      if(newStage>oldStage){
+        // 지도가 바뀌면 이전 구역 실적을 상위 지역으로 합산한다
+        G.region=G.region||{};
+        stageRegions(oldStage).forEach(r=>{
+          if(r.up&&G.region[r.n]){G.region[r.up]=(G.region[r.up]||0)+G.region[r.n];}
+        });
+      }
+      G.maxTier=t; G.queue.push({type:'tier',t,stage:newStage>oldStage?newStage:null});
+    }
   }
   // 위협
   if(G.threat&&!G.threat.done&&G.day>=G.threat.day)fireThreat();
@@ -2322,11 +2433,15 @@ function nextQueue(){
   // ── 관할 확장 ──
   if(e.type==='tier'){
     const t=e.t;
-    const gained=REGIONS.filter(r=>r.t===t);
+    const st=TIER_STAGE[t];
+    const gained=REGIONS.filter(r=>r.s===st&&r.t<=t&&(e.stage!=null||r.t===t));
     modal('관할 구역 확대',`${guildGrade()}급 승급 · ${TIERNAME[t]}`,
       `<div class="hint good" style="background:#1E2B1B;border-left-color:var(--moss);color:#A9CE97">
         헌터 협회가 우리 길드의 관리 등급을 상향했습니다.
         <b>${TIERNAME[t]}</b> 게이트 관리 권한을 받았습니다.</div>
+       ${e.stage!=null?`<div class="hint" style="border-left-color:var(--brass)">
+         관할 지도가 <b>${STAGES[e.stage].n}</b> 단위로 바뀝니다. ${STAGES[e.stage].sub}.</div>`:''}
+       ${e.stage!=null?`<div style="margin:12px 0">${mapHTML()}</div>`:''}
        <div class="tiny" style="margin:12px 0 6px">신규 관할 ${gained.length}개 구역</div>
        <div style="display:flex;flex-wrap:wrap;gap:5px">
        ${gained.map(r=>`<span class="tag y">${esc(r.n)}</span>`).join('')}</div>
