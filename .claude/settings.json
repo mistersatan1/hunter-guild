@@ -1,0 +1,30 @@
+{
+  "skillOverrides": {
+    "animate": "name-only",
+    "animation-performance": "name-only",
+    "brainstorming": "name-only",
+    "break-ui": "name-only",
+    "critique-information-density": "name-only",
+    "critique-visual-hierarchy": "name-only",
+    "dispatching-parallel-agents": "name-only",
+    "executing-plans": "name-only",
+    "feedback-patterns": "name-only",
+    "finishing-a-development-branch": "name-only",
+    "fitts-law": "name-only",
+    "grill-me": "name-only",
+    "impeccable": "name-only",
+    "micro-interaction-spec": "name-only",
+    "mobile-native": "name-only",
+    "receiving-code-review": "name-only",
+    "requesting-code-review": "name-only",
+    "review-animations": "name-only",
+    "skill-catalog": "on",
+    "subagent-driven-development": "name-only",
+    "systematic-debugging": "name-only",
+    "test-driven-development": "name-only",
+    "token-efficient-workflow": "on",
+    "using-git-worktrees": "name-only",
+    "verification-before-completion": "name-only",
+    "writing-plans": "name-only"
+  }
+}
